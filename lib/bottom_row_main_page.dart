@@ -66,9 +66,8 @@ class BottomRowMainPage extends ConsumerWidget {
                           context: context,
                           builder: (context) {
                             return const AlertDialog(
-                              title: Text("Summary Page"),
-                              content: SummaryPage(),
-                            );
+                                title: Text("Summary Page"),
+                                content: SummaryPage());
                           },
                         );
                       }

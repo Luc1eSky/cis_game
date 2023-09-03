@@ -64,7 +64,7 @@ class GameData {
   List<int> get total {
     return [
       zebras[0] + lions[0] + elephants[0],
-      zebras[1] + lions[1] + elephants[1]
+      zebras[1] + lions[1] + elephants[1] + savings.toInt()
     ];
   }
 

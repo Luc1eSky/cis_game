@@ -51,51 +51,68 @@ class _SummaryPageState extends ConsumerState<SummaryPage> {
               cells: <DataCell>[
                 DataCell(
                   SizedBox(
-                    width: 50,
+                    width: 40,
                     child: Image.asset('assets/images/zebra.png'),
                   ),
                 ),
                 DataCell(Text(
                     ref.watch(gameDataNotifierProvider).zebras[0].toString())),
-                DataCell(Text(
-                    ref.watch(gameDataNotifierProvider).zebras[1].toString())),
+                DataCell(
+                  Text(
+                      '${ref.watch(gameDataNotifierProvider).zebras[1].toString()} kwecha'),
+                ),
               ],
             ),
             DataRow(
               cells: <DataCell>[
                 DataCell(SizedBox(
-                  width: 50,
+                  width: 40,
                   child: Image.asset('assets/images/lion.png'),
                 )),
                 DataCell(Text(
                     ref.watch(gameDataNotifierProvider).lions[0].toString())),
                 DataCell(Text(
-                    ref.watch(gameDataNotifierProvider).lions[1].toString())),
+                    '${ref.watch(gameDataNotifierProvider).lions[1]} kwecha')),
               ],
             ),
             DataRow(
               cells: <DataCell>[
                 DataCell(SizedBox(
-                  width: 50,
+                  width: 40,
                   child: Image.asset('assets/images/elephant.png'),
                 )),
-                DataCell(Text(ref
-                    .watch(gameDataNotifierProvider)
-                    .elephants[0]
-                    .toString())),
-                DataCell(Text(ref
-                    .watch(gameDataNotifierProvider)
-                    .elephants[1]
-                    .toString())),
+                DataCell(
+                  Text(ref
+                      .watch(gameDataNotifierProvider)
+                      .elephants[0]
+                      .toString()),
+                ),
+                DataCell(Text(
+                    '${ref.watch(gameDataNotifierProvider).elephants[1].toString()} kwcha')),
               ],
             ),
             DataRow(
               cells: <DataCell>[
-                const DataCell(Text("Total")),
+                DataCell(SizedBox(
+                    width: 40,
+                    height: 40,
+                    child: Image.asset('assets/images/cash_box'
+                        '.png'))),
+                const DataCell(Text('')),
+                DataCell(
+                  Text('${ref.watch(gameDataNotifierProvider).savings} kwecha'),
+                ),
+              ],
+            ),
+            DataRow(
+              cells: <DataCell>[
+                const DataCell(Text("Total Payoff")),
                 DataCell(Text(
                     ref.watch(gameDataNotifierProvider).total[0].toString())),
-                DataCell(Text(
-                    ref.watch(gameDataNotifierProvider).total[1].toString())),
+                DataCell(
+                  Text(
+                      '${ref.watch(gameDataNotifierProvider).total[1].toString()} kwecha'),
+                ),
               ],
             ),
           ],
