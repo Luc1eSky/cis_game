@@ -27,6 +27,7 @@ class GameDataNotifier extends StateNotifier<GameData> {
             currentSeedType: null,
             season: 1,
             isNewSeason: true,
+            isAllPlanted: false,
           ),
         );
 
@@ -131,9 +132,9 @@ class GameDataNotifier extends StateNotifier<GameData> {
       // Todo: need to be randomized
       currentForecast: 3,
       currentSeedType: null,
-      // Todo: Does not update to 2???
       season: state.season + 1,
       isNewSeason: true,
+      isAllPlanted: false,
     );
   }
 
@@ -141,13 +142,18 @@ class GameDataNotifier extends StateNotifier<GameData> {
     state = state.copyWith(isNewSeason: false);
   }
 
-  int calculateFieldsAndProfitPerType() {
-    int fieldsZebra = 0;
-    for (int index = 0; index < state.fieldList.length; index++) {
-      if (state.fieldList[index].seedType!.animalName == 'zebra') {
-        fieldsZebra++;
+  void allFieldsPlanted() {
+    int plantedFields = 0;
+    for (Field field in state.fieldList) {
+      //SeedType? seedType = field.seedType;
+      FieldStatus? fieldStatus = field.fieldStatus;
+      if (field.fieldStatus != 'empty') {
+        plantedFields++;
+        if (plantedFields == 10) {
+          state = state.copyWith(isAllPlanted: true);
+          print('All fields are planted');
+        }
       }
     }
-    return (fieldsZebra);
   }
 }

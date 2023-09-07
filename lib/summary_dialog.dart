@@ -72,7 +72,7 @@ class _SummaryPageState extends ConsumerState<SummaryPage> {
                 DataCell(Text(
                     ref.watch(gameDataNotifierProvider).lions[0].toString())),
                 DataCell(Text(
-                    '${ref.watch(gameDataNotifierProvider).lions[1]} kwecha')),
+                    '${ref.watch(gameDataNotifierProvider).lions[1]} $currency')),
               ],
             ),
             DataRow(
@@ -88,7 +88,7 @@ class _SummaryPageState extends ConsumerState<SummaryPage> {
                       .toString()),
                 ),
                 DataCell(Text(
-                    '${ref.watch(gameDataNotifierProvider).elephants[1].toString()} kwcha')),
+                    '${ref.watch(gameDataNotifierProvider).elephants[1].toString()} $currency')),
               ],
             ),
             DataRow(
@@ -100,18 +100,30 @@ class _SummaryPageState extends ConsumerState<SummaryPage> {
                         '.png'))),
                 const DataCell(Text('')),
                 DataCell(
-                  Text('${ref.watch(gameDataNotifierProvider).savings} kwecha'),
+                  Text(
+                      '${ref.watch(gameDataNotifierProvider).savings} $currency'),
                 ),
               ],
             ),
             DataRow(
               cells: <DataCell>[
-                const DataCell(Text("Total Payoff")),
+                const DataCell(
+                  Text(
+                    "Total Payoff",
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                  ),
+                ),
                 DataCell(Text(
-                    ref.watch(gameDataNotifierProvider).total[0].toString())),
+                  ref.watch(gameDataNotifierProvider).total[0].toString(),
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 20),
+                )),
                 DataCell(
                   Text(
-                      '${ref.watch(gameDataNotifierProvider).total[1].toString()} kwecha'),
+                    '${ref.watch(gameDataNotifierProvider).total[1].toString()} $currency',
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 20),
+                  ),
                 ),
               ],
             ),

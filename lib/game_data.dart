@@ -9,6 +9,7 @@ class GameData {
   final SeedType? currentSeedType;
   final int season;
   final bool isNewSeason;
+  final bool isAllPlanted;
   // number of zebra fields in fieldLists
   List<int> get zebras {
     int zebras = 0;
@@ -76,6 +77,7 @@ class GameData {
     this.currentSeedType,
     required this.season,
     required this.isNewSeason,
+    required this.isAllPlanted,
   });
 
   GameData copyWith({
@@ -86,6 +88,7 @@ class GameData {
     SeedType? currentSeedType,
     int? season,
     bool? isNewSeason,
+    bool? isAllPlanted,
   }) {
     return GameData(
       cash: cash ?? this.cash,
@@ -95,6 +98,7 @@ class GameData {
       currentSeedType: currentSeedType ?? this.currentSeedType,
       season: season ?? this.season,
       isNewSeason: isNewSeason ?? this.isNewSeason,
+      isAllPlanted: isAllPlanted ?? this.isAllPlanted,
     );
   }
 }

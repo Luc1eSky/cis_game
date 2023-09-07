@@ -3,6 +3,8 @@ import 'package:cis_game/game_data_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'constants.dart';
+
 class SeedSelection extends ConsumerStatefulWidget {
   const SeedSelection({super.key});
 
@@ -89,9 +91,9 @@ class _SeedSelectionState extends ConsumerState<SeedSelection> {
                 child: Image.asset('assets/images/zebra.png'),
               ),
             ),
-            DataCell(Text('${seedTypeList[0].price} kwecha')),
-            DataCell(Text('${seedTypeList[0].yieldLowRain} kwecha')),
-            DataCell(Text('${seedTypeList[0].yieldHighRain} kwecha')),
+            DataCell(Text('${seedTypeList[0].price} $currency')),
+            DataCell(Text('${seedTypeList[0].yieldLowRain} $currency')),
+            DataCell(Text('${seedTypeList[0].yieldHighRain} $currency')),
           ],
         ),
         DataRow(
@@ -114,9 +116,9 @@ class _SeedSelectionState extends ConsumerState<SeedSelection> {
               width: 50,
               child: Image.asset('assets/images/lion.png'),
             )),
-            DataCell(Text('${seedTypeList[1].price} kwecha')),
-            DataCell(Text('${seedTypeList[1].yieldLowRain} kwecha')),
-            DataCell(Text('${seedTypeList[1].yieldHighRain} kwecha')),
+            DataCell(Text('${seedTypeList[1].price} $currency')),
+            DataCell(Text('${seedTypeList[1].yieldLowRain} $currency')),
+            DataCell(Text('${seedTypeList[1].yieldHighRain} $currency')),
           ],
         ),
         DataRow(
@@ -139,9 +141,9 @@ class _SeedSelectionState extends ConsumerState<SeedSelection> {
               width: 50,
               child: Image.asset('assets/images/elephant.png'),
             )),
-            DataCell(Text('${seedTypeList[2].price} kwecha')),
-            DataCell(Text('${seedTypeList[2].yieldLowRain} kwecha')),
-            DataCell(Text('${seedTypeList[2].yieldHighRain} kwecha')),
+            DataCell(Text('${seedTypeList[2].price} $currency')),
+            DataCell(Text('${seedTypeList[2].yieldLowRain} $currency')),
+            DataCell(Text('${seedTypeList[2].yieldHighRain} $currency')),
           ],
         ),
       ],

@@ -1,3 +1,4 @@
+import 'package:cis_game/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -34,7 +35,7 @@ class CashWidget extends ConsumerWidget {
               flex: 2,
               child: FittedBox(
                 child: Text(
-                  'ZK${ref.watch(gameDataNotifierProvider).cash}',
+                  '${ref.watch(gameDataNotifierProvider).cash} $currency',
                   style: const TextStyle(fontSize: 100),
                 ),
               ),

@@ -58,6 +58,9 @@ class BottomRowMainPage extends ConsumerWidget {
                         ref
                             .read(gameDataNotifierProvider.notifier)
                             .harvestFields();
+                        ref
+                            .read(gameDataNotifierProvider.notifier)
+                            .allFieldsPlanted();
                         //print('before delay');
                         // add delay before displaying summary
                         await Future.delayed(const Duration(seconds: 2));
