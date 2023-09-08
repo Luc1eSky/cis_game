@@ -107,7 +107,12 @@ class _SelectNewCoupleDialogState extends ConsumerState<SelectNewCoupleDialog> {
             String newWifeID = 'W${newCoupleID.substring(1)}';
             String newHusbandID = 'H${newCoupleID.substring(1)}';
 
-            // TODO: SELECT HUSBAND OR WIFE OF COUPLE GROUP
+            Couple newCouple = Couple(
+              coupleID: newCoupleID,
+              wifeID: newWifeID,
+              husbandID: newHusbandID,
+            );
+
             print('selected: $newCoupleID');
             Navigator.of(context).pop();
             ref.read(gameDataNotifierProvider.notifier).changeCouple(
@@ -121,7 +126,7 @@ class _SelectNewCoupleDialogState extends ConsumerState<SelectNewCoupleDialog> {
                 barrierDismissible: false,
                 context: context,
                 builder: (context) {
-                  return HusbandOrWifeDialog(coupleID: newCoupleID);
+                  return HusbandOrWifeDialog(couple: newCouple);
                 });
           },
           child: const Text('Select'),

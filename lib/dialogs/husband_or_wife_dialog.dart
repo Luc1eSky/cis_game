@@ -5,21 +5,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../classes/couple.dart';
 
 class HusbandOrWifeDialog extends ConsumerWidget {
-  final String coupleID;
-  const HusbandOrWifeDialog({required this.coupleID, super.key});
+  final Couple couple;
+  const HusbandOrWifeDialog({required this.couple, super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    String wifeID = 'W${coupleID.substring(1)}';
-    String husbandID = 'H${coupleID.substring(1)}';
-    Couple currentCouple = Couple(
-      coupleID: coupleID,
-      wifeID: wifeID,
-      husbandID: husbandID,
-    );
-
     return AlertDialog(
-      title: Text('Couple $coupleID'),
+      title: Text('Couple ${couple.coupleID}'),
       content: Row(
         children: [
           Expanded(
@@ -38,7 +30,7 @@ class HusbandOrWifeDialog extends ConsumerWidget {
                   children: [
                     const Text('Wife'),
                     const SizedBox(height: 10),
-                    Text(wifeID),
+                    Text(couple.wifeID),
                   ],
                 ),
               ),
@@ -61,7 +53,7 @@ class HusbandOrWifeDialog extends ConsumerWidget {
                   children: [
                     const Text('Husband'),
                     const SizedBox(height: 10),
-                    Text(husbandID),
+                    Text(couple.wifeID),
                   ],
                 ),
               ),
