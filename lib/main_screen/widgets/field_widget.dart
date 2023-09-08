@@ -1,11 +1,11 @@
-import 'package:cis_game/game_data_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'color_palette.dart';
-import 'constants.dart';
+import '../../classes/field.dart';
+import '../../color_palette.dart';
+import '../../constants.dart';
+import '../../state_management/game_data_notifier.dart';
 import 'custom_pattern_seeded.dart';
-import 'field.dart';
 
 class FieldWidget extends ConsumerWidget {
   final SeedType? seedType;
@@ -55,7 +55,7 @@ class FieldWidget extends ConsumerWidget {
                       // based on the forecast return high or low yield
                       // Todo: Need to be changed to be based on actual weather
                       //  event
-                      ref.read(gameDataNotifierProvider).currentForecast <
+                      ref.read(gameDataNotifierProvider).currentLevel.rainForecast <
                               thresholdLowRain
                           ? '${seedType!.yieldLowRain} kwacha'
                           : '${seedType!.yieldHighRain} kwacha'),

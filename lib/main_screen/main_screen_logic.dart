@@ -1,12 +1,11 @@
-import 'package:cis_game/game_data_notifier.dart';
+import 'package:cis_game/dialogs/seed_selection_dialog.dart';
 import 'package:cis_game/main.dart';
-import 'package:cis_game/seed_selection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'constants.dart';
-import 'field.dart';
-import 'field_widget.dart';
+import '../../constants.dart';
+import '../classes/field.dart';
+import 'widgets/field_widget.dart';
 
 List<Widget> createFieldWidgets(List<Field> listOfFields) {
   List<Widget> fieldWidgetList = [];
@@ -56,31 +55,9 @@ void _showCustomDialog(int fieldIndex, List<Field> fieldList) {
   showDialog(
     context: navigatorKey.currentContext!, // Use the converted context here
     builder: (BuildContext context) {
-      return Consumer(
-          builder: (BuildContext context, WidgetRef ref, Widget? child) {
+      return Consumer(builder: (BuildContext context, WidgetRef ref, Widget? child) {
         // ref.read(gameDataNotifierProvider.notifier).setDefaultSeedSelection();
-        return AlertDialog(
-          title: Text('Select seed type for field ${fieldIndex + 1}'),
-          // content
-          content: const SeedSelection(),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-                ref
-                    .read(gameDataNotifierProvider.notifier)
-                    .selectSeedTypeAndBuySeed(fieldIndex);
-              },
-              child: const Text('Buy seeds'),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: const Text('Close'),
-            ),
-          ],
-        );
+        return SeedSelectionDialog(fieldIndex: fieldIndex);
       });
     },
   );

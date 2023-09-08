@@ -2,8 +2,8 @@ import 'package:cis_game/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'color_palette.dart';
-import 'game_data_notifier.dart';
+import '../../color_palette.dart';
+import '../../state_management/game_data_notifier.dart';
 
 class CashWidget extends ConsumerWidget {
   const CashWidget({
@@ -26,9 +26,8 @@ class CashWidget extends ConsumerWidget {
           children: [
             Expanded(
               flex: 3,
-              child: AspectRatio(
-                  aspectRatio: 2.0,
-                  child: Image.asset('assets/images/K100_note.jpeg')),
+              child:
+                  AspectRatio(aspectRatio: 2.0, child: Image.asset('assets/images/K100_note.jpeg')),
             ),
             const Spacer(),
             Expanded(

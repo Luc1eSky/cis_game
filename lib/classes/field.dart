@@ -1,6 +1,6 @@
 import 'package:flutter/painting.dart';
 
-import 'color_palette.dart';
+import '../color_palette.dart';
 
 class Field {
   // default value when no seed type is null
@@ -47,11 +47,7 @@ SeedType normalMaturingHighYield = SeedType(
     seedColor: ColorPalette().seedNormalMaturingHighYield,
     animalImage: 'elephant.png');
 
-List<SeedType> seedTypeList = [
-  earlyMaturing,
-  normalMaturing,
-  normalMaturingHighYield
-];
+List<SeedType> seedTypeList = [earlyMaturing, normalMaturing, normalMaturingHighYield];
 
 class SeedType {
   final String animalName;

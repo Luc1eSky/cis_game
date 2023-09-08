@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
-import 'color_palette.dart';
+import '../../../color_palette.dart';
 import 'legend_widget.dart';
 
 class FieldsMainPage extends StatelessWidget {

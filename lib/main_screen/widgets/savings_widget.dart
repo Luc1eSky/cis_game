@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'color_palette.dart';
-import 'game_data_notifier.dart';
+import '../../color_palette.dart';
+import '../../state_management/game_data_notifier.dart';
 
 class SavingsWidget extends ConsumerWidget {
   const SavingsWidget({
@@ -34,9 +34,7 @@ class SavingsWidget extends ConsumerWidget {
                     color: ColorPalette().iconColor,
                     icon: const Icon(Icons.remove),
                     onPressed: () {
-                      ref
-                          .read(gameDataNotifierProvider.notifier)
-                          .savingsToCash();
+                      ref.read(gameDataNotifierProvider.notifier).savingsToCash();
                     },
                   ),
                 ),
@@ -49,8 +47,7 @@ class SavingsWidget extends ConsumerWidget {
                   Expanded(
                     flex: 3,
                     child: AspectRatio(
-                        aspectRatio: 2.0,
-                        child: Image.asset('assets/images/cash_box.png')),
+                        aspectRatio: 2.0, child: Image.asset('assets/images/cash_box.png')),
                   ),
                   const Spacer(),
                   Expanded(
@@ -68,7 +65,9 @@ class SavingsWidget extends ConsumerWidget {
             Expanded(
               flex: 1,
               child: CircleAvatar(
-                backgroundColor: ColorPalette().plusMinusButtonColor,
+                backgroundColor: ref.watch(gameDataNotifierProvider).allSeededAndCashLeft
+                    ? Colors.red
+                    : ColorPalette().plusMinusButtonColor,
                 radius: 500,
                 child: FittedBox(
                   child: IconButton(
@@ -76,9 +75,8 @@ class SavingsWidget extends ConsumerWidget {
                     color: ColorPalette().iconColor,
                     icon: const Icon(Icons.add),
                     onPressed: () {
-                      ref
-                          .read(gameDataNotifierProvider.notifier)
-                          .cashToSavings();
+                      ref.read(gameDataNotifierProvider.notifier).cashToSavings(
+                          transferAll: ref.read(gameDataNotifierProvider).allSeededAndCashLeft);
                     },
                   ),
                 ),

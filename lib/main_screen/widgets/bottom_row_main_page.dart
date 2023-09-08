@@ -1,11 +1,11 @@
-import 'package:cis_game/savings_widget.dart';
-import 'package:cis_game/summary_dialog.dart';
+import 'package:cis_game/dialogs/summary_dialog.dart';
+import 'package:cis_game/main_screen/widgets/savings_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../color_palette.dart';
+import '../../state_management/game_data_notifier.dart';
 import 'cash_widget.dart';
-import 'color_palette.dart';
-import 'game_data_notifier.dart';
 
 class BottomRowMainPage extends ConsumerWidget {
   const BottomRowMainPage({
@@ -55,24 +55,19 @@ class BottomRowMainPage extends ConsumerWidget {
                               );
                             });
                       } else {
-                        ref
-                            .read(gameDataNotifierProvider.notifier)
-                            .harvestFields();
-                        ref
-                            .read(gameDataNotifierProvider.notifier)
-                            .allFieldsPlanted();
+                        ref.read(gameDataNotifierProvider.notifier).harvestFields();
                         //print('before delay');
                         // add delay before displaying summary
                         await Future.delayed(const Duration(seconds: 2));
-                        showDialog(
-                          barrierDismissible: false,
-                          context: context,
-                          builder: (context) {
-                            return const AlertDialog(
-                                title: Text("Summary Page"),
-                                content: SummaryPage());
-                          },
-                        );
+                        if (context.mounted) {
+                          showDialog(
+                            barrierDismissible: false,
+                            context: context,
+                            builder: (context) {
+                              return const SummaryDialog();
+                            },
+                          );
+                        }
                       }
                     },
                     style: ElevatedButton.styleFrom(
