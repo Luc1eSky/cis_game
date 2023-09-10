@@ -39,7 +39,8 @@ class _MainScreenState extends ConsumerState<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> fullWidgetList = createFieldWidgets(ref.watch(gameDataNotifierProvider).fieldList);
+    List<Widget> fullWidgetList =
+        createFieldWidgets(ref.watch(gameDataNotifierProvider).currentFieldList);
     int topRowLength = fullWidgetList.length ~/ 2;
     List<Widget> topRowList = fullWidgetList.sublist(0, topRowLength);
     topRowList.add(const Spacer());

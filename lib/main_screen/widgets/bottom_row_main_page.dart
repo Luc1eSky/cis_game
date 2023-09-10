@@ -55,6 +55,8 @@ class BottomRowMainPage extends ConsumerWidget {
                     } else {
                       ref.read(gameDataNotifierProvider.notifier).harvestFields();
 
+                      ref.read(gameDataNotifierProvider.notifier).saveResult();
+
                       ref.read(gameDataNotifierProvider.notifier).checkIfLastLevelWasPlayed();
 
                       //print('before delay');

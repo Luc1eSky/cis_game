@@ -1,12 +1,14 @@
 import '../classes/couple.dart';
 import '../classes/field.dart';
 import '../classes/level.dart';
+import '../classes/result.dart';
 import '../constants.dart';
 
 class GameData {
   final double cash;
   final double savings;
-  final List<Field> fieldList;
+  final List<Field> currentFieldList;
+  final List<Result> savedResults;
   final int levelIndex;
   final Level currentLevel;
   final Couple currentCouple;
@@ -20,7 +22,7 @@ class GameData {
   List<int> get zebras {
     int zebras = 0;
     int yieldZebras = 0;
-    for (Field field in fieldList) {
+    for (Field field in currentFieldList) {
       SeedType? seedType = field.seedType;
       if (seedType != null && seedType.animalName == 'zebra') {
         zebras++;
@@ -38,7 +40,7 @@ class GameData {
   List<int> get lions {
     int lions = 0;
     int yieldLions = 0;
-    for (Field field in fieldList) {
+    for (Field field in currentFieldList) {
       SeedType? seedType = field.seedType;
       if (seedType != null && seedType.animalName == 'lion') {
         lions++;
@@ -56,7 +58,7 @@ class GameData {
   List<int> get elephants {
     int elephants = 0;
     int yieldElephants = 0;
-    for (Field field in fieldList) {
+    for (Field field in currentFieldList) {
       SeedType? seedType = field.seedType;
       if (seedType != null && seedType.animalName == 'elephant') {
         elephants++;
@@ -86,7 +88,8 @@ class GameData {
   GameData({
     required this.cash,
     required this.savings,
-    required this.fieldList,
+    required this.currentFieldList,
+    required this.savedResults,
     required this.levelIndex,
     required this.currentLevel,
     required this.currentCouple,
@@ -99,7 +102,8 @@ class GameData {
   GameData copyWith({
     double? cash,
     double? savings,
-    List<Field>? fieldList,
+    List<Field>? currentFieldList,
+    List<Result>? savedResults,
     int? levelIndex,
     Level? currentLevel,
     Couple? currentCouple,
@@ -111,7 +115,8 @@ class GameData {
     return GameData(
       cash: cash ?? this.cash,
       savings: savings ?? this.savings,
-      fieldList: fieldList ?? copyFieldList(this.fieldList),
+      currentFieldList: currentFieldList ?? copyFieldList(this.currentFieldList),
+      savedResults: savedResults ?? copySavedResults(this.savedResults),
       levelIndex: levelIndex ?? this.levelIndex,
       currentLevel: currentLevel ?? this.currentLevel.copyWith(),
       currentCouple: currentCouple ?? this.currentCouple.copyWith(),
@@ -123,12 +128,20 @@ class GameData {
   }
 }
 
-// update list of fields by going through each element
+// copy list of fields
 List<Field> copyFieldList(List<Field> fieldList) {
   List<Field> copiedFieldList = [];
   for (Field field in fieldList) {
     copiedFieldList.add(field.copyWith());
   }
-
   return copiedFieldList;
+}
+
+// copy list of results
+List<Result> copySavedResults(List<Result> resultList) {
+  List<Result> copiedResultList = [];
+  for (Result result in resultList) {
+    copiedResultList.add(result.copyWith());
+  }
+  return copiedResultList;
 }

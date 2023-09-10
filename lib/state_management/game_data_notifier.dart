@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../classes/field.dart';
 import '../classes/level.dart';
+import '../classes/result.dart';
 import '../constants.dart';
 import '../levels/levels.dart';
 import 'game_data.dart';
@@ -19,10 +20,11 @@ class GameDataNotifier extends StateNotifier<GameData> {
             cash: startingCash,
             savings: startingSavings,
             // generates initial list of fields that are empty
-            fieldList: List.generate(
+            currentFieldList: List.generate(
               numberOfFields,
               (index) => Field(fieldStatus: FieldStatus.empty),
             ),
+            savedResults: [],
             levelIndex: 0,
             currentLevel: placeholderLevel,
             // initialize first couple with dummy information
@@ -112,14 +114,15 @@ class GameDataNotifier extends StateNotifier<GameData> {
 
   void harvestFields() {
     List<Field> harvestFieldList = [];
-    for (int index = 0; index < state.fieldList.length; index++) {
-      if (state.fieldList[index].fieldStatus != FieldStatus.empty) {
-        harvestFieldList.add(state.fieldList[index].copyWith(fieldStatus: FieldStatus.harvested));
+    for (int index = 0; index < state.currentFieldList.length; index++) {
+      if (state.currentFieldList[index].fieldStatus != FieldStatus.empty) {
+        harvestFieldList
+            .add(state.currentFieldList[index].copyWith(fieldStatus: FieldStatus.harvested));
       } else {
-        harvestFieldList.add(state.fieldList[index].copyWith());
+        harvestFieldList.add(state.currentFieldList[index].copyWith());
       }
     }
-    state = state.copyWith(fieldList: harvestFieldList);
+    state = state.copyWith(currentFieldList: harvestFieldList);
   }
 
   void selectSeedTypeAndBuySeed(int fieldIndex) {
@@ -128,7 +131,7 @@ class GameDataNotifier extends StateNotifier<GameData> {
     // Check if user has enough cash to buy the seed
     if (state.cash >= state.currentSeedType!.price) {
       // go through the list of fields
-      for (int index = 0; index < state.fieldList.length; index++) {
+      for (int index = 0; index < state.currentFieldList.length; index++) {
         // update list with new field for the field clicked and seedType
         // selected
         if (index == fieldIndex) {
@@ -139,12 +142,12 @@ class GameDataNotifier extends StateNotifier<GameData> {
         } else {
           // if the fields are not selected just copy them over from the old
           // list
-          updatedFieldList.add(state.fieldList[index].copyWith());
+          updatedFieldList.add(state.currentFieldList[index].copyWith());
         }
       }
       // change the state by creating a new game data object with the new
       // list of fields
-      state = state.copyWith(fieldList: updatedFieldList);
+      state = state.copyWith(currentFieldList: updatedFieldList);
 
       // check if all fields have been seeded
       _checkIfAllFieldsSeeded();
@@ -173,40 +176,40 @@ class GameDataNotifier extends StateNotifier<GameData> {
   }
 
   void startNewSeason() {
-    state = GameData(
+    state = state.copyWith(
       cash: startingCash,
       savings: startingSavings,
       // generates initial list of fields that are empty
-      fieldList: List.generate(
+      currentFieldList: List.generate(
         numberOfFields,
         (index) => Field(fieldStatus: FieldStatus.empty),
       ),
       levelIndex: state.levelIndex + 1,
       currentLevel: state.currentCouple.currentPlayer!.levels[state.levelIndex + 1],
-      currentCouple: state.currentCouple.copyWith(),
       currentSeedType: null,
       season: state.season + 1,
       isNewSeason: true,
       allFieldsAreSeeded: false,
+      // copied values: savedFieldLists, currentCouple
     );
   }
 
   void startNewSeasonAsNewPlayer() {
-    state = GameData(
+    state = state.copyWith(
       cash: startingCash,
       savings: startingSavings,
       // generates initial list of fields that are empty
-      fieldList: List.generate(
+      currentFieldList: List.generate(
         numberOfFields,
         (index) => Field(fieldStatus: FieldStatus.empty),
       ),
       levelIndex: 0,
       currentLevel: state.currentCouple.currentPlayer!.levels[0],
-      currentCouple: state.currentCouple.copyWith(),
       currentSeedType: null,
       season: state.season + 1,
       isNewSeason: true,
       allFieldsAreSeeded: false,
+      // copied values: savedFieldLists, currentCouple
     );
   }
 
@@ -216,7 +219,7 @@ class GameDataNotifier extends StateNotifier<GameData> {
 
   void _checkIfAllFieldsSeeded() {
     bool allFieldsPlanted = true;
-    for (Field field in state.fieldList) {
+    for (Field field in state.currentFieldList) {
       if (field.fieldStatus == FieldStatus.empty) {
         allFieldsPlanted = false;
         break;
@@ -326,5 +329,28 @@ class GameDataNotifier extends StateNotifier<GameData> {
       state =
           state.copyWith(currentCouple: state.currentCouple.copyWith(both: currentPlayerHasPlayed));
     }
+  }
+
+  void saveResult() {
+    // create new result object from current data
+    Result newResult = Result(
+      level: state.currentLevel,
+      personalID: state.currentCouple.currentPlayer!.personalID,
+      savings: state.savings,
+      zebraFields: state.zebras[0],
+      lionFields: state.lions[0],
+      elephantFields: state.elephants[0],
+      zebraPayout: state.zebras[1],
+      lionPayout: state.lions[1],
+      elephantPayout: state.elephants[1],
+      amountOfPlantedFields: state.total[0],
+      totalPayout: state.total[1],
+    );
+    // get a copy of results list
+    List<Result> currentResults = copySavedResults(state.savedResults);
+    // add new result to it
+    currentResults.add(newResult);
+    // update state
+    state = state.copyWith(savedResults: currentResults);
   }
 }

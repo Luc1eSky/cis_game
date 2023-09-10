@@ -1,6 +1,6 @@
 const double startingCash = 100;
 const double startingSavings = 0;
-const int cashTransferStep = 10;
+const int cashTransferStep = 100;
 const int numberOfFields = 10;
 const int numberOfFieldRows = 2;
 const int maxNumberForecast = 5;

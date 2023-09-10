@@ -1,7 +1,7 @@
-import 'package:cis_game/classes/field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../classes/result.dart';
 import '../constants.dart';
 import '../state_management/game_data_notifier.dart';
 import 'choose_player_dialog.dart';
@@ -14,9 +14,9 @@ class SummaryDialog extends ConsumerStatefulWidget {
 }
 
 class _SummaryPageState extends ConsumerState<SummaryDialog> {
-  SeedType? selectedSeedType = seedTypeList[0];
   @override
   Widget build(BuildContext context) {
+    Result result = ref.read(gameDataNotifierProvider).savedResults.last;
     return AlertDialog(
       title: const Text("Summary Page"),
       content: Column(
@@ -58,9 +58,9 @@ class _SummaryPageState extends ConsumerState<SummaryDialog> {
                       child: Image.asset('assets/images/zebra.png'),
                     ),
                   ),
-                  DataCell(Text(ref.watch(gameDataNotifierProvider).zebras[0].toString())),
+                  DataCell(Text(result.zebraFields.toString())),
                   DataCell(
-                    Text('${ref.watch(gameDataNotifierProvider).zebras[1].toString()} kwecha'),
+                    Text('${result.zebraPayout.toString()} $currency'),
                   ),
                 ],
               ),
@@ -70,8 +70,8 @@ class _SummaryPageState extends ConsumerState<SummaryDialog> {
                     width: 40,
                     child: Image.asset('assets/images/lion.png'),
                   )),
-                  DataCell(Text(ref.watch(gameDataNotifierProvider).lions[0].toString())),
-                  DataCell(Text('${ref.watch(gameDataNotifierProvider).lions[1]} $currency')),
+                  DataCell(Text(result.lionFields.toString())),
+                  DataCell(Text('${result.lionPayout} $currency')),
                 ],
               ),
               DataRow(
@@ -81,22 +81,24 @@ class _SummaryPageState extends ConsumerState<SummaryDialog> {
                     child: Image.asset('assets/images/elephant.png'),
                   )),
                   DataCell(
-                    Text(ref.watch(gameDataNotifierProvider).elephants[0].toString()),
+                    Text(result.elephantFields.toString()),
                   ),
-                  DataCell(Text(
-                      '${ref.watch(gameDataNotifierProvider).elephants[1].toString()} $currency')),
+                  DataCell(Text('${result.elephantPayout.toString()} $currency')),
                 ],
               ),
               DataRow(
                 cells: <DataCell>[
-                  DataCell(SizedBox(
+                  DataCell(
+                    SizedBox(
                       width: 40,
                       height: 40,
                       child: Image.asset('assets/images/cash_box'
-                          '.png'))),
+                          '.png'),
+                    ),
+                  ),
                   const DataCell(Text('')),
                   DataCell(
-                    Text('${ref.watch(gameDataNotifierProvider).savings} $currency'),
+                    Text('${result.savings} $currency'),
                   ),
                 ],
               ),
@@ -108,13 +110,15 @@ class _SummaryPageState extends ConsumerState<SummaryDialog> {
                       style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                     ),
                   ),
-                  DataCell(Text(
-                    ref.watch(gameDataNotifierProvider).total[0].toString(),
-                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                  )),
                   DataCell(
                     Text(
-                      '${ref.watch(gameDataNotifierProvider).total[1].toString()} $currency',
+                      result.amountOfPlantedFields.toString(),
+                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                    ),
+                  ),
+                  DataCell(
+                    Text(
+                      '${result.totalPayout.toString()} $currency',
                       style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                     ),
                   ),
