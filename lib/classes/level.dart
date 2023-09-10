@@ -1,7 +1,7 @@
 // level class that contains all necessary data
 class Level {
   final String levelID;
-  final int rainForecast;
+  final int? rainForecast;
   final int rainActual;
 
   Level({

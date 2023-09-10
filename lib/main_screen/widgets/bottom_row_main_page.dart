@@ -14,76 +14,76 @@ class BottomRowMainPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Expanded(
-      flex: 6,
-      child: Row(
-        children: [
-          const Expanded(
-            flex: 3,
-            child: FractionallySizedBox(
-              widthFactor: 0.8,
-              heightFactor: 0.8,
-              child: CashWidget(),
-            ),
+    return Row(
+      children: [
+        const Expanded(
+          flex: 3,
+          child: FractionallySizedBox(
+            widthFactor: 0.8,
+            heightFactor: 0.8,
+            child: CashWidget(),
           ),
-          const Expanded(
-            flex: 3,
-            child: FractionallySizedBox(
-              widthFactor: 0.8,
-              heightFactor: 0.8,
-              child: SavingsWidget(),
-            ),
+        ),
+        const Expanded(
+          flex: 3,
+          child: FractionallySizedBox(
+            widthFactor: 0.8,
+            heightFactor: 0.8,
+            child: SavingsWidget(),
           ),
-          Expanded(
-            flex: 2,
-            child: FractionallySizedBox(
-              widthFactor: 0.8,
-              heightFactor: 0.8,
-              child: Center(
-                child: FittedBox(
-                  child: ElevatedButton(
-                    onPressed: () async {
-                      if (ref.read(gameDataNotifierProvider).cash > 0) {
+        ),
+        Expanded(
+          flex: 2,
+          child: FractionallySizedBox(
+            widthFactor: 0.8,
+            heightFactor: 0.8,
+            child: Center(
+              child: FittedBox(
+                child: ElevatedButton(
+                  onPressed: () async {
+                    if (ref.read(gameDataNotifierProvider).cash > 0) {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return const AlertDialog(
+                              title: Text("Warning"),
+                              content: Text('Please use or '
+                                  'save all '
+                                  'cash'),
+                            );
+                          });
+                    } else {
+                      ref.read(gameDataNotifierProvider.notifier).harvestFields();
+
+                      ref.read(gameDataNotifierProvider.notifier).checkIfLastLevelWasPlayed();
+
+                      //print('before delay');
+                      // add delay before displaying summary
+                      //await Future.delayed(const Duration(seconds: 2));
+                      if (context.mounted) {
                         showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return const AlertDialog(
-                                title: Text("Warning"),
-                                content: Text('Please use or '
-                                    'save all '
-                                    'cash'),
-                              );
-                            });
-                      } else {
-                        ref.read(gameDataNotifierProvider.notifier).harvestFields();
-                        //print('before delay');
-                        // add delay before displaying summary
-                        await Future.delayed(const Duration(seconds: 2));
-                        if (context.mounted) {
-                          showDialog(
-                            barrierDismissible: false,
-                            context: context,
-                            builder: (context) {
-                              return const SummaryDialog();
-                            },
-                          );
-                        }
+                          barrierDismissible: false,
+                          context: context,
+                          builder: (context) {
+                            return const SummaryDialog();
+                          },
+                        );
                       }
-                    },
-                    style: ElevatedButton.styleFrom(
-                      elevation: 10,
-                      shape: const CircleBorder(),
-                      //padding: const EdgeInsets.all(10),
-                      backgroundColor: ColorPalette().plantButton,
-                    ),
-                    child: Image.asset('assets/images/planting_seed.png'),
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    elevation: 10,
+                    shape: const CircleBorder(),
+                    //padding: const EdgeInsets.all(10),
+                    backgroundColor: ColorPalette().plantButton,
                   ),
+                  child: Image.asset('assets/images/planting_seed.png'),
                 ),
               ),
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

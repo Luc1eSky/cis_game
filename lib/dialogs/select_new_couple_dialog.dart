@@ -1,9 +1,10 @@
 import 'package:cis_game/classes/couple.dart';
-import 'package:cis_game/dialogs/husband_or_wife_dialog.dart';
 import 'package:cis_game/state_management/game_data_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import 'choose_player_dialog.dart';
 
 class SelectNewCoupleDialog extends ConsumerStatefulWidget {
   const SelectNewCoupleDialog({super.key});
@@ -13,15 +14,22 @@ class SelectNewCoupleDialog extends ConsumerStatefulWidget {
 }
 
 class _SelectNewCoupleDialogState extends ConsumerState<SelectNewCoupleDialog> {
+  // initialize text field controller and dropdown variable
   String dropdownValue = allLocations.first;
   final textController = TextEditingController();
 
   @override
   void initState() {
-    String currentLocation =
-        ref.read(gameDataNotifierProvider).currentCouple.coupleID.substring(1, 4);
-    if (ref.read(gameDataNotifierProvider).currentCouple.currentPlayer != CurrentPlayer.none) {
-      dropdownValue = currentLocation;
+    // set initial value of text field
+    textController.text = '001';
+    // update state after text field value changes
+    textController.addListener(() {
+      setState(() {});
+    });
+    // get current location from coupleID of game data if there is a current player
+    if (ref.read(gameDataNotifierProvider).currentCouple.currentPlayerType != PlayerType.none) {
+      dropdownValue =
+          ref.read(gameDataNotifierProvider).currentCouple.both.personalID.substring(1, 4);
     }
     super.initState();
   }
@@ -34,8 +42,6 @@ class _SelectNewCoupleDialogState extends ConsumerState<SelectNewCoupleDialog> {
 
   @override
   Widget build(BuildContext context) {
-    String currentLocation =
-        ref.read(gameDataNotifierProvider).currentCouple.coupleID.substring(1, 4);
     return AlertDialog(
       title: const Text('Select New Couple'),
       content: Column(
@@ -54,19 +60,25 @@ class _SelectNewCoupleDialogState extends ConsumerState<SelectNewCoupleDialog> {
                   ),
                 ),
               ),
-              DropdownMenu(
-                initialSelection: ref.read(gameDataNotifierProvider).currentCouple.currentPlayer ==
-                        CurrentPlayer.none
-                    ? dropdownValue
-                    : currentLocation,
-                onSelected: (String? value) {
-                  setState(() {
-                    dropdownValue = value!;
-                  });
-                },
-                dropdownMenuEntries: allLocations.map<DropdownMenuEntry<String>>((String value) {
-                  return DropdownMenuEntry<String>(value: value, label: value);
-                }).toList(),
+              SizedBox(
+                width: 100,
+                height: 50,
+                child: InputDecorator(
+                  decoration: const InputDecoration(border: OutlineInputBorder()),
+                  child: DropdownButtonHideUnderline(
+                    child: DropdownButton(
+                        value: dropdownValue,
+                        items: allLocations.map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem(value: value, child: Text(value));
+                        }).toList(),
+                        onChanged: (value) {
+                          print(value);
+                          setState(() {
+                            dropdownValue = value!;
+                          });
+                        }),
+                  ),
+                ),
               ),
               const SizedBox(width: 20),
               Expanded(
@@ -79,14 +91,17 @@ class _SelectNewCoupleDialogState extends ConsumerState<SelectNewCoupleDialog> {
                   ],
                   decoration: const InputDecoration(
                     counterText: "",
-                    hintText: '001-999',
                     border: OutlineInputBorder(),
                   ),
                 ),
               ),
             ],
           ),
-          //Text('C$dropdownValue${textController.text.padLeft(3, '0')}'),
+          const SizedBox(height: 20),
+          Text(
+            'C-$dropdownValue-${textController.text.padLeft(3, '0')}',
+            style: const TextStyle(fontSize: 20),
+          ),
         ],
       ),
       actions: <Widget>[
@@ -103,71 +118,25 @@ class _SelectNewCoupleDialogState extends ConsumerState<SelectNewCoupleDialog> {
               print('0 not allowed!');
               return;
             }
+            // create coupleID from selected values
             String newCoupleID = 'C$dropdownValue${text.padLeft(3, '0')}';
-            String newWifeID = 'W${newCoupleID.substring(1)}';
-            String newHusbandID = 'H${newCoupleID.substring(1)}';
 
-            Couple newCouple = Couple(
-              coupleID: newCoupleID,
-              wifeID: newWifeID,
-              husbandID: newHusbandID,
-            );
+            // change the current couple to the selected one
+            ref.read(gameDataNotifierProvider.notifier).changeCouple(newCoupleID: newCoupleID);
 
-            print('selected: $newCoupleID');
             Navigator.of(context).pop();
-            ref.read(gameDataNotifierProvider.notifier).changeCouple(
-                  newCouple: Couple(
-                    coupleID: newCoupleID,
-                    wifeID: newWifeID,
-                    husbandID: newHusbandID,
-                  ),
-                );
+
+            // open the next dialog to select the player
             showDialog(
                 barrierDismissible: false,
                 context: context,
                 builder: (context) {
-                  return HusbandOrWifeDialog(couple: newCouple);
+                  return const ChoosePlayerDialog();
                 });
           },
           child: const Text('Select'),
         ),
       ],
-    );
-  }
-}
-
-class LocationDropDown extends StatefulWidget {
-  final String? currentLocation;
-  const LocationDropDown({this.currentLocation, super.key});
-
-  @override
-  State<LocationDropDown> createState() => _LocationDropDownState();
-}
-
-class _LocationDropDownState extends State<LocationDropDown> {
-  String dropdownValue = allLocations.first;
-
-  @override
-  void initState() {
-    String? currentLocation = widget.currentLocation;
-    if (currentLocation != null) {
-      dropdownValue = currentLocation;
-    }
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return DropdownMenu(
-      initialSelection: widget.currentLocation ?? dropdownValue,
-      onSelected: (String? value) {
-        setState(() {
-          dropdownValue = value!;
-        });
-      },
-      dropdownMenuEntries: allLocations.map<DropdownMenuEntry<String>>((String value) {
-        return DropdownMenuEntry<String>(value: value, label: value);
-      }).toList(),
     );
   }
 }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../dialogs/change_user_dialog.dart';
 import '../../state_management/game_data_notifier.dart';
 
 class TopRowMainPage extends ConsumerWidget {
@@ -15,7 +14,7 @@ class TopRowMainPage extends ConsumerWidget {
       children: [
         const Spacer(),
         Expanded(
-          flex: 14,
+          flex: 15,
           child: Align(
             alignment: Alignment.centerLeft,
             child: FittedBox(
@@ -31,15 +30,15 @@ class TopRowMainPage extends ConsumerWidget {
                         showDialog(
                             context: context,
                             builder: (context) {
-                              return const ChangeUserDialog();
+                              return Container();
                             });
                       },
                       icon: const Icon(Icons.settings),
                     ),
                   ),
                   Text(
-                    'Participant: ${ref.watch(gameDataNotifierProvider).currentCouple.currentPlayerID}',
-                    style: TextStyle(fontSize: 100),
+                    'Participant: ${ref.watch(gameDataNotifierProvider).currentCouple.currentPlayer?.formattedID ?? ""}',
+                    style: const TextStyle(fontSize: 100),
                   ),
                 ],
               ),
@@ -48,7 +47,7 @@ class TopRowMainPage extends ConsumerWidget {
         ),
         const Spacer(),
         Expanded(
-          flex: 6,
+          flex: 5,
           child: Align(
             alignment: Alignment.centerRight,
             child: FittedBox(

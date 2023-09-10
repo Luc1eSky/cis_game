@@ -24,7 +24,7 @@ class GameData {
       SeedType? seedType = field.seedType;
       if (seedType != null && seedType.animalName == 'zebra') {
         zebras++;
-        if (currentLevel.rainForecast < thresholdLowRain) {
+        if (currentLevel.rainActual < thresholdLowRain) {
           yieldZebras += seedType.yieldLowRain;
         } else {
           yieldZebras += seedType.yieldHighRain;
@@ -42,7 +42,7 @@ class GameData {
       SeedType? seedType = field.seedType;
       if (seedType != null && seedType.animalName == 'lion') {
         lions++;
-        if (currentLevel.rainForecast < thresholdLowRain) {
+        if (currentLevel.rainActual < thresholdLowRain) {
           yieldLions += seedType.yieldLowRain;
         } else {
           yieldLions += seedType.yieldHighRain;
@@ -60,7 +60,7 @@ class GameData {
       SeedType? seedType = field.seedType;
       if (seedType != null && seedType.animalName == 'elephant') {
         elephants++;
-        if (currentLevel.rainForecast < thresholdLowRain) {
+        if (currentLevel.rainActual < thresholdLowRain) {
           yieldElephants += seedType.yieldLowRain;
         } else {
           yieldElephants += seedType.yieldHighRain;

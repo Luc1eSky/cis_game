@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../main_screen/widgets/forecast_widget.dart';
 import '../state_management/game_data_notifier.dart';
 
 class ForecastDialog extends ConsumerWidget {
@@ -10,7 +11,30 @@ class ForecastDialog extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return AlertDialog(
       title: const Text('Weather Forecast'),
-      content: Image.asset('assets/images/tv_forecast.png'),
+      content: Stack(
+        children: [
+          Center(
+            // check if there is a forecast or not and display weather presenter accordingly
+            child: ref.read(gameDataNotifierProvider).currentLevel.rainForecast == null
+                ? Image.asset('assets/images/tv_no_forecast.png')
+                : Image.asset('assets/images/tv_forecast_background.png'),
+          ),
+          const Positioned.fill(
+            child: Center(
+              child: AspectRatio(
+                aspectRatio: 1.4,
+                child: Column(
+                  children: [
+                    Spacer(),
+                    Expanded(child: ForecastWidget()),
+                    Spacer(flex: 4),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
       actions: <Widget>[
         ElevatedButton(
           onPressed: () {

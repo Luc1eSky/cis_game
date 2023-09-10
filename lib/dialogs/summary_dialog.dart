@@ -1,10 +1,10 @@
 import 'package:cis_game/classes/field.dart';
-import 'package:cis_game/levels/levels.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../constants.dart';
 import '../state_management/game_data_notifier.dart';
+import 'choose_player_dialog.dart';
 
 class SummaryDialog extends ConsumerStatefulWidget {
   const SummaryDialog({super.key});
@@ -122,34 +122,44 @@ class _SummaryPageState extends ConsumerState<SummaryDialog> {
               ),
             ],
           ),
-          ElevatedButton(
-            onPressed: () {
-              if (ref.watch(gameDataNotifierProvider).season < randomizedLevels.length) {
-                Navigator.of(context).pop(); // Close the current dialog
-                ref.read(gameDataNotifierProvider.notifier).startNewSeason();
-              } else {
-                // TODO: SHOW COUPLE SESSION INFO
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return AlertDialog(
-                      title: const Text('Season Limit Reached'),
-                      content: const Text('You have reached the maximum season limit.'),
-                      actions: <Widget>[
-                        ElevatedButton(
-                          onPressed: () {
-                            Navigator.of(context).pop(); // Close the new dialog
-                          },
-                          child: const Text('OK'),
-                        ),
-                      ],
-                    );
+          ref.read(gameDataNotifierProvider).currentCouple.currentPlayer!.hasPlayed
+              ? ref.read(gameDataNotifierProvider).currentCouple.everyoneHasPlayed
+                  ? ElevatedButton(
+                      onPressed: () {
+                        // Close the current dialog
+                        Navigator.of(context).pop();
+                        // open the dialog to choose a new player
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              // TODO: SUMMARY DIALOG
+                              return Container(
+                                color: Colors.green,
+                              );
+                            });
+                      },
+                      child: const Text('Summary Page'),
+                    )
+                  : ElevatedButton(
+                      onPressed: () {
+                        // Close the current dialog
+                        Navigator.of(context).pop();
+                        // open the dialog to choose a new player
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return const ChoosePlayerDialog();
+                            });
+                      },
+                      child: const Text('Next Player'),
+                    )
+              : ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop(); // Close the current dialog
+                    ref.read(gameDataNotifierProvider.notifier).startNewSeason();
                   },
-                );
-              }
-            },
-            child: const Text('Next Season'),
-          )
+                  child: const Text('Next Season'),
+                )
         ],
       ),
     );

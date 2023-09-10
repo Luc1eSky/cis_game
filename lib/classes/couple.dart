@@ -1,90 +1,115 @@
+import 'level.dart';
+
 class Couple {
   // playing together
-  String coupleID;
-  bool coupleHasPlayed;
-
+  Person both;
   // wive playing solo
-  String wifeID;
-  bool wiveHasPlayed;
-
+  Person wife;
   // husband playing solo
-  String husbandID;
-  bool husbandHasPlayed;
+  Person husband;
 
   // tracks who is currently playing
-  CurrentPlayer currentPlayer;
+  PlayerType currentPlayerType;
 
   Couple({
-    required this.coupleID,
-    this.coupleHasPlayed = false,
-    required this.wifeID,
-    this.wiveHasPlayed = false,
-    required this.husbandID,
-    this.husbandHasPlayed = false,
-    this.currentPlayer = CurrentPlayer.none,
+    required this.both,
+    required this.wife,
+    required this.husband,
+    this.currentPlayerType = PlayerType.none,
   });
 
   copyWith({
-    String? coupleID,
-    bool? coupleHasPlayed,
-    String? wifeID,
-    bool? wiveHasPlayed,
-    String? husbandID,
-    bool? husbandHasPlayed,
-    CurrentPlayer? currentPlayer,
+    Person? both,
+    Person? wife,
+    Person? husband,
+    PlayerType? currentPlayerType,
   }) {
     return Couple(
-      coupleID: coupleID ?? this.coupleID,
-      coupleHasPlayed: coupleHasPlayed ?? this.coupleHasPlayed,
-      wifeID: wifeID ?? this.wifeID,
-      wiveHasPlayed: wiveHasPlayed ?? this.wiveHasPlayed,
-      husbandID: husbandID ?? this.husbandID,
-      husbandHasPlayed: husbandHasPlayed ?? this.husbandHasPlayed,
-      currentPlayer: currentPlayer ?? this.currentPlayer,
+      both: both ?? this.both.copyWith(),
+      wife: wife ?? this.wife.copyWith(),
+      husband: husband ?? this.husband.copyWith(),
+      currentPlayerType: currentPlayerType ?? this.currentPlayerType,
     );
   }
 
-  String? get currentPlayerID {
-    if (currentPlayer == CurrentPlayer.wife) {
-      return wifeID;
+  // returns the person currently playing
+  Person? get currentPlayer {
+    if (currentPlayerType == PlayerType.wife) {
+      return wife;
     }
-    if (currentPlayer == CurrentPlayer.husband) {
-      return husbandID;
+    if (currentPlayerType == PlayerType.husband) {
+      return husband;
     }
-    if (currentPlayer == CurrentPlayer.couple) {
-      return coupleID;
+    if (currentPlayerType == PlayerType.both) {
+      return both;
     }
     return null;
   }
+
+  bool get coupleCanPlay {
+    return wife.hasPlayed && husband.hasPlayed && !both.hasPlayed;
+  }
+
+  bool get everyoneHasPlayed {
+    return wife.hasPlayed && husband.hasPlayed && both.hasPlayed;
+  }
 }
 
-enum CurrentPlayer {
+enum PlayerType {
   none,
   wife,
   husband,
-  couple,
+  both,
 }
-
-List<Couple> allCouples = [
-  Couple(
-    coupleID: 'CBBB001',
-    wifeID: 'WLOC001',
-    husbandID: 'HLOC001',
-  ),
-  Couple(
-    coupleID: 'CAAA002',
-    wifeID: 'WLOC002',
-    husbandID: 'HLOC002',
-  ),
-  Couple(
-    coupleID: 'CAAA003',
-    wifeID: 'WLOC003',
-    husbandID: 'HLOC003',
-  ),
-];
 
 List<String> allLocations = [
   'AAA',
   'BBB',
   'CCC',
 ];
+
+// class to store personal ID and if the person has played
+class Person {
+  final String personalID;
+  final bool hasPlayed;
+  final List<Level> levels;
+  final PlayerType playerType;
+
+  Person({
+    required this.personalID,
+    required this.hasPlayed,
+    required this.levels,
+    required this.playerType,
+  });
+
+  copyWith({
+    String? personalID,
+    bool? hasPlayed,
+    List<Level>? levels,
+    PlayerType? playerType,
+  }) {
+    return Person(
+      personalID: personalID ?? this.personalID,
+      hasPlayed: hasPlayed ?? this.hasPlayed,
+      levels: levels ?? copyLevels(this.levels),
+      playerType: playerType ?? this.playerType,
+    );
+  }
+
+  // returns personalID, but in a more readable format
+  String get formattedID {
+    String firstLetter = personalID.substring(0, 1);
+    String location = personalID.substring(1, 4);
+    String number = personalID.substring(4);
+
+    return '$firstLetter-$location-$number';
+  }
+}
+
+List<Level> copyLevels(List<Level> listToCopy) {
+  List<Level> copiedLevels = [];
+  for (Level level in listToCopy) {
+    copiedLevels.add(level);
+  }
+  return copiedLevels;
+}

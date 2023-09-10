@@ -55,8 +55,7 @@ class FieldWidget extends ConsumerWidget {
                       // based on the forecast return high or low yield
                       // Todo: Need to be changed to be based on actual weather
                       //  event
-                      ref.read(gameDataNotifierProvider).currentLevel.rainForecast <
-                              thresholdLowRain
+                      ref.read(gameDataNotifierProvider).currentLevel.rainActual < thresholdLowRain
                           ? '${seedType!.yieldLowRain} kwacha'
                           : '${seedType!.yieldHighRain} kwacha'),
                 ))

@@ -3,7 +3,6 @@ import 'package:cis_game/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../constants.dart';
 import '../classes/field.dart';
 import 'widgets/field_widget.dart';
 
@@ -30,25 +29,6 @@ List<Widget> createFieldWidgets(List<Field> listOfFields) {
   });
   fieldWidgetList.add(const Spacer());
   return fieldWidgetList;
-}
-
-List<Widget> createForecastWidgets(int currentForecast) {
-  List<Widget> forecastWidgets = [];
-  for (int i = 0; i < maxNumberForecast; i++) {
-    forecastWidgets.add(
-      Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 5.0),
-        child: FittedBox(
-          child: Icon(
-            i < currentForecast ? Icons.cloudy_snowing : Icons.cloud,
-            color: i < currentForecast ? Colors.blue : Colors.white,
-            size: 100,
-          ),
-        ),
-      ),
-    );
-  }
-  return forecastWidgets;
 }
 
 void _showCustomDialog(int fieldIndex, List<Field> fieldList) {

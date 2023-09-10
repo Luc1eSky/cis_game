@@ -4,11 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../classes/field.dart';
+import '../classes/level.dart';
 import '../constants.dart';
 import '../levels/levels.dart';
 import 'game_data.dart';
-
-const int cashTransferStep = 10;
 
 final gameDataNotifierProvider =
     StateNotifierProvider<GameDataNotifier, GameData>((ref) => GameDataNotifier());
@@ -17,23 +16,39 @@ class GameDataNotifier extends StateNotifier<GameData> {
   GameDataNotifier()
       : super(
           GameData(
-            cash: 100,
-            savings: 0,
+            cash: startingCash,
+            savings: startingSavings,
             // generates initial list of fields that are empty
             fieldList: List.generate(
               numberOfFields,
               (index) => Field(fieldStatus: FieldStatus.empty),
             ),
             levelIndex: 0,
-            currentLevel: randomizedLevels[0],
+            currentLevel: placeholderLevel,
+            // initialize first couple with dummy information
             currentCouple: Couple(
-              coupleID: 'test',
-              wifeID: 'test',
-              husbandID: 'test',
+              both: Person(
+                personalID: 'test',
+                hasPlayed: false,
+                levels: [],
+                playerType: PlayerType.both,
+              ),
+              wife: Person(
+                personalID: 'test',
+                hasPlayed: false,
+                levels: [],
+                playerType: PlayerType.wife,
+              ),
+              husband: Person(
+                personalID: 'test',
+                hasPlayed: false,
+                levels: [],
+                playerType: PlayerType.husband,
+              ),
             ), // TODO: OVERWRITE
             // WITH SELECTION
             currentSeedType: null,
-            season: 1,
+            season: 0,
             isNewSeason: true,
             allFieldsAreSeeded: false,
           ),
@@ -159,15 +174,34 @@ class GameDataNotifier extends StateNotifier<GameData> {
 
   void startNewSeason() {
     state = GameData(
-      cash: 100,
-      savings: 0,
+      cash: startingCash,
+      savings: startingSavings,
       // generates initial list of fields that are empty
       fieldList: List.generate(
         numberOfFields,
         (index) => Field(fieldStatus: FieldStatus.empty),
       ),
       levelIndex: state.levelIndex + 1,
-      currentLevel: randomizedLevels[state.levelIndex + 1],
+      currentLevel: state.currentCouple.currentPlayer!.levels[state.levelIndex + 1],
+      currentCouple: state.currentCouple.copyWith(),
+      currentSeedType: null,
+      season: state.season + 1,
+      isNewSeason: true,
+      allFieldsAreSeeded: false,
+    );
+  }
+
+  void startNewSeasonAsNewPlayer() {
+    state = GameData(
+      cash: startingCash,
+      savings: startingSavings,
+      // generates initial list of fields that are empty
+      fieldList: List.generate(
+        numberOfFields,
+        (index) => Field(fieldStatus: FieldStatus.empty),
+      ),
+      levelIndex: 0,
+      currentLevel: state.currentCouple.currentPlayer!.levels[0],
       currentCouple: state.currentCouple.copyWith(),
       currentSeedType: null,
       season: state.season + 1,
@@ -191,12 +225,106 @@ class GameDataNotifier extends StateNotifier<GameData> {
     state = state.copyWith(allFieldsAreSeeded: allFieldsPlanted);
   }
 
-  void changeCouple({required Couple newCouple}) {
+  void changeCouple({required String newCoupleID}) {
+    // creating individual IDs from couple ID
+    String newWifeID = 'W${newCoupleID.substring(1)}';
+    String newHusbandID = 'H${newCoupleID.substring(1)}';
+
+    // copy individual level list
+    List<Level> copiedIndividualLevels = [];
+    for (Level level in individualLevels) {
+      copiedIndividualLevels.add(level.copyWith());
+    }
+    // shuffle list randomly
+    copiedIndividualLevels.shuffle();
+
+    // take 4 levels for each participant
+    List<Level> wifeLevels = copiedIndividualLevels.sublist(0, copiedIndividualLevels.length ~/ 2);
+    List<Level> husbandLevels = copiedIndividualLevels.sublist(copiedIndividualLevels.length ~/ 2);
+
+    print('husband:');
+    for (Level level in husbandLevels) {
+      print(level.levelID);
+      print(level.rainForecast);
+      print('---');
+    }
+    print('wife:');
+    for (Level level in wifeLevels) {
+      print(level.levelID);
+      print(level.rainForecast);
+      print('---');
+    }
+
+    // copy couple level list
+    List<Level> copiedCoupleLevels = [];
+    for (Level level in coupleLevels) {
+      copiedCoupleLevels.add(level.copyWith());
+    }
+    // shuffle list randomly
+    copiedCoupleLevels.shuffle();
+
+    Couple newCouple = Couple(
+      both: Person(
+        personalID: newCoupleID,
+        hasPlayed: false,
+        levels: copiedCoupleLevels,
+        playerType: PlayerType.both,
+      ),
+      wife: Person(
+        personalID: newWifeID,
+        hasPlayed: false,
+        levels: wifeLevels,
+        playerType: PlayerType.wife,
+      ),
+      husband: Person(
+        personalID: newHusbandID,
+        hasPlayed: false,
+        levels: husbandLevels,
+        playerType: PlayerType.husband,
+      ),
+    );
+
     state = state.copyWith(currentCouple: newCouple);
   }
 
-  void changePlayer({required CurrentPlayer newPlayer}) {
-    Couple currentCouple = state.currentCouple;
-    state = state.copyWith(currentCouple: currentCouple.copyWith(currentPlayer: newPlayer));
+  // change the current player and start first level
+  void changePlayer({required PlayerType newPlayerType}) {
+    state = state.copyWith(
+      currentCouple: state.currentCouple.copyWith(currentPlayerType: newPlayerType),
+    );
+    startNewSeasonAsNewPlayer();
+  }
+
+  void checkIfLastLevelWasPlayed() {
+    if (state.levelIndex + 1 == state.currentCouple.currentPlayer!.levels.length) {
+      _setCurrentPlayerToHasPlayed();
+    }
+  }
+
+  void _setCurrentPlayerToHasPlayed() {
+    // read player type and get person object of current player
+    Person? currentPlayer = state.currentCouple.currentPlayer;
+
+    // exit if there is no player
+    if (currentPlayer == null) {
+      return;
+    }
+
+    // get a copy of the person with hasPlayed being true
+    Person currentPlayerHasPlayed = currentPlayer.copyWith(hasPlayed: true);
+
+    // copy couple with the updated person
+    if (currentPlayer.playerType == PlayerType.wife) {
+      state =
+          state.copyWith(currentCouple: state.currentCouple.copyWith(wife: currentPlayerHasPlayed));
+    }
+    if (currentPlayer.playerType == PlayerType.husband) {
+      state = state.copyWith(
+          currentCouple: state.currentCouple.copyWith(husband: currentPlayerHasPlayed));
+    }
+    if (currentPlayer.playerType == PlayerType.both) {
+      state =
+          state.copyWith(currentCouple: state.currentCouple.copyWith(both: currentPlayerHasPlayed));
+    }
   }
 }

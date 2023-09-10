@@ -18,43 +18,74 @@ List<Level> practiceLevels = [
   ),
 ];
 
-List<Level> standardLevels = [
+List<Level> individualLevels = [
   Level(
-    levelID: "S1",
-    rainForecast: 3,
-    rainActual: 4,
+    levelID: "I1",
+    rainForecast: 0,
+    rainActual: 0,
   ),
   Level(
-    levelID: "S2",
-    rainForecast: 5,
-    rainActual: 5,
+    levelID: "I2",
+    rainForecast: 1,
+    rainActual: 1,
+  ),
+  Level(
+    levelID: "I3",
+    rainForecast: 2,
+    rainActual: 2,
+  ),
+  Level(
+    levelID: "I4",
+    rainForecast: null,
+    rainActual: 2,
   ),
   // Level(
-  //   levelID: "S3",
-  //   rainForecast: 2,
-  //   rainActual: 1,
-  // ),
-  // Level(
-  //   levelID: "S4",
-  //   rainForecast: 1,
-  //   rainActual: 1,
-  // ),
-  // Level(
-  //   levelID: "S5",
-  //   rainForecast: 4,
+  //   levelID: "I5",
+  //   rainForecast: 3,
   //   rainActual: 3,
+  // ),
+  // Level(
+  //   levelID: "I6",
+  //   rainForecast: null,
+  //   rainActual: 4,
+  // ),
+  // Level(
+  //   levelID: "I7",
+  //   rainForecast: 4,
+  //   rainActual: 4,
+  // ),
+  // Level(
+  //   levelID: "I8",
+  //   rainForecast: 5,
+  //   rainActual: 5,
   // ),
 ];
 
-List<Level> randomizedLevels = [
+List<Level> coupleLevels = [
   Level(
-    levelID: "S2",
-    rainForecast: 5,
-    rainActual: 5,
+    levelID: "C1",
+    rainForecast: 1,
+    rainActual: 1,
   ),
   Level(
-    levelID: "S1",
-    rainForecast: 3,
-    rainActual: 4,
+    levelID: "C2",
+    rainForecast: 2,
+    rainActual: 2,
   ),
+  // Level(
+  //   levelID: "C3",
+  //   rainForecast: null,
+  //   rainActual: 3,
+  // ),
+  // Level(
+  //   levelID: "C4",
+  //   rainForecast: 5,
+  //   rainActual: 5,
+  // ),
 ];
+
+Level placeholderLevel = Level(
+  levelID: "placeholder",
+  rainForecast: null,
+  rainActual: 0,
+);
