@@ -5,15 +5,16 @@ import '../classes/result.dart';
 import '../constants.dart';
 import '../state_management/game_data_notifier.dart';
 import 'choose_player_dialog.dart';
+import 'game_summary_dialog.dart';
 
-class SummaryDialog extends ConsumerStatefulWidget {
-  const SummaryDialog({super.key});
+class SeasonSummaryDialog extends ConsumerStatefulWidget {
+  const SeasonSummaryDialog({super.key});
 
   @override
-  ConsumerState<SummaryDialog> createState() => _SummaryPageState();
+  ConsumerState<SeasonSummaryDialog> createState() => _SummaryPageState();
 }
 
-class _SummaryPageState extends ConsumerState<SummaryDialog> {
+class _SummaryPageState extends ConsumerState<SeasonSummaryDialog> {
   @override
   Widget build(BuildContext context) {
     Result result = ref.read(gameDataNotifierProvider).savedResults.last;
@@ -133,14 +134,13 @@ class _SummaryPageState extends ConsumerState<SummaryDialog> {
                         // Close the current dialog
                         Navigator.of(context).pop();
                         // open the dialog to choose a new player
+
                         showDialog(
                             context: context,
                             builder: (context) {
-                              // TODO: SUMMARY DIALOG
-                              return Container(
-                                color: Colors.green,
-                              );
+                              return const GameSummaryDialog();
                             });
+                        // TODO: SUMMARY DIALOG
                       },
                       child: const Text('Summary Page'),
                     )

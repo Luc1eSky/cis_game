@@ -1,4 +1,4 @@
-import 'package:cis_game/dialogs/summary_dialog.dart';
+import 'package:cis_game/dialogs/season_summary_dialog.dart';
 import 'package:cis_game/main_screen/widgets/savings_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -67,7 +67,7 @@ class BottomRowMainPage extends ConsumerWidget {
                           barrierDismissible: false,
                           context: context,
                           builder: (context) {
-                            return const SummaryDialog();
+                            return const SeasonSummaryDialog();
                           },
                         );
                       }

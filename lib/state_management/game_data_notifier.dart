@@ -194,6 +194,46 @@ class GameDataNotifier extends StateNotifier<GameData> {
     );
   }
 
+  void startNewGame() {
+    state = state.copyWith(
+      cash: startingCash,
+      savings: startingSavings,
+      // generates initial list of fields that are empty
+      currentFieldList: List.generate(
+        numberOfFields,
+        (index) => Field(fieldStatus: FieldStatus.empty),
+      ),
+      savedResults: [],
+      levelIndex: 0,
+      currentLevel: placeholderLevel,
+      // initialize first couple with dummy information
+      currentCouple: Couple(
+        both: Person(
+          personalID: 'test',
+          hasPlayed: false,
+          levels: [],
+          playerType: PlayerType.both,
+        ),
+        wife: Person(
+          personalID: 'test',
+          hasPlayed: false,
+          levels: [],
+          playerType: PlayerType.wife,
+        ),
+        husband: Person(
+          personalID: 'test',
+          hasPlayed: false,
+          levels: [],
+          playerType: PlayerType.husband,
+        ),
+      ),
+      currentSeedType: null,
+      season: 0,
+      isNewSeason: true,
+      allFieldsAreSeeded: false,
+    );
+  }
+
   void startNewSeasonAsNewPlayer() {
     state = state.copyWith(
       cash: startingCash,
