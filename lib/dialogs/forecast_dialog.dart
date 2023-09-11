@@ -15,16 +15,18 @@ class ForecastDialog extends ConsumerWidget {
         children: [
           Center(
             // check if there is a forecast or not and display weather presenter accordingly
-            child: ref.read(gameDataNotifierProvider).currentLevel.rainForecast == null
-                ? Image.asset('assets/images/tv_no_forecast.png')
-                : Image.asset('assets/images/tv_forecast_background.png'),
+            child:
+                ref.read(gameDataNotifierProvider).currentLevel.rainForecast ==
+                        null
+                    ? Image.asset('assets/images/tv_no_forecast.png')
+                    : Image.asset('assets/images/tv_forecast_background.png'),
           ),
-          const Positioned.fill(
+          Positioned.fill(
             child: Center(
               child: AspectRatio(
                 aspectRatio: 1.4,
                 child: Column(
-                  children: [
+                  children: const [
                     Spacer(),
                     Expanded(child: ForecastWidget()),
                     Spacer(flex: 4),

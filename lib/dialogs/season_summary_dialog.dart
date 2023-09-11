@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../classes/result.dart';
 import '../constants.dart';
+import '../main_screen/widgets/actual_weather_widget.dart';
 import '../state_management/game_data_notifier.dart';
 import 'choose_player_dialog.dart';
 import 'game_summary_dialog.dart';
@@ -19,10 +20,21 @@ class _SummaryPageState extends ConsumerState<SeasonSummaryDialog> {
   Widget build(BuildContext context) {
     Result result = ref.read(gameDataNotifierProvider).savedResults.last;
     return AlertDialog(
-      title: const Text("Summary Page"),
+      backgroundColor: Colors.grey,
+      //title: const Text("Summary Page"),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
+          SizedBox(
+            height: 50,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const [
+                Text('Actual Weather:'),
+                ActualWeatherWidget(),
+              ],
+            ),
+          ),
           DataTable(
             columns: const <DataColumn>[
               DataColumn(
@@ -84,7 +96,8 @@ class _SummaryPageState extends ConsumerState<SeasonSummaryDialog> {
                   DataCell(
                     Text(result.elephantFields.toString()),
                   ),
-                  DataCell(Text('${result.elephantPayout.toString()} $currency')),
+                  DataCell(
+                      Text('${result.elephantPayout.toString()} $currency')),
                 ],
               ),
               DataRow(
@@ -108,27 +121,37 @@ class _SummaryPageState extends ConsumerState<SeasonSummaryDialog> {
                   const DataCell(
                     Text(
                       "Total Payoff",
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                     ),
                   ),
                   DataCell(
                     Text(
                       result.amountOfPlantedFields.toString(),
-                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 20),
                     ),
                   ),
                   DataCell(
                     Text(
                       '${result.totalPayout.toString()} $currency',
-                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 20),
                     ),
                   ),
                 ],
               ),
             ],
           ),
-          ref.read(gameDataNotifierProvider).currentCouple.currentPlayer!.hasPlayed
-              ? ref.read(gameDataNotifierProvider).currentCouple.everyoneHasPlayed
+          ref
+                  .read(gameDataNotifierProvider)
+                  .currentCouple
+                  .currentPlayer!
+                  .hasPlayed
+              ? ref
+                      .read(gameDataNotifierProvider)
+                      .currentCouple
+                      .everyoneHasPlayed
                   ? ElevatedButton(
                       onPressed: () {
                         // Close the current dialog
@@ -160,7 +183,9 @@ class _SummaryPageState extends ConsumerState<SeasonSummaryDialog> {
               : ElevatedButton(
                   onPressed: () {
                     Navigator.of(context).pop(); // Close the current dialog
-                    ref.read(gameDataNotifierProvider.notifier).startNewSeason();
+                    ref
+                        .read(gameDataNotifierProvider.notifier)
+                        .startNewSeason();
                   },
                   child: const Text('Next Season'),
                 )

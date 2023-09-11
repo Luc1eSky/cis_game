@@ -1,6 +1,6 @@
 const double startingCash = 100;
 const double startingSavings = 0;
-const int cashTransferStep = 100;
+const int cashTransferStep = 10;
 const int numberOfFields = 10;
 const int numberOfFieldRows = 2;
 const int maxNumberForecast = 5;
@@ -18,8 +18,10 @@ const int legendEntries = 3;
 const int fieldsPerRow = numberOfFields ~/ numberOfFieldRows;
 const int horizontalGaps = fieldsPerRow + 1;
 const double fieldAreaWidthRatio = fieldsPerRow + horizontalGaps * gapRatio;
-const double fieldAreaWidthRatioWithLegend = fieldAreaWidthRatio + legendWidthRatio;
-const double fieldAreaHeightRatio = numberOfFieldRows + (numberOfFieldRows + 1) * gapRatio;
+const double fieldAreaWidthRatioWithLegend =
+    fieldAreaWidthRatio + legendWidthRatio;
+const double fieldAreaHeightRatio =
+    numberOfFieldRows + (numberOfFieldRows + 1) * gapRatio;
 const double legendHeightRatio = fieldAreaHeightRatio / legendEntries;
 const double fieldAreaHeightRatioWithLegend =
     numberOfFieldRows + (numberOfFieldRows + 1) * gapRatio + legendHeightRatio;
