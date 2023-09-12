@@ -25,8 +25,9 @@ class _SummaryPageState extends ConsumerState<SeasonSummaryDialog> {
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
+          // TODO: HOW TO UPDATE THIS TO MAKE IT DYNAMIC
           SizedBox(
-            height: 50,
+            height: 40,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: const [
