@@ -20,21 +20,30 @@ class _GameSummaryDialog extends ConsumerState<GameSummaryDialog> {
     List<DataRow> dataRows = [];
 
     // for loop based on the amount of seasons played
-    for (int index = 0; index < ref.read(gameDataNotifierProvider).season; index++) {
+    for (int index = 0;
+        index < ref.read(gameDataNotifierProvider).season;
+        index++) {
       dataRows.add(
         DataRow(
           cells: <DataCell>[
             DataCell(Text((index + 1).toString())),
-            DataCell(Text(
-                ref.read(gameDataNotifierProvider).savedResults[index].totalPayout.toString())),
-            DataCell(Text(
-                (ref.read(gameDataNotifierProvider).savedResults[index].totalPayout - startingCash)
-                    .toString())),
+            DataCell(Text(ref
+                .read(gameDataNotifierProvider)
+                .savedResults[index]
+                .totalPayout
+                .toString())),
+            DataCell(Text((ref
+                        .read(gameDataNotifierProvider)
+                        .savedResults[index]
+                        .totalPayout -
+                    startingCash)
+                .toString())),
           ],
         ),
       );
     }
     return AlertDialog(
+      scrollable: true,
       title: const Text("Game Summary"),
       content: Column(
         mainAxisSize: MainAxisSize.min,
