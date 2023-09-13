@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../classes/result.dart';
-import '../constants.dart';
 import '../state_management/game_data_notifier.dart';
 
 class GameSummaryDialog extends ConsumerStatefulWidget {
@@ -33,10 +32,10 @@ class _GameSummaryDialog extends ConsumerState<GameSummaryDialog> {
                 .totalPayout
                 .toString())),
             DataCell(Text((ref
-                        .read(gameDataNotifierProvider)
-                        .savedResults[index]
-                        .totalPayout -
-                    startingCash)
+                    .read(gameDataNotifierProvider)
+                    .savedResults[index]
+                    .playerType
+                    .name)
                 .toString())),
           ],
         ),
@@ -69,7 +68,7 @@ class _GameSummaryDialog extends ConsumerState<GameSummaryDialog> {
               DataColumn(
                 label: Expanded(
                   child: Text(
-                    'Profit',
+                    'Player',
                     style: TextStyle(fontStyle: FontStyle.italic),
                   ),
                 ),

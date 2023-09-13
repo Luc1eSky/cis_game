@@ -34,7 +34,9 @@ class SavingsWidget extends ConsumerWidget {
                     color: ColorPalette().iconColor,
                     icon: const Icon(Icons.remove),
                     onPressed: () {
-                      ref.read(gameDataNotifierProvider.notifier).savingsToCash();
+                      ref
+                          .read(gameDataNotifierProvider.notifier)
+                          .savingsToCash();
                     },
                   ),
                 ),
@@ -47,7 +49,8 @@ class SavingsWidget extends ConsumerWidget {
                   Expanded(
                     flex: 3,
                     child: AspectRatio(
-                        aspectRatio: 2.0, child: Image.asset('assets/images/cash_box.png')),
+                        aspectRatio: 2.0,
+                        child: Image.asset('assets/images/cash_box.png')),
                   ),
                   const Spacer(),
                   Expanded(
@@ -65,9 +68,10 @@ class SavingsWidget extends ConsumerWidget {
             Expanded(
               flex: 1,
               child: CircleAvatar(
-                backgroundColor: ref.watch(gameDataNotifierProvider).allSeededAndCashLeft
-                    ? Colors.red
-                    : ColorPalette().plusMinusButtonColor,
+                backgroundColor:
+                    ref.watch(gameDataNotifierProvider).allSeededAndCashLeft
+                        ? Colors.blueAccent
+                        : ColorPalette().plusMinusButtonColor,
                 radius: 500,
                 child: FittedBox(
                   child: IconButton(
@@ -76,7 +80,9 @@ class SavingsWidget extends ConsumerWidget {
                     icon: const Icon(Icons.add),
                     onPressed: () {
                       ref.read(gameDataNotifierProvider.notifier).cashToSavings(
-                          transferAll: ref.read(gameDataNotifierProvider).allSeededAndCashLeft);
+                          transferAll: ref
+                              .read(gameDataNotifierProvider)
+                              .allSeededAndCashLeft);
                     },
                   ),
                 ),

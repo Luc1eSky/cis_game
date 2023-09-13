@@ -51,12 +51,9 @@ class FieldWidget extends ConsumerWidget {
                     border: Border.all(color: seedType!.seedColor, width: 5.0)),
                 child: Center(
                   child: Text(
-                      // based on the forecast return high or low yield
-                      // Todo: Need to be changed to be based on actual weather
-                      //  event
                       ref.read(gameDataNotifierProvider).currentLevel.isRaining
-                          ? '${seedType!.yieldNoRain} kwacha'
-                          : '${seedType!.yieldRain} kwacha'),
+                          ? '${seedType!.yieldRain} kwacha'
+                          : '${seedType!.yieldNoRain} kwacha'),
                 ))
             : Container(
                 decoration: BoxDecoration(

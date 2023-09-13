@@ -71,7 +71,7 @@ List<Level> coupleLevels = [
     levelID: "C1",
     rainForecast: 2,
     isRaining: false,
-    plantingAdvice: 'Advice: Plant Lion',
+    plantingAdvice: 'Advice: Plant Zebra',
   ),
   Level(
     levelID: "C2",

@@ -404,6 +404,7 @@ class GameDataNotifier extends StateNotifier<GameData> {
     Result newResult = Result(
       level: state.currentLevel,
       personalID: state.currentCouple.currentPlayer!.personalID,
+      playerType: state.currentCouple.currentPlayerType,
       savings: state.savings,
       zebraFields: state.zebras[0],
       lionFields: state.lions[0],

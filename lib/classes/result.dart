@@ -1,9 +1,12 @@
 // results class that contains all data that needs to be saved
+import 'package:cis_game/classes/couple.dart';
+
 import 'level.dart';
 
 class Result {
   final Level level;
   final String personalID;
+  final PlayerType playerType;
   final double savings;
   final int zebraFields;
   final int lionFields;
@@ -17,6 +20,7 @@ class Result {
   Result({
     required this.level,
     required this.personalID,
+    required this.playerType,
     required this.savings,
     required this.zebraFields,
     required this.lionFields,
@@ -31,6 +35,7 @@ class Result {
   Result copyWith({
     Level? level,
     String? personalID,
+    PlayerType? playerType,
     double? savings,
     int? zebraFields,
     int? lionFields,
@@ -44,6 +49,7 @@ class Result {
     return Result(
       level: level ?? this.level.copyWith(),
       personalID: personalID ?? this.personalID,
+      playerType: playerType ?? this.playerType,
       savings: savings ?? this.savings,
       zebraFields: zebraFields ?? this.zebraFields,
       lionFields: lionFields ?? this.lionFields,
@@ -51,7 +57,8 @@ class Result {
       zebraPayout: zebraPayout ?? this.zebraPayout,
       lionPayout: lionPayout ?? this.lionPayout,
       elephantPayout: elephantPayout ?? this.elephantPayout,
-      amountOfPlantedFields: amountOfPlantedFields ?? this.amountOfPlantedFields,
+      amountOfPlantedFields:
+          amountOfPlantedFields ?? this.amountOfPlantedFields,
       totalPayout: totalPayout ?? this.totalPayout,
     );
   }
