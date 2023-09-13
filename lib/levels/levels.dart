@@ -4,17 +4,20 @@ List<Level> practiceLevels = [
   Level(
     levelID: "P1",
     rainForecast: 3,
-    rainActual: 4,
+    isRaining: false,
+    plantingAdvice: null,
   ),
   Level(
     levelID: "P2",
     rainForecast: 5,
-    rainActual: 5,
+    isRaining: false,
+    plantingAdvice: null,
   ),
   Level(
     levelID: "P3",
     rainForecast: 2,
-    rainActual: 1,
+    isRaining: false,
+    plantingAdvice: null,
   ),
 ];
 
@@ -22,70 +25,83 @@ List<Level> individualLevels = [
   Level(
     levelID: "I1",
     rainForecast: 0,
-    rainActual: 0,
+    isRaining: false,
+    plantingAdvice: null,
   ),
   Level(
     levelID: "I2",
     rainForecast: 1,
-    rainActual: 1,
+    isRaining: false,
+    plantingAdvice: 'Advice: Plant Zebra',
   ),
   Level(
     levelID: "I3",
-    rainForecast: 2,
-    rainActual: 2,
+    rainForecast: 1,
+    isRaining: false,
+    plantingAdvice: null,
   ),
   Level(
     levelID: "I4",
     rainForecast: null,
-    rainActual: 2,
+    isRaining: false,
+    plantingAdvice: null,
   ),
-  // Level(
-  //   levelID: "I5",
-  //   rainForecast: 3,
-  //   rainActual: 3,
-  // ),
-  // Level(
-  //   levelID: "I6",
-  //   rainForecast: null,
-  //   rainActual: 4,
-  // ),
-  // Level(
-  //   levelID: "I7",
-  //   rainForecast: 4,
-  //   rainActual: 4,
-  // ),
-  // Level(
-  //   levelID: "I8",
-  //   rainForecast: 5,
-  //   rainActual: 5,
-  // ),
+  Level(
+    levelID: "I5",
+    rainForecast: 2,
+    isRaining: false,
+    plantingAdvice: null,
+  ),
+  Level(
+    levelID: "I6",
+    rainForecast: 3,
+    isRaining: false,
+    plantingAdvice: null,
+  ),
+  Level(
+    levelID: "I7",
+    rainForecast: 4,
+    isRaining: false,
+    plantingAdvice: 'Advice: Plant Elephant',
+  ),
 ];
 
 List<Level> coupleLevels = [
   Level(
     levelID: "C1",
-    rainForecast: 1,
-    rainActual: 1,
+    rainForecast: 2,
+    isRaining: false,
+    plantingAdvice: 'Advice: Plant Lion',
   ),
   Level(
     levelID: "C2",
-    rainForecast: 2,
-    rainActual: 2,
+    rainForecast: null,
+    isRaining: false,
+    plantingAdvice: null,
   ),
-  // Level(
-  //   levelID: "C3",
-  //   rainForecast: null,
-  //   rainActual: 3,
-  // ),
-  // Level(
-  //   levelID: "C4",
-  //   rainForecast: 5,
-  //   rainActual: 5,
-  // ),
+  Level(
+    levelID: "C3",
+    rainForecast: 3,
+    isRaining: false,
+    plantingAdvice: null,
+  ),
+  Level(
+    levelID: "C4",
+    rainForecast: 4,
+    isRaining: false,
+    plantingAdvice: null,
+  ),
+  Level(
+    levelID: "C5",
+    rainForecast: 2,
+    isRaining: false,
+    plantingAdvice: null,
+  ),
 ];
 
 Level placeholderLevel = Level(
   levelID: "placeholder",
   rainForecast: null,
-  rainActual: 0,
+  isRaining: false,
+  plantingAdvice: null,
 );

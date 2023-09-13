@@ -26,24 +26,24 @@ class Field {
 SeedType earlyMaturing = SeedType(
     animalName: 'zebra',
     price: 4,
-    yieldLowRain: 6,
-    yieldHighRain: 6,
+    yieldNoRain: 3,
+    yieldRain: 9,
     seedColor: ColorPalette().seedEarlyMaturing,
     animalImage: 'zebra.png');
 
 SeedType normalMaturing = SeedType(
     animalName: 'lion',
     price: 6,
-    yieldLowRain: 5,
-    yieldHighRain: 10,
+    yieldNoRain: 3,
+    yieldRain: 13,
     seedColor: ColorPalette().seedNormalMaturing,
     animalImage: 'lion.png');
 
 SeedType normalMaturingHighYield = SeedType(
     animalName: 'elephant',
     price: 10,
-    yieldLowRain: 3,
-    yieldHighRain: 18,
+    yieldNoRain: 2,
+    yieldRain: 20,
     seedColor: ColorPalette().seedNormalMaturingHighYield,
     animalImage: 'elephant.png');
 
@@ -56,16 +56,16 @@ List<SeedType> seedTypeList = [
 class SeedType {
   final String animalName;
   final int price;
-  final int yieldLowRain;
-  final int yieldHighRain;
+  final int yieldNoRain;
+  final int yieldRain;
   final Color seedColor;
   final String animalImage;
 
   SeedType({
     required this.animalName,
     required this.price,
-    required this.yieldLowRain,
-    required this.yieldHighRain,
+    required this.yieldNoRain,
+    required this.yieldRain,
     required this.seedColor,
     required this.animalImage,
   });

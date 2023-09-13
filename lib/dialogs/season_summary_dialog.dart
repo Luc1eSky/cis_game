@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../classes/result.dart';
 import '../constants.dart';
-import '../main_screen/widgets/actual_weather_widget.dart';
 import '../state_management/game_data_notifier.dart';
 import 'choose_player_dialog.dart';
 import 'game_summary_dialog.dart';
@@ -20,7 +19,7 @@ class _SummaryPageState extends ConsumerState<SeasonSummaryDialog> {
   Widget build(BuildContext context) {
     Result result = ref.read(gameDataNotifierProvider).savedResults.last;
     return AlertDialog(
-      backgroundColor: Colors.grey,
+      // backgroundColor: Colors.grey,
       //title: const Text("Summary Page"),
       content: Column(
         mainAxisSize: MainAxisSize.min,
@@ -28,13 +27,11 @@ class _SummaryPageState extends ConsumerState<SeasonSummaryDialog> {
           // TODO: HOW TO UPDATE THIS TO MAKE IT DYNAMIC
           SizedBox(
             height: 40,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                Text('Actual Weather:'),
-                ActualWeatherWidget(),
-              ],
-            ),
+            child: ref.read(gameDataNotifierProvider).currentLevel.isRaining
+                ? const Text('Actual '
+                    'Weather: RAINING')
+                : const Text('Actual '
+                    'Weather: NOT RAINING'),
           ),
           DataTable(
             columns: const <DataColumn>[

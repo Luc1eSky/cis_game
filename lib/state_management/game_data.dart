@@ -2,7 +2,6 @@ import '../classes/couple.dart';
 import '../classes/field.dart';
 import '../classes/level.dart';
 import '../classes/result.dart';
-import '../constants.dart';
 
 class GameData {
   final double cash;
@@ -26,10 +25,10 @@ class GameData {
       SeedType? seedType = field.seedType;
       if (seedType != null && seedType.animalName == 'zebra') {
         zebras++;
-        if (currentLevel.rainActual < thresholdLowRain) {
-          yieldZebras += seedType.yieldLowRain;
+        if (currentLevel.isRaining) {
+          yieldZebras += seedType.yieldRain;
         } else {
-          yieldZebras += seedType.yieldHighRain;
+          yieldZebras += seedType.yieldNoRain;
         }
       }
     }
@@ -44,10 +43,10 @@ class GameData {
       SeedType? seedType = field.seedType;
       if (seedType != null && seedType.animalName == 'lion') {
         lions++;
-        if (currentLevel.rainActual < thresholdLowRain) {
-          yieldLions += seedType.yieldLowRain;
+        if (currentLevel.isRaining) {
+          yieldLions += seedType.yieldRain;
         } else {
-          yieldLions += seedType.yieldHighRain;
+          yieldLions += seedType.yieldNoRain;
         }
       }
     }
@@ -62,10 +61,10 @@ class GameData {
       SeedType? seedType = field.seedType;
       if (seedType != null && seedType.animalName == 'elephant') {
         elephants++;
-        if (currentLevel.rainActual < thresholdLowRain) {
-          yieldElephants += seedType.yieldLowRain;
+        if (currentLevel.isRaining) {
+          yieldElephants += seedType.yieldRain;
         } else {
-          yieldElephants += seedType.yieldHighRain;
+          yieldElephants += seedType.yieldNoRain;
         }
       }
     }
@@ -115,7 +114,8 @@ class GameData {
     return GameData(
       cash: cash ?? this.cash,
       savings: savings ?? this.savings,
-      currentFieldList: currentFieldList ?? copyFieldList(this.currentFieldList),
+      currentFieldList:
+          currentFieldList ?? copyFieldList(this.currentFieldList),
       savedResults: savedResults ?? copySavedResults(this.savedResults),
       levelIndex: levelIndex ?? this.levelIndex,
       currentLevel: currentLevel ?? this.currentLevel.copyWith(),

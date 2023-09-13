@@ -10,7 +10,11 @@ class ForecastDialog extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return AlertDialog(
-      title: const Text('Weather Forecast'),
+      title: const Text(
+        'Weather Forecast',
+        textAlign: TextAlign.center,
+        style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+      ),
       content: Stack(
         children: [
           Center(
@@ -24,12 +28,33 @@ class ForecastDialog extends ConsumerWidget {
           Positioned.fill(
             child: Center(
               child: AspectRatio(
-                aspectRatio: 1.4,
+                aspectRatio: 1.6,
                 child: Column(
-                  children: const [
-                    Spacer(),
-                    Expanded(child: ForecastWidget()),
-                    Spacer(flex: 4),
+                  children: [
+                    const Spacer(),
+                    const Expanded(
+                      flex: 3,
+                      child: ForecastWidget(),
+                    ),
+                    const Spacer(flex: 6),
+                    ref
+                                .read(gameDataNotifierProvider)
+                                .currentLevel
+                                .plantingAdvice !=
+                            null
+                        ? Expanded(
+                            flex: 4,
+                            child: Text(
+                              ref
+                                  .read(gameDataNotifierProvider)
+                                  .currentLevel
+                                  .plantingAdvice!,
+                              style: const TextStyle(
+                                  fontSize: 25, fontWeight: FontWeight.bold),
+                            ),
+                          )
+                        : const Spacer(flex: 4),
+                    const Spacer(),
                   ],
                 ),
               ),

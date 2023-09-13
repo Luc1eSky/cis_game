@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cis_game/classes/couple.dart';
 import 'package:cis_game/main.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +13,8 @@ import '../levels/levels.dart';
 import 'game_data.dart';
 
 final gameDataNotifierProvider =
-    StateNotifierProvider<GameDataNotifier, GameData>((ref) => GameDataNotifier());
+    StateNotifierProvider<GameDataNotifier, GameData>(
+        (ref) => GameDataNotifier());
 
 class GameDataNotifier extends StateNotifier<GameData> {
   GameDataNotifier()
@@ -116,8 +119,8 @@ class GameDataNotifier extends StateNotifier<GameData> {
     List<Field> harvestFieldList = [];
     for (int index = 0; index < state.currentFieldList.length; index++) {
       if (state.currentFieldList[index].fieldStatus != FieldStatus.empty) {
-        harvestFieldList
-            .add(state.currentFieldList[index].copyWith(fieldStatus: FieldStatus.harvested));
+        harvestFieldList.add(state.currentFieldList[index]
+            .copyWith(fieldStatus: FieldStatus.harvested));
       } else {
         harvestFieldList.add(state.currentFieldList[index].copyWith());
       }
@@ -135,10 +138,12 @@ class GameDataNotifier extends StateNotifier<GameData> {
         // update list with new field for the field clicked and seedType
         // selected
         if (index == fieldIndex) {
-          updatedFieldList
-              .add(Field(seedType: state.currentSeedType, fieldStatus: FieldStatus.seeded));
+          updatedFieldList.add(Field(
+              seedType: state.currentSeedType,
+              fieldStatus: FieldStatus.seeded));
           // adjust cash based on seed price
-          state = state.copyWith(cash: state.cash - state.currentSeedType!.price);
+          state =
+              state.copyWith(cash: state.cash - state.currentSeedType!.price);
         } else {
           // if the fields are not selected just copy them over from the old
           // list
@@ -185,7 +190,8 @@ class GameDataNotifier extends StateNotifier<GameData> {
         (index) => Field(fieldStatus: FieldStatus.empty),
       ),
       levelIndex: state.levelIndex + 1,
-      currentLevel: state.currentCouple.currentPlayer!.levels[state.levelIndex + 1],
+      currentLevel:
+          state.currentCouple.currentPlayer!.levels[state.levelIndex + 1],
       currentSeedType: null,
       season: state.season + 1,
       isNewSeason: true,
@@ -274,25 +280,35 @@ class GameDataNotifier extends StateNotifier<GameData> {
     String newHusbandID = 'H${newCoupleID.substring(1)}';
 
     // copy individual level list
-    List<Level> copiedIndividualLevels = [];
+    List<Level> copiedWifeLevels = [];
     for (Level level in individualLevels) {
-      copiedIndividualLevels.add(level.copyWith());
+      copiedWifeLevels.add(level.copyWith());
     }
     // shuffle list randomly
-    copiedIndividualLevels.shuffle();
+    copiedWifeLevels.shuffle();
+
+    // copy individual level list
+    List<Level> copiedHusbandLevels = [];
+    for (Level level in individualLevels) {
+      copiedHusbandLevels.add(level.copyWith());
+    }
+    // shuffle list randomly
+    copiedHusbandLevels.shuffle();
 
     // take 4 levels for each participant
-    List<Level> wifeLevels = copiedIndividualLevels.sublist(0, copiedIndividualLevels.length ~/ 2);
-    List<Level> husbandLevels = copiedIndividualLevels.sublist(copiedIndividualLevels.length ~/ 2);
+    // List<Level> wifeLevels =
+    //     copiedIndividualLevels.sublist(0, copiedIndividualLevels.length ~/ 2);
+    // List<Level> husbandLevels =
+    //     copiedIndividualLevels.sublist(copiedIndividualLevels.length ~/ 2);
 
     print('husband:');
-    for (Level level in husbandLevels) {
+    for (Level level in copiedHusbandLevels) {
       print(level.levelID);
       print(level.rainForecast);
       print('---');
     }
     print('wife:');
-    for (Level level in wifeLevels) {
+    for (Level level in copiedWifeLevels) {
       print(level.levelID);
       print(level.rainForecast);
       print('---');
@@ -306,6 +322,13 @@ class GameDataNotifier extends StateNotifier<GameData> {
     // shuffle list randomly
     copiedCoupleLevels.shuffle();
 
+    print('couple:');
+    for (Level level in copiedCoupleLevels) {
+      print(level.levelID);
+      print(level.rainForecast);
+      print('---');
+    }
+
     Couple newCouple = Couple(
       both: Person(
         personalID: newCoupleID,
@@ -316,13 +339,13 @@ class GameDataNotifier extends StateNotifier<GameData> {
       wife: Person(
         personalID: newWifeID,
         hasPlayed: false,
-        levels: wifeLevels,
+        levels: copiedWifeLevels,
         playerType: PlayerType.wife,
       ),
       husband: Person(
         personalID: newHusbandID,
         hasPlayed: false,
-        levels: husbandLevels,
+        levels: copiedHusbandLevels,
         playerType: PlayerType.husband,
       ),
     );
@@ -333,13 +356,15 @@ class GameDataNotifier extends StateNotifier<GameData> {
   // change the current player and start first level
   void changePlayer({required PlayerType newPlayerType}) {
     state = state.copyWith(
-      currentCouple: state.currentCouple.copyWith(currentPlayerType: newPlayerType),
+      currentCouple:
+          state.currentCouple.copyWith(currentPlayerType: newPlayerType),
     );
     startNewSeasonAsNewPlayer();
   }
 
   void checkIfLastLevelWasPlayed() {
-    if (state.levelIndex + 1 == state.currentCouple.currentPlayer!.levels.length) {
+    if (state.levelIndex + 1 ==
+        state.currentCouple.currentPlayer!.levels.length) {
       _setCurrentPlayerToHasPlayed();
     }
   }
@@ -358,16 +383,19 @@ class GameDataNotifier extends StateNotifier<GameData> {
 
     // copy couple with the updated person
     if (currentPlayer.playerType == PlayerType.wife) {
-      state =
-          state.copyWith(currentCouple: state.currentCouple.copyWith(wife: currentPlayerHasPlayed));
+      state = state.copyWith(
+          currentCouple:
+              state.currentCouple.copyWith(wife: currentPlayerHasPlayed));
     }
     if (currentPlayer.playerType == PlayerType.husband) {
       state = state.copyWith(
-          currentCouple: state.currentCouple.copyWith(husband: currentPlayerHasPlayed));
+          currentCouple:
+              state.currentCouple.copyWith(husband: currentPlayerHasPlayed));
     }
     if (currentPlayer.playerType == PlayerType.both) {
-      state =
-          state.copyWith(currentCouple: state.currentCouple.copyWith(both: currentPlayerHasPlayed));
+      state = state.copyWith(
+          currentCouple:
+              state.currentCouple.copyWith(both: currentPlayerHasPlayed));
     }
   }
 
@@ -392,5 +420,40 @@ class GameDataNotifier extends StateNotifier<GameData> {
     currentResults.add(newResult);
     // update state
     state = state.copyWith(savedResults: currentResults);
+  }
+
+  void randomizeWeatherEvent() {
+    if (state.currentLevel.rainForecast == 0) {
+      print('It does not rain');
+      // state remains the same
+    } else if (state.currentLevel.rainForecast == 5) {
+      print('It does rain');
+      state = state.copyWith();
+    } else if (state.currentLevel.rainForecast == null) {
+      // this is for the 0.8 chance of rain
+      int intValue = (Random().nextInt(maxNumberForecast) + 1);
+      print('The random number: $intValue');
+      if (intValue < maxNumberForecast) {
+        // it does rain
+        print('It rains');
+        state = state.copyWith(
+            currentLevel: state.currentLevel.copyWith(isRaining: true));
+      } else {
+        // it does not rain
+        print('It does not rain');
+      }
+    } else {
+      int intValue = (Random().nextInt(maxNumberForecast) + 1);
+      print('The random number: $intValue');
+      if (intValue <= state.currentLevel.rainForecast!) {
+        // it does rain
+        print('It rains');
+        state = state.copyWith(
+            currentLevel: state.currentLevel.copyWith(isRaining: true));
+      } else {
+        // it does not rain
+        print('It does not rain');
+      }
+    }
   }
 }

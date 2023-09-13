@@ -53,11 +53,26 @@ class BottomRowMainPage extends ConsumerWidget {
                             );
                           });
                     } else {
-                      ref.read(gameDataNotifierProvider.notifier).harvestFields();
+                      ref
+                          .read(gameDataNotifierProvider.notifier)
+                          .harvestFields();
+
+                      ref
+                          .read(gameDataNotifierProvider.notifier)
+                          .checkIfLastLevelWasPlayed();
+
+                      ref
+                          .read(gameDataNotifierProvider.notifier)
+                          .randomizeWeatherEvent();
 
                       ref.read(gameDataNotifierProvider.notifier).saveResult();
 
-                      ref.read(gameDataNotifierProvider.notifier).checkIfLastLevelWasPlayed();
+                      print('---');
+                      print('Is it raining?');
+                      print(ref
+                          .read(gameDataNotifierProvider)
+                          .currentLevel
+                          .isRaining);
 
                       //print('before delay');
                       // add delay before displaying summary

@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../classes/field.dart';
 import '../../color_palette.dart';
-import '../../constants.dart';
 import '../../state_management/game_data_notifier.dart';
 import 'custom_pattern_seeded.dart';
 
@@ -55,9 +54,9 @@ class FieldWidget extends ConsumerWidget {
                       // based on the forecast return high or low yield
                       // Todo: Need to be changed to be based on actual weather
                       //  event
-                      ref.read(gameDataNotifierProvider).currentLevel.rainActual < thresholdLowRain
-                          ? '${seedType!.yieldLowRain} kwacha'
-                          : '${seedType!.yieldHighRain} kwacha'),
+                      ref.read(gameDataNotifierProvider).currentLevel.isRaining
+                          ? '${seedType!.yieldNoRain} kwacha'
+                          : '${seedType!.yieldRain} kwacha'),
                 ))
             : Container(
                 decoration: BoxDecoration(
