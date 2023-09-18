@@ -13,8 +13,7 @@ import '../levels/levels.dart';
 import 'game_data.dart';
 
 final gameDataNotifierProvider =
-    StateNotifierProvider<GameDataNotifier, GameData>(
-        (ref) => GameDataNotifier());
+    StateNotifierProvider<GameDataNotifier, GameData>((ref) => GameDataNotifier());
 
 class GameDataNotifier extends StateNotifier<GameData> {
   GameDataNotifier()
@@ -119,8 +118,8 @@ class GameDataNotifier extends StateNotifier<GameData> {
     List<Field> harvestFieldList = [];
     for (int index = 0; index < state.currentFieldList.length; index++) {
       if (state.currentFieldList[index].fieldStatus != FieldStatus.empty) {
-        harvestFieldList.add(state.currentFieldList[index]
-            .copyWith(fieldStatus: FieldStatus.harvested));
+        harvestFieldList
+            .add(state.currentFieldList[index].copyWith(fieldStatus: FieldStatus.harvested));
       } else {
         harvestFieldList.add(state.currentFieldList[index].copyWith());
       }
@@ -138,12 +137,10 @@ class GameDataNotifier extends StateNotifier<GameData> {
         // update list with new field for the field clicked and seedType
         // selected
         if (index == fieldIndex) {
-          updatedFieldList.add(Field(
-              seedType: state.currentSeedType,
-              fieldStatus: FieldStatus.seeded));
+          updatedFieldList
+              .add(Field(seedType: state.currentSeedType, fieldStatus: FieldStatus.seeded));
           // adjust cash based on seed price
-          state =
-              state.copyWith(cash: state.cash - state.currentSeedType!.price);
+          state = state.copyWith(cash: state.cash - state.currentSeedType!.price);
         } else {
           // if the fields are not selected just copy them over from the old
           // list
@@ -190,8 +187,7 @@ class GameDataNotifier extends StateNotifier<GameData> {
         (index) => Field(fieldStatus: FieldStatus.empty),
       ),
       levelIndex: state.levelIndex + 1,
-      currentLevel:
-          state.currentCouple.currentPlayer!.levels[state.levelIndex + 1],
+      currentLevel: state.currentCouple.currentPlayer!.levels[state.levelIndex + 1],
       currentSeedType: null,
       season: state.season + 1,
       isNewSeason: true,
@@ -356,15 +352,13 @@ class GameDataNotifier extends StateNotifier<GameData> {
   // change the current player and start first level
   void changePlayer({required PlayerType newPlayerType}) {
     state = state.copyWith(
-      currentCouple:
-          state.currentCouple.copyWith(currentPlayerType: newPlayerType),
+      currentCouple: state.currentCouple.copyWith(currentPlayerType: newPlayerType),
     );
     startNewSeasonAsNewPlayer();
   }
 
   void checkIfLastLevelWasPlayed() {
-    if (state.levelIndex + 1 ==
-        state.currentCouple.currentPlayer!.levels.length) {
+    if (state.levelIndex + 1 == state.currentCouple.currentPlayer!.levels.length) {
       _setCurrentPlayerToHasPlayed();
     }
   }
@@ -383,19 +377,16 @@ class GameDataNotifier extends StateNotifier<GameData> {
 
     // copy couple with the updated person
     if (currentPlayer.playerType == PlayerType.wife) {
-      state = state.copyWith(
-          currentCouple:
-              state.currentCouple.copyWith(wife: currentPlayerHasPlayed));
+      state =
+          state.copyWith(currentCouple: state.currentCouple.copyWith(wife: currentPlayerHasPlayed));
     }
     if (currentPlayer.playerType == PlayerType.husband) {
       state = state.copyWith(
-          currentCouple:
-              state.currentCouple.copyWith(husband: currentPlayerHasPlayed));
+          currentCouple: state.currentCouple.copyWith(husband: currentPlayerHasPlayed));
     }
     if (currentPlayer.playerType == PlayerType.both) {
-      state = state.copyWith(
-          currentCouple:
-              state.currentCouple.copyWith(both: currentPlayerHasPlayed));
+      state =
+          state.copyWith(currentCouple: state.currentCouple.copyWith(both: currentPlayerHasPlayed));
     }
   }
 
@@ -424,37 +415,23 @@ class GameDataNotifier extends StateNotifier<GameData> {
   }
 
   void randomizeWeatherEvent() {
-    if (state.currentLevel.rainForecast == 0) {
-      print('It does not rain');
-      // state remains the same
-    } else if (state.currentLevel.rainForecast == 5) {
-      print('It does rain');
-      state = state.copyWith();
-    } else if (state.currentLevel.rainForecast == null) {
-      // this is for the 0.8 chance of rain
-      int intValue = (Random().nextInt(maxNumberForecast) + 1);
-      print('The random number: $intValue');
-      if (intValue < maxNumberForecast) {
-        // it does rain
-        print('It rains');
-        state = state.copyWith(
-            currentLevel: state.currentLevel.copyWith(isRaining: true));
-      } else {
-        // it does not rain
-        print('It does not rain');
-      }
+    int? rainForecast = state.currentLevel.rainForecast;
+
+    rainForecast ??= noForecastRainChance;
+    int intValue = (Random().nextInt(maxNumberForecast) + 1); // 1-5
+    print('The forecast: $rainForecast');
+    print('The random number: $intValue');
+    if (intValue <= rainForecast) {
+      print('It rains');
+      state = state.copyWith(currentLevel: state.currentLevel.copyWith(isRaining: true));
     } else {
-      int intValue = (Random().nextInt(maxNumberForecast) + 1);
-      print('The random number: $intValue');
-      if (intValue <= state.currentLevel.rainForecast!) {
-        // it does rain
-        print('It rains');
-        state = state.copyWith(
-            currentLevel: state.currentLevel.copyWith(isRaining: true));
-      } else {
-        // it does not rain
-        print('It does not rain');
-      }
+      print('It does not rain');
     }
+  }
+
+  Future<void> showAnimation({int seconds = 2}) async {
+    state = state.copyWith(showingAnimation: true);
+    await Future.delayed(Duration(seconds: seconds));
+    state = state.copyWith(showingAnimation: false);
   }
 }

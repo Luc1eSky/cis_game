@@ -18,6 +18,6 @@ class ColorPalette {
 // seed legend color
   Color get seedEarlyMaturing => const Color.fromRGBO(227, 7, 7, 1.0);
   Color get seedNormalMaturing => const Color.fromRGBO(7, 143, 227, 1.0);
-  Color get seedNormalMaturingHighYield =>
-      const Color.fromRGBO(119, 28, 217, 1.0);
+  Color get seedNormalMaturingHighYield => const Color.fromRGBO(119, 28, 217, 1.0);
+  Color get snackBar => const Color.fromRGBO(40, 157, 231, 1.0);
 }

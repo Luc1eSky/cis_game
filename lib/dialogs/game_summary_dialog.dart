@@ -1,4 +1,4 @@
-import 'package:cis_game/dialogs/select_new_couple_dialog.dart';
+import 'package:cis_game/dialogs/pin_unlock_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -19,23 +19,14 @@ class _GameSummaryDialog extends ConsumerState<GameSummaryDialog> {
     List<DataRow> dataRows = [];
 
     // for loop based on the amount of seasons played
-    for (int index = 0;
-        index < ref.read(gameDataNotifierProvider).season;
-        index++) {
+    for (int index = 0; index < ref.read(gameDataNotifierProvider).season; index++) {
       dataRows.add(
         DataRow(
           cells: <DataCell>[
             DataCell(Text((index + 1).toString())),
-            DataCell(Text(ref
-                .read(gameDataNotifierProvider)
-                .savedResults[index]
-                .totalPayout
-                .toString())),
-            DataCell(Text((ref
-                    .read(gameDataNotifierProvider)
-                    .savedResults[index]
-                    .playerType
-                    .name)
+            DataCell(Text(
+                ref.read(gameDataNotifierProvider).savedResults[index].totalPayout.toString())),
+            DataCell(Text((ref.read(gameDataNotifierProvider).savedResults[index].playerType.name)
                 .toString())),
           ],
         ),
@@ -85,8 +76,9 @@ class _GameSummaryDialog extends ConsumerState<GameSummaryDialog> {
               showDialog(
                   context: context,
                   builder: (context) {
+                    // TODO: SHOW SUCCESS AND HINT TO HAND IT TO ENUMERATOR
                     // Start new Game
-                    return const SelectNewCoupleDialog();
+                    return const PinUnlockDialog();
                   });
             },
             child: const Text('Start Next Game'),

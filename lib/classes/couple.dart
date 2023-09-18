@@ -53,6 +53,10 @@ class Couple {
   bool get everyoneHasPlayed {
     return wife.hasPlayed && husband.hasPlayed && both.hasPlayed;
   }
+
+  bool get nooneHasPlayed {
+    return !wife.hasPlayed && !husband.hasPlayed && !both.hasPlayed;
+  }
 }
 
 enum PlayerType {

@@ -1,4 +1,5 @@
 import 'package:cis_game/classes/couple.dart';
+import 'package:cis_game/dialogs/pin_unlock_dialog.dart';
 import 'package:cis_game/main_screen/widgets/forecast_widget.dart';
 import 'package:cis_game/main_screen/widgets/top_row_main_page.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +8,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../color_palette.dart';
 import '../constants.dart';
 import '../dialogs/forecast_dialog.dart';
-import '../dialogs/select_new_couple_dialog.dart';
 import '../state_management/game_data_notifier.dart';
 import 'main_screen_logic.dart';
 import 'widgets/bottom_row_main_page.dart';
@@ -29,7 +29,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
             barrierDismissible: false,
             context: context,
             builder: (context) {
-              return const SelectNewCoupleDialog();
+              return const PinUnlockDialog(); //SelectNewCoupleDialog();
             });
       }
     });
@@ -381,31 +381,51 @@ class LandScapeLayout extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Column(
+    return Stack(
       children: [
-        const SizedBox(
-          height: topRowHeight,
-          child: TopRowMainPage(),
+        Column(
+          children: [
+            const SizedBox(
+              height: topRowHeight,
+              child: TopRowMainPage(),
+            ),
+            const Expanded(
+              flex: 2,
+              child: FractionallySizedBox(
+                heightFactor: 0.5,
+                child: ForecastWidget(),
+              ),
+            ),
+            Expanded(
+              flex: 8,
+              child: FieldsMainPage(
+                topRowList: topRowList,
+                bottomRowList: bottomRowList,
+              ),
+            ),
+            const Spacer(),
+            const Expanded(
+              flex: 6,
+              child: BottomRowMainPage(),
+            ),
+          ],
         ),
-        const Expanded(
-          flex: 2,
-          child: FractionallySizedBox(
-            heightFactor: 0.5,
-            child: ForecastWidget(),
+        if (ref.watch(gameDataNotifierProvider).showingAnimation)
+          Container(color: Colors.transparent),
+        if (ref.watch(gameDataNotifierProvider).showingAnimation)
+          Positioned(
+            top: 100,
+            left: MediaQuery.of(context).size.width / 2 - 100,
+            child: Container(
+              //duration: const Duration(milliseconds: 1000),
+              //curve: Curves.easeInOut,
+              width: 200,
+              height: 200,
+              color: ref.read(gameDataNotifierProvider).currentLevel.isRaining
+                  ? Colors.blue
+                  : Colors.yellow,
+            ),
           ),
-        ),
-        Expanded(
-          flex: 8,
-          child: FieldsMainPage(
-            topRowList: topRowList,
-            bottomRowList: bottomRowList,
-          ),
-        ),
-        const Spacer(),
-        const Expanded(
-          flex: 6,
-          child: BottomRowMainPage(),
-        ),
       ],
     );
   }

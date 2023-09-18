@@ -53,30 +53,17 @@ class BottomRowMainPage extends ConsumerWidget {
                             );
                           });
                     } else {
-                      ref
-                          .read(gameDataNotifierProvider.notifier)
-                          .harvestFields();
+                      ref.read(gameDataNotifierProvider.notifier).checkIfLastLevelWasPlayed();
 
-                      ref
-                          .read(gameDataNotifierProvider.notifier)
-                          .checkIfLastLevelWasPlayed();
+                      ref.read(gameDataNotifierProvider.notifier).randomizeWeatherEvent();
 
-                      ref
-                          .read(gameDataNotifierProvider.notifier)
-                          .randomizeWeatherEvent();
+                      ref.read(gameDataNotifierProvider.notifier).harvestFields();
 
                       ref.read(gameDataNotifierProvider.notifier).saveResult();
 
-                      print('---');
-                      print('Is it raining?');
-                      print(ref
-                          .read(gameDataNotifierProvider)
-                          .currentLevel
-                          .isRaining);
+                      // show weather animation
+                      await ref.read(gameDataNotifierProvider.notifier).showAnimation();
 
-                      //print('before delay');
-                      // add delay before displaying summary
-                      //await Future.delayed(const Duration(seconds: 2));
                       if (context.mounted) {
                         showDialog(
                           barrierDismissible: false,
