@@ -6,6 +6,11 @@ import 'main_screen/main_screen.dart';
 final navigatorKey = GlobalKey<NavigatorState>();
 
 void main() {
+  // if (kIsWeb) {
+  //   // removes the # in front of the web address
+  //   setPathUrlStrategy();
+  //   debugPrint("its a web app");
+  // }
   runApp(const MyApp());
 }
 

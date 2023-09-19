@@ -429,9 +429,9 @@ class GameDataNotifier extends StateNotifier<GameData> {
     }
   }
 
-  Future<void> showAnimation({int seconds = 2}) async {
+  Future<void> showAnimation({int milliseconds = 5000}) async {
     state = state.copyWith(showingAnimation: true);
-    await Future.delayed(Duration(seconds: seconds));
+    await Future.delayed(Duration(milliseconds: milliseconds));
     state = state.copyWith(showingAnimation: false);
   }
 }

@@ -4,10 +4,12 @@ import 'package:cis_game/main_screen/widgets/forecast_widget.dart';
 import 'package:cis_game/main_screen/widgets/top_row_main_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rive/rive.dart';
 
 import '../../color_palette.dart';
 import '../constants.dart';
 import '../dialogs/forecast_dialog.dart';
+import '../rive/rive_data_notifier.dart';
 import '../state_management/game_data_notifier.dart';
 import 'main_screen_logic.dart';
 import 'widgets/bottom_row_main_page.dart';
@@ -23,6 +25,8 @@ class MainScreen extends ConsumerStatefulWidget {
 class _MainScreenState extends ConsumerState<MainScreen> {
   @override
   void initState() {
+    ref.read(riveDataNotifierProvider.notifier).loadRiveData();
+
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       if (ref.watch(gameDataNotifierProvider).currentCouple.currentPlayerType == PlayerType.none) {
         showDialog(
@@ -412,21 +416,91 @@ class LandScapeLayout extends ConsumerWidget {
         ),
         if (ref.watch(gameDataNotifierProvider).showingAnimation)
           Container(color: Colors.transparent),
-        if (ref.watch(gameDataNotifierProvider).showingAnimation)
-          Positioned(
-            top: 100,
-            left: MediaQuery.of(context).size.width / 2 - 100,
-            child: Container(
-              //duration: const Duration(milliseconds: 1000),
-              //curve: Curves.easeInOut,
-              width: 200,
-              height: 200,
-              color: ref.read(gameDataNotifierProvider).currentLevel.isRaining
-                  ? Colors.blue
-                  : Colors.yellow,
-            ),
-          ),
+        if (ref.watch(gameDataNotifierProvider).showingAnimation) const WeatherWidget(),
       ],
+    );
+  }
+}
+
+// class WeatherWidget extends ConsumerWidget {
+//   const WeatherWidget({
+//     super.key,
+//   });
+//
+//   @override
+//   Widget build(BuildContext context, WidgetRef ref) {
+//     return Positioned(
+//       top: 100,
+//       left: MediaQuery.of(context).size.width / 2 - 100,
+//       child: Container(
+//         //duration: const Duration(milliseconds: 1000),
+//         //curve: Curves.easeInOut,
+//         width: 200,
+//         height: 200,
+//         color: ref.read(gameDataNotifierProvider).currentLevel.isRaining
+//             ? Colors.blue
+//             : Colors.yellow,
+//       ),
+//     );
+//   }
+// }
+
+class WeatherWidget extends ConsumerWidget {
+  const WeatherWidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double riveWidth = screenWidth * 1.0;
+    double riveHeight = riveWidth / 1150 * 500;
+
+    // get artboards from file
+    final Artboard? rainArtboard =
+        ref.read(riveDataNotifierProvider).riveFileRain!.artboardByName('Rain')?.instance();
+    final Artboard? noRainArtboard =
+        ref.read(riveDataNotifierProvider).riveFileRain!.artboardByName('No Rain')?.instance();
+    //mainArtboard.instance();
+
+    if (rainArtboard == null || noRainArtboard == null) {
+      // TODO: ERROR HANDLING FOR NO CONTROLLER FOUND
+      return const Placeholder();
+    }
+    // get state machine controller from artboard
+    var rainController = StateMachineController.fromArtboard(rainArtboard, 'State Machine 1');
+    var noRainController = StateMachineController.fromArtboard(noRainArtboard, 'State Machine 1');
+
+    if (rainController == null || noRainController == null) {
+      // TODO: ERROR HANDLING FOR NO CONTROLLER FOUND
+      return const Placeholder();
+    }
+
+    // add controller to artboard
+    rainArtboard.addController(rainController);
+    noRainArtboard.addController(noRainController);
+
+    return Positioned(
+      top: 20,
+      left: MediaQuery.of(context).size.width / 2 - riveWidth / 2,
+      child: SizedBox(
+        width: riveWidth,
+        height: riveHeight,
+        child: Rive(
+          artboard: ref.read(gameDataNotifierProvider).currentLevel.isRaining
+              ? rainArtboard
+              : noRainArtboard,
+        ),
+
+        //const RiveAnimation.asset('assets/rive/rain.riv'),
+      ),
+
+      // Container(
+      //   width: 200,
+      //   height: 200,
+      //   color:
+      //       ref.read(gameDataNotifierProvider).currentLevel.isRaining ? Colors.blue : Colors.yellow,
+      // ),
     );
   }
 }
