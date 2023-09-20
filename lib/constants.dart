@@ -1,6 +1,8 @@
 import 'classes/enumerator.dart';
 
-const double maximumDialogHeight = 500;
+const double minimumScreenHeight = 250;
+const double pinUnlockDialogMaxHeight = 500;
+const double forecastDialogMaxHeight = 800;
 
 const String unlockPin = '7532';
 

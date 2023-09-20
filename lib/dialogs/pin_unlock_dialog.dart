@@ -45,7 +45,11 @@ class _PinUnlockDialogState extends State<PinUnlockDialog> {
 
   @override
   Widget build(BuildContext context) {
-    double dialogHeight = min(MediaQuery.of(context).size.height * 0.7, maximumDialogHeight);
+    double screenHeight = MediaQuery.of(context).size.height;
+    if (screenHeight < minimumScreenHeight) {
+      return const SizedBox();
+    }
+    double dialogHeight = min(MediaQuery.of(context).size.height * 0.7, pinUnlockDialogMaxHeight);
     double dialogWidth = dialogHeight / 5.5 * 3;
     return Scaffold(
       backgroundColor: Colors.transparent,

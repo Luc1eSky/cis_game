@@ -1,3 +1,4 @@
+import 'package:cis_game/dialogs/dialog_template.dart';
 import 'package:cis_game/state_management/game_data_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -10,8 +11,7 @@ class ChoosePlayerDialog extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     Couple currentCouple = ref.read(gameDataNotifierProvider).currentCouple;
-    return AlertDialog(
-      //title: Text('Couple ${currentCouple.both.formattedID}'),
+    return DialogTemplate(
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -99,14 +99,6 @@ class ChoosePlayerDialog extends ConsumerWidget {
           ),
         ],
       ),
-      //actions: <Widget>[
-      // ElevatedButton(
-      //   onPressed: () {
-      //     Navigator.of(context).pop();
-      //   },
-      //   child: const Text('Back'),
-      // ),
-      //],
     );
   }
 }

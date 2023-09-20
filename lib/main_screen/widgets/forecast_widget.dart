@@ -18,19 +18,22 @@ class ForecastWidget extends ConsumerWidget {
       maxNumberForecast,
       (i) => Padding(
         padding: const EdgeInsets.symmetric(horizontal: 5.0),
-        child: FittedBox(
-          child: Icon(
-            i < currentForecast ? Icons.cloudy_snowing : Icons.cloud,
-            color: i < currentForecast ? Colors.blue : Colors.white,
-            size: 100,
-          ),
+        child: Icon(
+          i < currentForecast ? Icons.cloudy_snowing : Icons.cloud,
+          color: i < currentForecast ? Colors.blue : Colors.white,
+          size: 100,
         ),
       ),
     );
 
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: cloudList,
+    return FractionallySizedBox(
+      widthFactor: 0.6,
+      child: FittedBox(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: cloudList,
+        ),
+      ),
     );
   }
 }

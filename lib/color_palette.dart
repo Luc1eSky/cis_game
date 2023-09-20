@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 class ColorPalette {
   // general colors
   Color get backgroundColor => const Color.fromRGBO(180, 215, 157, 1.0);
+  Color get dialogBackgroundColor => const Color.fromRGBO(128, 224, 167, 1.0);
   Color get tileColor => const Color.fromRGBO(161, 160, 153, 0.5);
   Color get plantButton => const Color.fromRGBO(33, 155, 3, 1.0);
 // plus minus button
