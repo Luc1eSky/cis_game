@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class ColorPalette {
   // general colors
   Color get backgroundColor => const Color.fromRGBO(180, 215, 157, 1.0);
-  Color get dialogBackgroundColor => const Color.fromRGBO(128, 224, 167, 1.0);
+  Color get dialogBackgroundColor => const Color.fromRGBO(247, 247, 247, 1.0);
   Color get tileColor => const Color.fromRGBO(161, 160, 153, 0.5);
   Color get plantButton => const Color.fromRGBO(33, 155, 3, 1.0);
 // plus minus button
@@ -14,7 +14,7 @@ class ColorPalette {
 // field section colors
   Color get fieldBackground => const Color.fromRGBO(206, 149, 41, 1.0);
   Color get fieldColorEmpty => const Color.fromRGBO(155, 95, 32, 1.0);
-  Color get fieldColorSeeded => const Color.fromRGBO(232, 194, 8, 1.0);
+  Color get fieldColorSeeded => const Color.fromRGBO(155, 95, 32, 1.0);
   Color get fieldColorGrown => const Color.fromRGBO(67, 155, 32, 1.0);
 // seed legend color
   Color get seedEarlyMaturing => const Color.fromRGBO(227, 7, 7, 1.0);

@@ -11,74 +11,51 @@ class TopRowMainPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        const Spacer(),
+        FittedBox(
+          child: IconButton(
+            iconSize: 100,
+            onPressed: () {
+              // TODO: OPEN SETTINGS TO CHANGE PARTICIPANT
+              print('Icon pressed');
+              // showDialog(
+              //     context: context,
+              //     builder: (context) {
+              //       return Container();
+              //     });
+            },
+            icon: const Icon(Icons.settings),
+          ),
+        ),
         Expanded(
-          flex: 15,
-          child: Align(
+          flex: 11,
+          child: FittedBox(
             alignment: Alignment.centerLeft,
-            child: FittedBox(
-              child: Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: IconButton(
-                      iconSize: 100,
-                      onPressed: () {
-                        // TODO: OPEN SETTINGS TO CHANGE PARTICIPANT
-                        print('Icon pressed');
-                        // showDialog(
-                        //     context: context,
-                        //     builder: (context) {
-                        //       return Container();
-                        //     });
-                      },
-                      icon: const Icon(Icons.settings),
-                    ),
-                  ),
-                  Text(
-                    'Participant: ${ref.watch(gameDataNotifierProvider).currentCouple.currentPlayer?.formattedID ?? ""}',
+            child: Row(
+              children: [
+                const SizedBox(width: 10),
+                FittedBox(
+                  child: Text(
+                    // TODO: GET FROM GAME DATA
+                    'Enumerator: ${ref.watch(gameDataNotifierProvider).currentEnumerator?.firstName ?? ""}',
                     style: const TextStyle(fontSize: 100),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),
-        const Spacer(),
         Expanded(
-          flex: 5,
-          child: Align(
+          flex: 4,
+          child: FittedBox(
             alignment: Alignment.centerRight,
-            child: FittedBox(
-              child: Text(
-                'Season: ${ref.watch(gameDataNotifierProvider).season}',
-                style: const TextStyle(fontSize: 100),
-              ),
+            child: Text(
+              'Season: ${ref.watch(gameDataNotifierProvider).season}',
+              style: const TextStyle(fontSize: 100),
             ),
           ),
         ),
-        const Spacer(),
-
-        // const Padding(
-        //   padding: EdgeInsets.only(left: 15.0),
-        //   child: FittedBox(
-        //     child: Text(
-        //       'Participant: John Doe',
-        //       style: TextStyle(fontSize: 100),
-        //     ),
-        //   ),
-        // ),
-        // const Spacer(),
-        // Padding(
-        //   padding: const EdgeInsets.only(right: 15.0),
-        //   child: FittedBox(
-        //     child: Text(
-        //       "Season: ${ref.watch(gameDataNotifierProvider).season}",
-        //       style: const TextStyle(fontSize: 100),
-        //     ),
-        //   ),
-        // ),
       ],
     );
   }

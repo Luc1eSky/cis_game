@@ -19,7 +19,7 @@ class _SelectNewCoupleDialogState extends ConsumerState<SelectNewCoupleDialog> {
   // initialize dropdown variables
   String? locationDropdownValue;
   int? coupleNumberDropdownValue;
-  String? enumeratorDropdownValue;
+  Enumerator? enumeratorDropdownValue;
 
   @override
   void initState() {
@@ -65,10 +65,9 @@ class _SelectNewCoupleDialogState extends ConsumerState<SelectNewCoupleDialog> {
                           child: DropdownButton(
                               hint: const Text('please choose'),
                               value: enumeratorDropdownValue,
-                              items: enumerators.map<DropdownMenuItem<String>>((Enumerator value) {
-                                String fullName = '${value.firstName} ${value.lastName}';
-
-                                return DropdownMenuItem(value: fullName, child: Text(fullName));
+                              items: enumerators.map((Enumerator enumerator) {
+                                return DropdownMenuItem(
+                                    value: enumerator, child: Text(enumerator.fullName));
                               }).toList(),
                               onChanged: (value) {
                                 setState(() {
@@ -176,6 +175,10 @@ class _SelectNewCoupleDialogState extends ConsumerState<SelectNewCoupleDialog> {
 
               // change the current couple to the selected one
               ref.read(gameDataNotifierProvider.notifier).changeCouple(newCoupleID: newCoupleID);
+
+              ref
+                  .read(gameDataNotifierProvider.notifier)
+                  .setCurrentEnumerator(newEnumerator: enumeratorDropdownValue!);
 
               Navigator.of(context).pop();
 

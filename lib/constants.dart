@@ -7,6 +7,8 @@ const double forecastDialogMaxHeight = 800;
 const String unlockPin = '7532';
 
 const int weatherAnimationTimeInMs = 5000;
+const int growingAnimationTimeInMs = 3000;
+const int pauseAfterGrowingAnimationInMs = 2000;
 
 const double startingCash = 100;
 const double startingSavings = 0;
@@ -22,6 +24,7 @@ const String currency = 'kwacha';
 List<int> coupleNumbers = List.generate(99, (index) => index + 1);
 
 const double topRowHeight = 40;
+const double secondRowHeight = 40;
 
 const double gapRatio = 0.20;
 const double legendWidthRatio = 1.5;

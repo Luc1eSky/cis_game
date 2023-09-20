@@ -1,7 +1,7 @@
 import 'package:cis_game/classes/couple.dart';
-import 'package:cis_game/dialogs/pin_unlock_dialog.dart';
 import 'package:cis_game/main_screen/screen_too_small_page.dart';
 import 'package:cis_game/main_screen/widgets/forecast_widget.dart';
+import 'package:cis_game/main_screen/widgets/second_row_main_page.dart';
 import 'package:cis_game/main_screen/widgets/top_row_main_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -10,9 +10,9 @@ import 'package:rive/rive.dart';
 import '../../color_palette.dart';
 import '../constants.dart';
 import '../dialogs/forecast_dialog.dart';
+import '../dialogs/pin_unlock_dialog.dart';
 import '../rive/rive_data_notifier.dart';
 import '../state_management/game_data_notifier.dart';
-import 'main_screen_logic.dart';
 import 'widgets/bottom_row_main_page.dart';
 import 'widgets/fields_main_page.dart';
 
@@ -34,7 +34,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
             barrierDismissible: false,
             context: context,
             builder: (context) {
-              return const PinUnlockDialog(); //SelectNewCoupleDialog();
+              return const PinUnlockDialog();
             });
       }
     });
@@ -44,13 +44,6 @@ class _MainScreenState extends ConsumerState<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> fullWidgetList =
-        createFieldWidgets(ref.watch(gameDataNotifierProvider).currentFieldList);
-    int topRowLength = fullWidgetList.length ~/ 2;
-    List<Widget> topRowList = fullWidgetList.sublist(0, topRowLength);
-    topRowList.add(const Spacer());
-    List<Widget> bottomRowList = fullWidgetList.sublist(topRowLength);
-
     return Scaffold(
       backgroundColor: ColorPalette().backgroundColor,
       body: SafeArea(
@@ -70,11 +63,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                 // } else {
                 //   return const TestLandScape();
 
-                return LandScapeLayout(
-                  topRowList: topRowList,
-                  bottomRowList: bottomRowList,
-                );
-                //}
+                return const LandScapeLayout();
               },
             ),
             if (ref.watch(gameDataNotifierProvider).isNewSeason == true &&
@@ -93,313 +82,26 @@ class _MainScreenState extends ConsumerState<MainScreen> {
   }
 }
 
-// class TestPortrait extends ConsumerWidget {
-//   const TestPortrait({super.key});
-//
-//   @override
-//   Widget build(BuildContext context, WidgetRef ref) {
-//     return Column(
-//       children: [
-//         SizedBox(
-//           height: topRowHeight,
-//           child: Container(
-//             color: Colors.blue,
-//             child: const TopRowMainPage(),
-//           ),
-//         ),
-//         Expanded(
-//           flex: 2,
-//           child: Container(
-//             color: Colors.white,
-//             child: const FractionallySizedBox(
-//               heightFactor: 0.5,
-//               child: ForecastWidget(),
-//             ),
-//           ),
-//         ),
-//         Expanded(
-//           flex: 8,
-//           child: Container(
-//             color: Colors.purple,
-//             child: Container(
-//               color: Colors.red,
-//               child: Center(
-//                 child: Container(
-//                   color: Colors.orange,
-//                   child: AspectRatio(
-//                     aspectRatio: fieldAreaWidthRatio / fieldAreaHeightRatioWithLegend,
-//                     child: LayoutBuilder(builder: (context, constraints) {
-//                       double fieldSize = constraints.maxWidth / fieldAreaWidthRatio;
-//                       return Column(
-//                         children: [
-//                           Expanded(
-//                             flex: (100 / fieldAreaHeightRatioWithLegend * fieldAreaHeightRatio)
-//                                 .round(),
-//                             child: Column(
-//                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//                               children: [
-//                                 Row(
-//                                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//                                   children: [
-//                                     Container(
-//                                       color: Colors.brown,
-//                                       width: fieldSize,
-//                                       height: fieldSize,
-//                                     ),
-//                                     Container(
-//                                       color: Colors.brown,
-//                                       width: fieldSize,
-//                                       height: fieldSize,
-//                                     ),
-//                                     Container(
-//                                       color: Colors.brown,
-//                                       width: fieldSize,
-//                                       height: fieldSize,
-//                                     ),
-//                                     Container(
-//                                       color: Colors.brown,
-//                                       width: fieldSize,
-//                                       height: fieldSize,
-//                                     ),
-//                                     Container(
-//                                       color: Colors.brown,
-//                                       width: fieldSize,
-//                                       height: fieldSize,
-//                                     ),
-//                                   ],
-//                                 ),
-//                                 Row(
-//                                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//                                   children: [
-//                                     Container(
-//                                       color: Colors.brown,
-//                                       width: fieldSize,
-//                                       height: fieldSize,
-//                                     ),
-//                                     Container(
-//                                       color: Colors.brown,
-//                                       width: fieldSize,
-//                                       height: fieldSize,
-//                                     ),
-//                                     Container(
-//                                       color: Colors.brown,
-//                                       width: fieldSize,
-//                                       height: fieldSize,
-//                                     ),
-//                                     Container(
-//                                       color: Colors.brown,
-//                                       width: fieldSize,
-//                                       height: fieldSize,
-//                                     ),
-//                                     Container(
-//                                       color: Colors.brown,
-//                                       width: fieldSize,
-//                                       height: fieldSize,
-//                                     ),
-//                                   ],
-//                                 ),
-//                               ],
-//                             ),
-//                           ),
-//                           Expanded(
-//                             flex:
-//                                 (100 / fieldAreaHeightRatioWithLegend * legendHeightRatio).round(),
-//                             child: Container(
-//                               color: Colors.purple,
-//                             ),
-//                           ),
-//                         ],
-//                       );
-//                     }),
-//                   ),
-//                 ),
-//               ),
-//             ),
-//           ),
-//         ),
-//         const Spacer(),
-//         const Expanded(
-//           flex: 6,
-//           child: BottomRowMainPage(),
-//         ),
-//       ],
-//     );
-//   }
-// }
-//
-// class TestLandScape extends ConsumerWidget {
-//   const TestLandScape({super.key});
-//
-//   @override
-//   Widget build(BuildContext context, WidgetRef ref) {
-//     return Column(
-//       children: [
-//         SizedBox(
-//           height: topRowHeight,
-//           child: Container(
-//             color: Colors.blue,
-//             child: const TopRowMainPage(),
-//           ),
-//         ),
-//         Expanded(
-//           flex: 2,
-//           child: Container(
-//             color: Colors.white,
-//             child: const FractionallySizedBox(
-//               heightFactor: 0.5,
-//               child: ForecastWidget(),
-//             ),
-//           ),
-//         ),
-//         Expanded(
-//           flex: 8,
-//           child: Container(
-//             color: Colors.purple,
-//             child: Container(
-//               color: Colors.red,
-//               child: Center(
-//                 child: Container(
-//                   color: Colors.orange,
-//                   child: AspectRatio(
-//                     aspectRatio: fieldAreaWidthRatioWithLegend / fieldAreaHeightRatio,
-//                     child: LayoutBuilder(builder: (context, constraints) {
-//                       double fieldSize = constraints.maxWidth / fieldAreaWidthRatioWithLegend;
-//                       return Row(
-//                         children: [
-//                           Expanded(
-//                             flex:
-//                                 (100 / fieldAreaWidthRatioWithLegend * fieldAreaWidthRatio).round(),
-//                             child: Column(
-//                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//                               children: [
-//                                 Row(
-//                                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//                                   children: [
-//                                     Container(
-//                                       color: Colors.brown,
-//                                       width: fieldSize,
-//                                       height: fieldSize,
-//                                     ),
-//                                     Container(
-//                                       color: Colors.brown,
-//                                       width: fieldSize,
-//                                       height: fieldSize,
-//                                     ),
-//                                     Container(
-//                                       color: Colors.brown,
-//                                       width: fieldSize,
-//                                       height: fieldSize,
-//                                     ),
-//                                     Container(
-//                                       color: Colors.brown,
-//                                       width: fieldSize,
-//                                       height: fieldSize,
-//                                     ),
-//                                     Container(
-//                                       color: Colors.brown,
-//                                       width: fieldSize,
-//                                       height: fieldSize,
-//                                     ),
-//                                   ],
-//                                 ),
-//                                 Row(
-//                                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//                                   children: [
-//                                     Container(
-//                                       color: Colors.brown,
-//                                       width: fieldSize,
-//                                       height: fieldSize,
-//                                     ),
-//                                     Container(
-//                                       color: Colors.brown,
-//                                       width: fieldSize,
-//                                       height: fieldSize,
-//                                     ),
-//                                     Container(
-//                                       color: Colors.brown,
-//                                       width: fieldSize,
-//                                       height: fieldSize,
-//                                     ),
-//                                     Container(
-//                                       color: Colors.brown,
-//                                       width: fieldSize,
-//                                       height: fieldSize,
-//                                     ),
-//                                     Container(
-//                                       color: Colors.brown,
-//                                       width: fieldSize,
-//                                       height: fieldSize,
-//                                     ),
-//                                   ],
-//                                 ),
-//                               ],
-//                             ),
-//                           ),
-//                           Expanded(
-//                             flex: (100 / fieldAreaWidthRatioWithLegend * legendWidthRatio).round(),
-//                             child: Container(
-//                               color: Colors.white,
-//                               child: Column(
-//                                 children: [
-//                                   Expanded(
-//                                     child: Container(
-//                                       color: Colors.lightBlueAccent,
-//                                     ),
-//                                   ),
-//                                   Expanded(
-//                                     child: Container(
-//                                       color: Colors.limeAccent,
-//                                     ),
-//                                   ),
-//                                   Expanded(
-//                                     child: Container(
-//                                       color: Colors.purpleAccent,
-//                                     ),
-//                                   ),
-//                                 ],
-//                               ),
-//                             ),
-//                           ),
-//                         ],
-//                       );
-//                     }),
-//                   ),
-//                 ),
-//               ),
-//             ),
-//           ),
-//         ),
-//         const Spacer(),
-//         const Expanded(
-//           flex: 6,
-//           child: BottomRowMainPage(),
-//         ),
-//       ],
-//     );
-//   }
-// }
-
 class LandScapeLayout extends ConsumerWidget {
   const LandScapeLayout({
     super.key,
-    required this.topRowList,
-    required this.bottomRowList,
   });
-
-  final List<Widget> topRowList;
-  final List<Widget> bottomRowList;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Stack(
       children: [
-        Column(
+        const Column(
           children: [
-            const SizedBox(
+            SizedBox(
               height: topRowHeight,
               child: TopRowMainPage(),
             ),
-            const Expanded(
+            SizedBox(
+              height: secondRowHeight,
+              child: SecondRowMainPage(),
+            ),
+            Expanded(
               flex: 2,
               child: FractionallySizedBox(
                 heightFactor: 0.5,
@@ -408,48 +110,22 @@ class LandScapeLayout extends ConsumerWidget {
             ),
             Expanded(
               flex: 8,
-              child: FieldsMainPage(
-                topRowList: topRowList,
-                bottomRowList: bottomRowList,
-              ),
+              child: FieldsMainPage(),
             ),
-            const Spacer(),
-            const Expanded(
+            Spacer(),
+            Expanded(
               flex: 6,
               child: BottomRowMainPage(),
             ),
           ],
         ),
-        if (ref.watch(gameDataNotifierProvider).showingAnimation)
+        if (ref.watch(gameDataNotifierProvider).showingWeatherAnimation)
           Container(color: Colors.transparent),
-        if (ref.watch(gameDataNotifierProvider).showingAnimation) const WeatherWidget(),
+        if (ref.watch(gameDataNotifierProvider).showingWeatherAnimation) const WeatherWidget(),
       ],
     );
   }
 }
-
-// class WeatherWidget extends ConsumerWidget {
-//   const WeatherWidget({
-//     super.key,
-//   });
-//
-//   @override
-//   Widget build(BuildContext context, WidgetRef ref) {
-//     return Positioned(
-//       top: 100,
-//       left: MediaQuery.of(context).size.width / 2 - 100,
-//       child: Container(
-//         //duration: const Duration(milliseconds: 1000),
-//         //curve: Curves.easeInOut,
-//         width: 200,
-//         height: 200,
-//         color: ref.read(gameDataNotifierProvider).currentLevel.isRaining
-//             ? Colors.blue
-//             : Colors.yellow,
-//       ),
-//     );
-//   }
-// }
 
 class WeatherWidget extends ConsumerWidget {
   const WeatherWidget({

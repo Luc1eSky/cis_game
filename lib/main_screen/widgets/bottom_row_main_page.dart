@@ -1,10 +1,10 @@
+import 'package:cis_game/constants.dart';
 import 'package:cis_game/dialogs/season_summary_dialog.dart';
 import 'package:cis_game/main_screen/widgets/savings_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../color_palette.dart';
-import '../../constants.dart';
 import '../../state_management/game_data_notifier.dart';
 import 'cash_widget.dart';
 
@@ -58,14 +58,19 @@ class BottomRowMainPage extends ConsumerWidget {
 
                       ref.read(gameDataNotifierProvider.notifier).randomizeWeatherEvent();
 
-                      ref.read(gameDataNotifierProvider.notifier).harvestFields();
-
                       ref.read(gameDataNotifierProvider.notifier).saveResult();
 
                       // show weather animation and wait until it is done
-                      await ref
-                          .read(gameDataNotifierProvider.notifier)
-                          .showAnimation(milliseconds: weatherAnimationTimeInMs);
+                      await ref.read(gameDataNotifierProvider.notifier).showWeatherAnimation();
+
+                      // show growing animation and wait until it is done
+                      await ref.read(gameDataNotifierProvider.notifier).showGrowingAnimation();
+
+                      await Future.delayed(
+                        const Duration(milliseconds: pauseAfterGrowingAnimationInMs),
+                      );
+
+                      //ref.read(gameDataNotifierProvider.notifier).harvestFields();
 
                       if (context.mounted) {
                         showDialog(

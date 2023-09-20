@@ -18,7 +18,7 @@ class GameData {
   final int season;
   final bool isNewSeason;
   final bool allFieldsAreSeeded;
-  final bool showingAnimation;
+  final bool showingWeatherAnimation;
   final Enumerator? currentEnumerator;
 
   // number of zebra fields in fieldLists
@@ -100,7 +100,7 @@ class GameData {
     required this.season,
     required this.isNewSeason,
     required this.allFieldsAreSeeded,
-    this.showingAnimation = false,
+    this.showingWeatherAnimation = false,
     this.currentEnumerator,
   });
 
@@ -116,14 +116,13 @@ class GameData {
     int? season,
     bool? isNewSeason,
     bool? allFieldsAreSeeded,
-    bool? showingAnimation,
+    bool? showingWeatherAnimation,
     Enumerator? currentEnumerator,
   }) {
     return GameData(
       cash: cash ?? this.cash,
       savings: savings ?? this.savings,
-      currentFieldList:
-          currentFieldList ?? copyFieldList(this.currentFieldList),
+      currentFieldList: currentFieldList ?? copyFieldList(this.currentFieldList),
       savedResults: savedResults ?? copySavedResults(this.savedResults),
       levelIndex: levelIndex ?? this.levelIndex,
       currentLevel: currentLevel ?? this.currentLevel.copyWith(),
@@ -132,9 +131,8 @@ class GameData {
       season: season ?? this.season,
       isNewSeason: isNewSeason ?? this.isNewSeason,
       allFieldsAreSeeded: allFieldsAreSeeded ?? this.allFieldsAreSeeded,
-      showingAnimation: showingAnimation ?? this.showingAnimation,
-      currentEnumerator:
-          currentEnumerator ?? this.currentEnumerator?.copyWith(),
+      showingWeatherAnimation: showingWeatherAnimation ?? this.showingWeatherAnimation,
+      currentEnumerator: currentEnumerator ?? this.currentEnumerator?.copyWith(),
     );
   }
 }

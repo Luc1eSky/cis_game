@@ -117,3 +117,24 @@ List<Level> copyLevels(List<Level> listToCopy) {
   }
   return copiedLevels;
 }
+
+Couple dummyCouple = Couple(
+  both: Person(
+    personalID: 'test',
+    hasPlayed: false,
+    levels: [],
+    playerType: PlayerType.both,
+  ),
+  wife: Person(
+    personalID: 'test',
+    hasPlayed: false,
+    levels: [],
+    playerType: PlayerType.wife,
+  ),
+  husband: Person(
+    personalID: 'test',
+    hasPlayed: false,
+    levels: [],
+    playerType: PlayerType.husband,
+  ),
+);
