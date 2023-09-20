@@ -4,6 +4,8 @@ const double maximumDialogHeight = 500;
 
 const String unlockPin = '7532';
 
+const int weatherAnimationTimeInMs = 5000;
+
 const double startingCash = 100;
 const double startingSavings = 0;
 const int cashTransferStep = 10;

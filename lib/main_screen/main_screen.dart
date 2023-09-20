@@ -494,13 +494,6 @@ class WeatherWidget extends ConsumerWidget {
 
         //const RiveAnimation.asset('assets/rive/rain.riv'),
       ),
-
-      // Container(
-      //   width: 200,
-      //   height: 200,
-      //   color:
-      //       ref.read(gameDataNotifierProvider).currentLevel.isRaining ? Colors.blue : Colors.yellow,
-      // ),
     );
   }
 }

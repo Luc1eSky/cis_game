@@ -27,11 +27,11 @@ class TopRowMainPage extends ConsumerWidget {
                       onPressed: () {
                         // TODO: OPEN SETTINGS TO CHANGE PARTICIPANT
                         print('Icon pressed');
-                        showDialog(
-                            context: context,
-                            builder: (context) {
-                              return Container();
-                            });
+                        // showDialog(
+                        //     context: context,
+                        //     builder: (context) {
+                        //       return Container();
+                        //     });
                       },
                       icon: const Icon(Icons.settings),
                     ),

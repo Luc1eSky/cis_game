@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../color_palette.dart';
+import '../../constants.dart';
 import '../../state_management/game_data_notifier.dart';
 import 'cash_widget.dart';
 
@@ -61,8 +62,10 @@ class BottomRowMainPage extends ConsumerWidget {
 
                       ref.read(gameDataNotifierProvider.notifier).saveResult();
 
-                      // show weather animation
-                      await ref.read(gameDataNotifierProvider.notifier).showAnimation();
+                      // show weather animation and wait until it is done
+                      await ref
+                          .read(gameDataNotifierProvider.notifier)
+                          .showAnimation(milliseconds: weatherAnimationTimeInMs);
 
                       if (context.mounted) {
                         showDialog(

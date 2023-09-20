@@ -1,13 +1,13 @@
 import 'dart:math';
 
-import 'package:cis_game/color_palette.dart';
-import 'package:cis_game/dialogs/choose_player_dialog.dart';
 import 'package:cis_game/dialogs/select_new_couple_dialog.dart';
-import 'package:cis_game/state_management/game_data_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../color_palette.dart';
 import '../constants.dart';
+import '../state_management/game_data_notifier.dart';
+import 'choose_player_dialog.dart';
 
 class PinUnlockDialog extends StatefulWidget {
   const PinUnlockDialog({super.key});
@@ -45,132 +45,148 @@ class _PinUnlockDialogState extends State<PinUnlockDialog> {
 
   @override
   Widget build(BuildContext context) {
+    double dialogHeight = min(MediaQuery.of(context).size.height * 0.7, maximumDialogHeight);
+    double dialogWidth = dialogHeight / 5.5 * 3;
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: Center(
-        child: SizedBox(
-          height: min(MediaQuery.of(context).size.height * 0.7, maximumDialogHeight),
-          child: AlertDialog(
-            backgroundColor: Colors.grey[800],
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(17),
-            ),
-            title: const Center(
-              child: Text(
-                'Enumerator Unlock',
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-            content: Center(
-              child: AspectRatio(
-                aspectRatio: 3 / 5,
-                child: Column(
-                  children: [
-                    Expanded(
-                      flex: 18,
-                      child: Align(
-                        alignment: Alignment.topCenter,
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.grey[800],
+            borderRadius: BorderRadius.circular(dialogWidth * 0.10),
+          ),
+          child: Padding(
+            padding: EdgeInsets.all(dialogWidth * 0.08),
+            child: SizedBox(
+              height: dialogHeight,
+              width: dialogWidth,
+              child: Column(
+                children: [
+                  Expanded(
+                    flex: 8,
+                    child: Container(
+                      //color: Colors.yellow,
+                      child: const FractionallySizedBox(
+                        widthFactor: 0.8,
+                        heightFactor: 0.8,
+                        child: FittedBox(
+                          child: Text(
+                            'Enumerator unlock',
+                            style: TextStyle(
+                              fontSize: 100,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    flex: 16,
+                    child: FractionallySizedBox(
+                      widthFactor: 0.6,
+                      heightFactor: 0.8,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.grey[700],
+                          borderRadius: BorderRadius.circular(dialogWidth * 0.06),
+                        ),
                         child: FractionallySizedBox(
-                          widthFactor: 0.6,
-                          heightFactor: 0.75,
-                          child: Container(
-                            color: Colors.grey[700],
-                            child: FractionallySizedBox(
-                              widthFactor: 0.8,
-                              heightFactor: 0.8,
-                              child: FittedBox(
-                                child: Text(
-                                  formatPinCode(pinCode),
-                                  style: const TextStyle(
-                                    fontSize: 100,
-                                    color: Colors.white,
-                                  ),
-                                ),
+                          widthFactor: 0.7,
+                          heightFactor: 0.7,
+                          child: FittedBox(
+                            child: Text(
+                              formatPinCode(pinCode),
+                              style: const TextStyle(
+                                fontSize: 100,
+                                color: Colors.white,
                               ),
                             ),
                           ),
                         ),
                       ),
                     ),
-                    Expanded(
-                      flex: 82,
-                      child: GridView.builder(
-                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 3,
-                          mainAxisSpacing: 17,
-                          crossAxisSpacing: 17,
-                        ),
-                        itemCount: 12,
-                        itemBuilder: (BuildContext context, int index) {
-                          int number = index + 1;
-                          if (number == 11) {
-                            number = 0;
-                          }
+                  ),
+                  Expanded(
+                    flex: 69,
+                    child: FractionallySizedBox(
+                      widthFactor: 0.9,
+                      heightFactor: 0.9,
+                      child: GridView.count(
+                        crossAxisCount: 3,
+                        mainAxisSpacing: dialogWidth * 0.07,
+                        crossAxisSpacing: dialogWidth * 0.07,
+                        children: List.generate(
+                          12,
+                          (index) {
+                            int number = index + 1;
 
-                          // add delete button
-                          if (number == 10) {
-                            return PinButton(
-                              backgroundColor: Colors.red,
-                              onTapFunction: () {
-                                print('delete');
-                                deleteLastNumber();
-                              },
-                              buttonIconData: Icons.backspace_outlined,
-                            );
-                          }
-
-                          // add submit button
-                          if (number == 12) {
-                            return Consumer(builder: (context, ref, child) {
+                            // add delete button
+                            if (number == 10) {
                               return PinButton(
-                                backgroundColor: Colors.green,
+                                backgroundColor: Colors.red,
                                 onTapFunction: () {
-                                  if (pinCode == unlockPin) {
-                                    Navigator.of(context).pop();
-                                    showDialog(
-                                        context: context,
-                                        builder: (context) {
-                                          if (ref
-                                              .read(gameDataNotifierProvider)
-                                              .currentCouple
-                                              .nooneHasPlayed) {
-                                            return const SelectNewCoupleDialog();
-                                          } else {
-                                            return const ChoosePlayerDialog();
-                                          }
-                                        });
-                                  } else {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                        backgroundColor: ColorPalette().snackBar,
-                                        content: const Center(
-                                          child: Text('Code incorrect'),
-                                        ),
-                                      ),
-                                    );
-                                  }
-                                  print('submit');
+                                  deleteLastNumber();
                                 },
-                                buttonIconData: Icons.check,
+                                buttonIconData: Icons.backspace_outlined,
                               );
-                            });
-                          }
+                            }
 
-                          // add number entry button
-                          return PinButton(
-                            backgroundColor: Colors.grey[700]!,
-                            onTapFunction: () {
-                              print(number);
-                              addNumberToPin(number);
-                              // TODO: ADD NUMBER TO STRING
-                            },
-                            buttonText: number.toString(),
-                          );
-                        },
+                            // add submit button
+                            if (number == 12) {
+                              return Consumer(builder: (context, ref, child) {
+                                return PinButton(
+                                  backgroundColor: Colors.green,
+                                  onTapFunction: () {
+                                    if (pinCode == unlockPin) {
+                                      Navigator.of(context).pop();
+                                      showDialog(
+                                          context: context,
+                                          builder: (context) {
+                                            if (ref
+                                                .read(gameDataNotifierProvider)
+                                                .currentCouple
+                                                .nooneHasPlayed) {
+                                              return const SelectNewCoupleDialog();
+                                            } else {
+                                              return const ChoosePlayerDialog();
+                                            }
+                                          });
+                                    } else {
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                          backgroundColor: ColorPalette().snackBar,
+                                          content: const Center(
+                                            child: Text('Code incorrect'),
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                    print('submit');
+                                  },
+                                  buttonIconData: Icons.check,
+                                );
+                              });
+                            }
+
+                            if (number == 11) {
+                              number = 0;
+                            }
+
+                            return PinButton(
+                              backgroundColor: Colors.grey[700]!,
+                              onTapFunction: () {
+                                print(number);
+                                addNumberToPin(number);
+                              },
+                              buttonText: number.toString(),
+                            );
+                          },
+                        ),
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ),
@@ -196,34 +212,36 @@ class PinButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        padding: EdgeInsets.zero,
-        backgroundColor: backgroundColor,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(17),
-        ),
-      ),
-      onPressed: onTapFunction,
-      child: Center(
-        child: FractionallySizedBox(
-          widthFactor: 0.5,
-          heightFactor: 0.5,
-          child: FittedBox(
-            child: buttonText != null
-                ? Text(
-                    buttonText!,
-                    style: const TextStyle(fontSize: 100),
-                  )
-                : buttonIconData != null
-                    ? Icon(
-                        buttonIconData,
-                        size: 100,
-                      )
-                    : Container(),
+    return LayoutBuilder(builder: (context, constraints) {
+      return ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          padding: EdgeInsets.zero,
+          backgroundColor: backgroundColor,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(constraints.maxWidth * 0.2),
           ),
         ),
-      ),
-    );
+        onPressed: onTapFunction,
+        child: Center(
+          child: FractionallySizedBox(
+            widthFactor: 0.5,
+            heightFactor: 0.5,
+            child: FittedBox(
+              child: buttonText != null
+                  ? Text(
+                      buttonText!,
+                      style: const TextStyle(fontSize: 100),
+                    )
+                  : buttonIconData != null
+                      ? Icon(
+                          buttonIconData,
+                          size: 100,
+                        )
+                      : Container(),
+            ),
+          ),
+        ),
+      );
+    });
   }
 }
