@@ -12,23 +12,33 @@ class SelectNewCoupleDialog extends ConsumerStatefulWidget {
   const SelectNewCoupleDialog({super.key});
 
   @override
-  ConsumerState<SelectNewCoupleDialog> createState() => _SelectNewCoupleDialogState();
+  ConsumerState<SelectNewCoupleDialog> createState() =>
+      _SelectNewCoupleDialogState();
 }
 
 class _SelectNewCoupleDialogState extends ConsumerState<SelectNewCoupleDialog> {
   // initialize dropdown variables
   String? locationDropdownValue;
   int? coupleNumberDropdownValue;
-  String? enumeratorDropdownValue;
+  Enumerator? enumeratorDropdownValue;
 
   @override
   void initState() {
     // get current location from coupleID of game data if there is a current player
-    if (ref.read(gameDataNotifierProvider).currentCouple.currentPlayerType != PlayerType.none) {
-      locationDropdownValue =
-          ref.read(gameDataNotifierProvider).currentCouple.both.personalID.substring(1, 4);
-      coupleNumberDropdownValue =
-          int.parse(ref.read(gameDataNotifierProvider).currentCouple.both.personalID.substring(4));
+    if (ref.read(gameDataNotifierProvider).currentCouple.currentPlayerType !=
+        PlayerType.none) {
+      locationDropdownValue = ref
+          .read(gameDataNotifierProvider)
+          .currentCouple
+          .both
+          .personalID
+          .substring(1, 4);
+      coupleNumberDropdownValue = int.parse(ref
+          .read(gameDataNotifierProvider)
+          .currentCouple
+          .both
+          .personalID
+          .substring(4));
     }
     super.initState();
   }
@@ -60,19 +70,21 @@ class _SelectNewCoupleDialogState extends ConsumerState<SelectNewCoupleDialog> {
                       width: 255,
                       height: 50,
                       child: InputDecorator(
-                        decoration: const InputDecoration(border: OutlineInputBorder()),
+                        decoration:
+                            const InputDecoration(border: OutlineInputBorder()),
                         child: DropdownButtonHideUnderline(
                           child: DropdownButton(
                               hint: const Text('please choose'),
                               value: enumeratorDropdownValue,
-                              items: enumerators.map<DropdownMenuItem<String>>((Enumerator value) {
-                                String fullName = '${value.firstName} ${value.lastName}';
-
-                                return DropdownMenuItem(value: fullName, child: Text(fullName));
+                              items: enumerators.map((Enumerator enumerator) {
+                                return DropdownMenuItem(
+                                  value: enumerator,
+                                  child: Text(enumerator.fullName),
+                                );
                               }).toList(),
-                              onChanged: (value) {
+                              onChanged: (enumerator) {
                                 setState(() {
-                                  enumeratorDropdownValue = value!;
+                                  enumeratorDropdownValue = enumerator!;
                                 });
                               }),
                         ),
@@ -103,13 +115,16 @@ class _SelectNewCoupleDialogState extends ConsumerState<SelectNewCoupleDialog> {
                       width: 100,
                       height: 50,
                       child: InputDecorator(
-                        decoration: const InputDecoration(border: OutlineInputBorder()),
+                        decoration:
+                            const InputDecoration(border: OutlineInputBorder()),
                         child: DropdownButtonHideUnderline(
                           child: DropdownButton(
                               hint: const Text('select'),
                               value: locationDropdownValue,
-                              items: allLocations.map<DropdownMenuItem<String>>((String value) {
-                                return DropdownMenuItem(value: value, child: Text(value));
+                              items: allLocations.map<DropdownMenuItem<String>>(
+                                  (String value) {
+                                return DropdownMenuItem(
+                                    value: value, child: Text(value));
                               }).toList(),
                               onChanged: (value) {
                                 setState(() {
@@ -124,13 +139,16 @@ class _SelectNewCoupleDialogState extends ConsumerState<SelectNewCoupleDialog> {
                       width: 100,
                       height: 50,
                       child: InputDecorator(
-                        decoration: const InputDecoration(border: OutlineInputBorder()),
+                        decoration:
+                            const InputDecoration(border: OutlineInputBorder()),
                         child: DropdownButtonHideUnderline(
                           child: DropdownButton(
                               hint: const Text('select'),
                               value: coupleNumberDropdownValue,
-                              items: coupleNumbers.map<DropdownMenuItem<int>>((int value) {
-                                return DropdownMenuItem(value: value, child: Text('$value'));
+                              items: coupleNumbers
+                                  .map<DropdownMenuItem<int>>((int value) {
+                                return DropdownMenuItem(
+                                    value: value, child: Text('$value'));
                               }).toList(),
                               onChanged: (value) {
                                 setState(() {
@@ -175,7 +193,11 @@ class _SelectNewCoupleDialogState extends ConsumerState<SelectNewCoupleDialog> {
                   'C$locationDropdownValue${coupleNumberDropdownValue.toString().padLeft(2, '0')}';
 
               // change the current couple to the selected one
-              ref.read(gameDataNotifierProvider.notifier).changeCouple(newCoupleID: newCoupleID);
+              ref
+                  .read(gameDataNotifierProvider.notifier)
+                  .changeCouple(newCoupleID: newCoupleID);
+              ref.read(gameDataNotifierProvider.notifier).setCurrentEnumerator(
+                  newEnumerator: enumeratorDropdownValue!);
 
               Navigator.of(context).pop();
 

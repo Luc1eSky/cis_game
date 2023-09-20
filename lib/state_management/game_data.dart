@@ -1,3 +1,5 @@
+import 'package:cis_game/classes/enumerator.dart';
+
 import '../classes/couple.dart';
 import '../classes/field.dart';
 import '../classes/level.dart';
@@ -17,6 +19,7 @@ class GameData {
   final bool isNewSeason;
   final bool allFieldsAreSeeded;
   final bool showingAnimation;
+  final Enumerator? currentEnumerator;
 
   // number of zebra fields in fieldLists
   List<int> get zebras {
@@ -98,6 +101,7 @@ class GameData {
     required this.isNewSeason,
     required this.allFieldsAreSeeded,
     this.showingAnimation = false,
+    this.currentEnumerator,
   });
 
   GameData copyWith({
@@ -113,11 +117,13 @@ class GameData {
     bool? isNewSeason,
     bool? allFieldsAreSeeded,
     bool? showingAnimation,
+    Enumerator? currentEnumerator,
   }) {
     return GameData(
       cash: cash ?? this.cash,
       savings: savings ?? this.savings,
-      currentFieldList: currentFieldList ?? copyFieldList(this.currentFieldList),
+      currentFieldList:
+          currentFieldList ?? copyFieldList(this.currentFieldList),
       savedResults: savedResults ?? copySavedResults(this.savedResults),
       levelIndex: levelIndex ?? this.levelIndex,
       currentLevel: currentLevel ?? this.currentLevel.copyWith(),
@@ -127,6 +133,8 @@ class GameData {
       isNewSeason: isNewSeason ?? this.isNewSeason,
       allFieldsAreSeeded: allFieldsAreSeeded ?? this.allFieldsAreSeeded,
       showingAnimation: showingAnimation ?? this.showingAnimation,
+      currentEnumerator:
+          currentEnumerator ?? this.currentEnumerator?.copyWith(),
     );
   }
 }

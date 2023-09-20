@@ -1,4 +1,4 @@
-import 'package:cis_game/dialogs/pin_unlock_dialog.dart';
+import 'package:cis_game/dialogs/player_done_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -94,7 +94,8 @@ class _SummaryPageState extends ConsumerState<SeasonSummaryDialog> {
                   DataCell(
                     Text(result.elephantFields.toString()),
                   ),
-                  DataCell(Text('${result.elephantPayout.toString()} $currency')),
+                  DataCell(
+                      Text('${result.elephantPayout.toString()} $currency')),
                 ],
               ),
               DataRow(
@@ -118,27 +119,37 @@ class _SummaryPageState extends ConsumerState<SeasonSummaryDialog> {
                   const DataCell(
                     Text(
                       "Total Payoff",
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                     ),
                   ),
                   DataCell(
                     Text(
                       result.amountOfPlantedFields.toString(),
-                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 20),
                     ),
                   ),
                   DataCell(
                     Text(
                       '${result.totalPayout.toString()} $currency',
-                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 20),
                     ),
                   ),
                 ],
               ),
             ],
           ),
-          ref.read(gameDataNotifierProvider).currentCouple.currentPlayer!.hasPlayed
-              ? ref.read(gameDataNotifierProvider).currentCouple.everyoneHasPlayed
+          ref
+                  .read(gameDataNotifierProvider)
+                  .currentCouple
+                  .currentPlayer!
+                  .hasPlayed
+              ? ref
+                      .read(gameDataNotifierProvider)
+                      .currentCouple
+                      .everyoneHasPlayed
                   ? ElevatedButton(
                       onPressed: () {
                         // Close the current dialog
@@ -162,7 +173,7 @@ class _SummaryPageState extends ConsumerState<SeasonSummaryDialog> {
                         showDialog(
                             context: context,
                             builder: (context) {
-                              return const PinUnlockDialog();
+                              return const PlayerDoneDialog();
                             });
                       },
                       child: const Text('Next Player'),
@@ -170,7 +181,9 @@ class _SummaryPageState extends ConsumerState<SeasonSummaryDialog> {
               : ElevatedButton(
                   onPressed: () {
                     Navigator.of(context).pop(); // Close the current dialog
-                    ref.read(gameDataNotifierProvider.notifier).startNewSeason();
+                    ref
+                        .read(gameDataNotifierProvider.notifier)
+                        .startNewSeason();
                   },
                   child: const Text('Next Season'),
                 )
