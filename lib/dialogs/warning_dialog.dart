@@ -19,8 +19,9 @@ class WarningDialog extends ConsumerWidget {
       content: const SizedBox(
         width: 50,
         child: Text(
-          "Do you really want to start a new game? "
-          "Previous summary data won't be accessible.",
+          "Did the current couple receive their payment?"
+          "\n\nPrevious summary data won't be accessible when you start a new "
+          "game.",
         ),
       ),
       actions: [

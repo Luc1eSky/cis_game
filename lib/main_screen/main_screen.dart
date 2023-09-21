@@ -29,12 +29,13 @@ class _MainScreenState extends ConsumerState<MainScreen> {
     ref.read(riveDataNotifierProvider.notifier).loadRiveData();
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      if (ref.watch(gameDataNotifierProvider).currentCouple.currentPlayerType == PlayerType.none) {
+      if (ref.watch(gameDataNotifierProvider).currentCouple.currentPlayerType ==
+          PlayerType.none) {
         showDialog(
             barrierDismissible: false,
             context: context,
             builder: (context) {
-              return PinUnlockDialog();
+              return const PinUnlockDialog();
             });
       }
     });
@@ -67,7 +68,10 @@ class _MainScreenState extends ConsumerState<MainScreen> {
               },
             ),
             if (ref.watch(gameDataNotifierProvider).isNewSeason == true &&
-                ref.watch(gameDataNotifierProvider).currentCouple.currentPlayerType !=
+                ref
+                        .watch(gameDataNotifierProvider)
+                        .currentCouple
+                        .currentPlayerType !=
                     PlayerType.none)
               Container(
                 color: Colors.black.withOpacity(0.4),
@@ -123,7 +127,8 @@ class LandScapeLayout extends ConsumerWidget {
           ),
           if (ref.watch(gameDataNotifierProvider).showingWeatherAnimation)
             Container(color: Colors.transparent),
-          if (ref.watch(gameDataNotifierProvider).showingWeatherAnimation) const WeatherWidget(),
+          if (ref.watch(gameDataNotifierProvider).showingWeatherAnimation)
+            const WeatherWidget(),
         ],
       ),
     );
