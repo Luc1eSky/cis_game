@@ -1,3 +1,4 @@
+import 'package:cis_game/dialogs/dialog_template.dart';
 import 'package:cis_game/dialogs/pin_unlock_dialog.dart';
 import 'package:cis_game/state_management/game_data_notifier.dart';
 import 'package:flutter/material.dart';
@@ -13,8 +14,7 @@ class PlayerDoneDialog extends ConsumerStatefulWidget {
 class _SummaryPageState extends ConsumerState<PlayerDoneDialog> {
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-      //title: const Text('Please hand tablet to enumerator'),
+    return DialogTemplate(
       content: SizedBox(
         width: 250,
         height: 250,
@@ -29,8 +29,7 @@ class _SummaryPageState extends ConsumerState<PlayerDoneDialog> {
               child: Row(
                 children: [
                   Expanded(
-                    child: FittedBox(
-                        child: Icon(Icons.tablet_android_outlined, size: 500)),
+                    child: FittedBox(child: Icon(Icons.tablet_android_outlined, size: 500)),
                   ),
                   Expanded(
                     child: FittedBox(
@@ -56,43 +55,31 @@ class _SummaryPageState extends ConsumerState<PlayerDoneDialog> {
               height: 25,
               child: FittedBox(
                 child: Text(
-                  ref
-                      .read(gameDataNotifierProvider)
-                      .currentEnumerator!
-                      .fullName,
+                  ref.read(gameDataNotifierProvider).currentEnumerator!.fullName,
                   style: const TextStyle(fontSize: 100),
                 ),
               ),
             ),
-            const SizedBox(height: 10),
-            Expanded(
-              flex: 2,
-              child: Container(
-                //color: Colors.red,
-                alignment: Alignment.bottomRight,
-                child: FittedBox(
-                  child: IconButton(
-                    icon: const Icon(Icons.arrow_circle_right),
-                    iconSize: 200,
-                    color: Colors.green,
-                    onPressed: () {
-                      // Close the current dialog
-                      Navigator.of(context).pop();
-                      // open the dialog to choose a new player
-
-                      showDialog(
-                          context: context,
-                          builder: (context) {
-                            return const PinUnlockDialog();
-                          });
-                    },
-                  ),
-                ),
-              ),
-            )
           ],
         ),
       ),
+      actions: [
+        ElevatedButton(
+          onPressed: () {
+            // Close the current dialog
+            Navigator.of(context).pop();
+            // open the dialog to choose a new player
+
+            showDialog(
+              context: context,
+              builder: (context) {
+                return const PinUnlockDialog();
+              },
+            );
+          },
+          child: const Icon(Icons.arrow_right_alt_outlined),
+        ),
+      ],
     );
   }
 }

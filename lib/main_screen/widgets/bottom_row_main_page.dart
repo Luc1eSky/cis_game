@@ -63,13 +63,14 @@ class BottomRowMainPage extends ConsumerWidget {
                       // show weather animation and wait until it is done
                       await ref.read(gameDataNotifierProvider.notifier).showWeatherAnimation();
 
-                      // show growing animation and wait until it is done
-                      await ref.read(gameDataNotifierProvider.notifier).showGrowingAnimation();
+                      if (ref.read(gameDataNotifierProvider).total[0] > 0) {
+                        // show growing animation and wait until it is done
+                        await ref.read(gameDataNotifierProvider.notifier).showGrowingAnimation();
 
-                      await Future.delayed(
-                        const Duration(milliseconds: pauseAfterGrowingAnimationInMs),
-                      );
-
+                        await Future.delayed(
+                          const Duration(milliseconds: pauseAfterGrowingAnimationInMs),
+                        );
+                      }
                       //ref.read(gameDataNotifierProvider.notifier).harvestFields();
 
                       if (context.mounted) {

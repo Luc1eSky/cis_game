@@ -1,45 +1,53 @@
 import 'classes/enumerator.dart';
 
+// pin for enumerators to unlock the next steps
+const String unlockPin = '7532';
+
+// minimum screen height that is needed to play at all (otherwise black screen)
 const double minimumScreenHeight = 250;
+
+// fixed height of two top rows
+const double topRowHeight = 30;
+const double secondRowHeight = 30;
+
+// limit dialog sizes so they don't become too huge
 const double pinUnlockDialogMaxHeight = 500;
 const double forecastDialogMaxHeight = 800;
 
-const String unlockPin = '7532';
-
+// animation timing
 const int weatherAnimationTimeInMs = 5000;
 const int growingAnimationTimeInMs = 3000;
-const int pauseAfterGrowingAnimationInMs = 2000;
+const int pauseAfterGrowingAnimationInMs = 1000;
 
+// starting values for cash and savings
 const double startingCash = 100;
 const double startingSavings = 0;
-const int cashTransferStep = 10;
+
+// transfer step when moving cash between cash and savings
+const int cashTransferStep = 100;
+
+// field parameters
 const int numberOfFields = 10;
 const int numberOfFieldRows = 2;
+int fieldsPerRow = (numberOfFields / numberOfFieldRows).round();
+double fieldAreaAspectRatio = fieldsPerRow / numberOfFieldRows;
+
+// legend parameters
+const double legendAspectRatio = 0.5;
+
+// forecast parameters
 const int maxNumberForecast = 5;
 const int thresholdLowRain = 3;
 const int noForecastRainChance = 4; // 80% chance when no forecast
-const String playerIDPlaceholder = 'tbd';
+
+// currency string
 const String currency = 'kwacha';
 
-List<int> coupleNumbers = List.generate(99, (index) => index + 1);
+// max number of couples per location (for dropdown selection)
+const int maxNumberOfCouplesPerLocation = 99;
 
-const double topRowHeight = 40;
-const double secondRowHeight = 40;
-
-const double gapRatio = 0.20;
-const double legendWidthRatio = 1.5;
-const int legendEntries = 3;
-
-// helpers
-const int fieldsPerRow = numberOfFields ~/ numberOfFieldRows;
-const int horizontalGaps = fieldsPerRow + 1;
-const double fieldAreaWidthRatio = fieldsPerRow + horizontalGaps * gapRatio;
-const double fieldAreaWidthRatioWithLegend = fieldAreaWidthRatio + legendWidthRatio;
-const double fieldAreaHeightRatio = numberOfFieldRows + (numberOfFieldRows + 1) * gapRatio;
-const double legendHeightRatio = fieldAreaHeightRatio / legendEntries;
-const double fieldAreaHeightRatioWithLegend =
-    numberOfFieldRows + (numberOfFieldRows + 1) * gapRatio + legendHeightRatio;
-
+// TODO: WHERE TO IMPLEMENT?
+// list of enumerators
 List<Enumerator> enumerators = [
   Enumerator(firstName: "John", lastName: "Wick"),
   Enumerator(firstName: "Petite", lastName: "Ecolier"),

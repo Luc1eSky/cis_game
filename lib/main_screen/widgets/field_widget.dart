@@ -44,46 +44,53 @@ class FieldWidget extends ConsumerWidget {
             });
       },
 
-      child: Container(
-        decoration: BoxDecoration(
-          color: fieldWidgetColor,
-          border: seedType == null
-              ? Border.all(width: 0.0)
-              : Border.all(color: seedType!.seedColor, width: 5.0),
-          borderRadius: BorderRadius.circular(10), // TODO: DYNAMIC
-        ),
-        child: fieldStatus == FieldStatus.harvested
-            ? Center(
-                child: Text(ref.read(gameDataNotifierProvider).currentLevel.isRaining
-                    ? '${seedType!.yieldRain} kwacha'
-                    : '${seedType!.yieldNoRain} kwacha'),
-              )
-            : fieldStatus == FieldStatus.empty
-                ? Container()
-                : GridView.builder(
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 5),
-                    itemCount: 25,
-                    itemBuilder: (context, index) {
-                      return LayoutBuilder(builder: (context, constraints) {
-                        return Center(
-                          child: AnimatedContainer(
-                            height: fieldStatus == FieldStatus.seeded
-                                ? constraints.maxHeight * 0.5
-                                : constraints.maxHeight * 0.75,
-                            //width: constraints.maxWidth * 0.6,
-                            duration: const Duration(milliseconds: growingAnimationTimeInMs),
-                            //curve: Curves.easeInOut,
-                            decoration: BoxDecoration(
-                              color:
-                                  fieldStatus == FieldStatus.seeded ? Colors.brown : Colors.green,
-                              shape: BoxShape.circle,
+      child: LayoutBuilder(builder: (context, constraints) {
+        //return RiveAnimation.asset('assets/rive/maize.riv');
+        return Container(
+          decoration: BoxDecoration(
+            color: fieldWidgetColor,
+            border: seedType == null
+                ? Border.all(width: 0.0)
+                : Border.all(color: seedType!.seedColor, width: constraints.maxWidth * 0.05),
+            borderRadius: BorderRadius.circular(constraints.maxWidth * 0.1),
+          ),
+          child: fieldStatus == FieldStatus.harvested
+              ? Center(
+                  child: Text(ref.read(gameDataNotifierProvider).currentLevel.isRaining
+                      ? '${seedType!.yieldRain} kwacha'
+                      : '${seedType!.yieldNoRain} kwacha'),
+                )
+              : fieldStatus == FieldStatus.empty
+                  ? Container()
+                  : GridView.builder(
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 5),
+                      itemCount: 25,
+                      itemBuilder: (context, index) {
+                        return LayoutBuilder(builder: (context, constraints) {
+                          return Center(
+                            child: AnimatedContainer(
+                              height: fieldStatus == FieldStatus.seeded
+                                  ? constraints.maxHeight * 0.45
+                                  : ref.read(gameDataNotifierProvider).currentLevel.isRaining
+                                      ? constraints.maxHeight * 0.75
+                                      : constraints.maxHeight * 0.55,
+                              duration: const Duration(milliseconds: growingAnimationTimeInMs),
+                              //curve: Curves.easeInOut,
+                              decoration: BoxDecoration(
+                                color: fieldStatus == FieldStatus.seeded
+                                    ? Colors.brown
+                                    : ref.read(gameDataNotifierProvider).currentLevel.isRaining
+                                        ? Colors.green
+                                        : Colors.lightGreenAccent.withOpacity(0.7),
+                                shape: BoxShape.circle,
+                              ),
                             ),
-                          ),
-                        );
-                      });
-                    }),
-      ),
+                          );
+                        });
+                      }),
+        );
+      }),
 
       // fieldStatus == FieldStatus.seeded
       //     ? Container(

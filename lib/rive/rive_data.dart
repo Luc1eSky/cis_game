@@ -2,6 +2,7 @@ import 'package:rive/rive.dart';
 
 class RiveData {
   final RiveFile? riveFileRain;
+  final RiveFile? riveFileMaize;
   final bool riveFilesAreLoaded;
 
   // final List<SMIInput<double>?> stateNumberInputsDot;
@@ -11,6 +12,7 @@ class RiveData {
 
   RiveData({
     this.riveFileRain,
+    this.riveFileMaize,
     this.riveFilesAreLoaded = false,
     // required this.stateNumberInputsDot,
     // required this.clickedTriggers,
@@ -21,10 +23,12 @@ class RiveData {
   // method to copy custom class
   RiveData copyWith({
     RiveFile? riveFileRain,
+    RiveFile? riveFileMaize,
     bool? riveFilesAreLoaded,
   }) {
     return RiveData(
       riveFileRain: riveFileRain ?? this.riveFileRain,
+      riveFileMaize: riveFileMaize ?? this.riveFileMaize,
       riveFilesAreLoaded: riveFilesAreLoaded ?? this.riveFilesAreLoaded,
     );
   }

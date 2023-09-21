@@ -242,7 +242,7 @@ class GameDataNotifier extends StateNotifier<GameData> {
       levelIndex: 0,
       currentLevel: state.currentCouple.currentPlayer!.levels[0],
       currentSeedType: null,
-      season: state.season + 1,
+      season: 1,
       isNewSeason: true,
       allFieldsAreSeeded: false,
       // copied values: savedFieldLists, currentCouple

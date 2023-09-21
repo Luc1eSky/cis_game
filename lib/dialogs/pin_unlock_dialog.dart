@@ -8,6 +8,7 @@ import '../color_palette.dart';
 import '../constants.dart';
 import '../state_management/game_data_notifier.dart';
 import 'choose_player_dialog.dart';
+import 'choose_player_for_summary_dialog.dart';
 
 class PinUnlockDialog extends StatefulWidget {
   const PinUnlockDialog({super.key});
@@ -145,6 +146,7 @@ class _PinUnlockDialogState extends State<PinUnlockDialog> {
                                     if (pinCode == unlockPin) {
                                       Navigator.of(context).pop();
                                       showDialog(
+                                          barrierDismissible: false,
                                           context: context,
                                           builder: (context) {
                                             if (ref
@@ -152,6 +154,11 @@ class _PinUnlockDialogState extends State<PinUnlockDialog> {
                                                 .currentCouple
                                                 .nooneHasPlayed) {
                                               return const SelectNewCoupleDialog();
+                                            } else if (ref
+                                                .read(gameDataNotifierProvider)
+                                                .currentCouple
+                                                .everyoneHasPlayed) {
+                                              return const ChoosePlayerForSummaryDialog();
                                             } else {
                                               return const ChoosePlayerDialog();
                                             }

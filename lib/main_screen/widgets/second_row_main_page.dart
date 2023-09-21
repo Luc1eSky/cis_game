@@ -13,7 +13,7 @@ class SecondRowMainPage extends ConsumerWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        const SizedBox(width: 44),
+        const SizedBox(width: 32),
         Expanded(
           flex: 11,
           child: FittedBox(
@@ -24,7 +24,7 @@ class SecondRowMainPage extends ConsumerWidget {
             ),
           ),
         ),
-        Expanded(
+        const Expanded(
           flex: 4,
           child: FittedBox(
             alignment: Alignment.centerRight,

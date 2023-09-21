@@ -1,5 +1,6 @@
 import 'package:cis_game/classes/couple.dart';
 import 'package:cis_game/classes/enumerator.dart';
+import 'package:cis_game/dialogs/dialog_template.dart';
 import 'package:cis_game/state_management/game_data_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -42,7 +43,7 @@ class _SelectNewCoupleDialogState extends ConsumerState<SelectNewCoupleDialog> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.transparent,
-      body: AlertDialog(
+      body: DialogTemplate(
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -128,7 +129,9 @@ class _SelectNewCoupleDialogState extends ConsumerState<SelectNewCoupleDialog> {
                           child: DropdownButton(
                               hint: const Text('select'),
                               value: coupleNumberDropdownValue,
-                              items: coupleNumbers.map<DropdownMenuItem<int>>((int value) {
+                              items:
+                                  List.generate(maxNumberOfCouplesPerLocation, (index) => index + 1)
+                                      .map<DropdownMenuItem<int>>((int value) {
                                 return DropdownMenuItem(value: value, child: Text('$value'));
                               }).toList(),
                               onChanged: (value) {
