@@ -81,6 +81,8 @@ class ChoosePlayerForSummaryDialog extends ConsumerWidget {
       actions: [
         ElevatedButton(
           onPressed: () {
+            // Close the current dialog
+            Navigator.of(context).pop();
             // open warning dialog
             showDialog(
               context: context,

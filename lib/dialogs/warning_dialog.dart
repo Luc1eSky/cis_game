@@ -1,3 +1,4 @@
+import 'package:cis_game/dialogs/choose_player_for_summary_dialog.dart';
 import 'package:cis_game/dialogs/dialog_template.dart';
 import 'package:cis_game/dialogs/pin_unlock_dialog.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +27,15 @@ class WarningDialog extends ConsumerWidget {
         ElevatedButton(
           onPressed: () {
             Navigator.of(context).pop();
+            // open the dialog to choose a new player
+            showDialog(
+              barrierDismissible: false,
+              context: context,
+              builder: (context) {
+                // Show selection dialog again
+                return const ChoosePlayerForSummaryDialog();
+              },
+            );
           },
           child: const Text('No, go back'),
         ),
@@ -39,8 +49,7 @@ class WarningDialog extends ConsumerWidget {
               barrierDismissible: false,
               context: context,
               builder: (context) {
-                // TODO: SHOW WARNING
-                // Start new Game
+                // Start new Game via unlock
                 return const PinUnlockDialog();
               },
             );
