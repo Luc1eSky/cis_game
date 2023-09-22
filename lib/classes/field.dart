@@ -17,7 +17,7 @@ class Field {
     FieldStatus? fieldStatus,
   }) {
     return Field(
-      seedType: seedType ?? this.seedType,
+      seedType: seedType ?? this.seedType?.copyWith(),
       fieldStatus: fieldStatus ?? this.fieldStatus,
     );
   }
@@ -55,7 +55,7 @@ List<SeedType> seedTypeList = [
 
 class SeedType {
   final String animalName;
-  final int price;
+  final double price;
   final int yieldNoRain;
   final int yieldRain;
   final Color seedColor;
@@ -69,6 +69,24 @@ class SeedType {
     required this.seedColor,
     required this.animalImage,
   });
+
+  SeedType copyWith({
+    String? animalName,
+    double? price,
+    int? yieldNoRain,
+    int? yieldRain,
+    Color? seedColor,
+    String? animalImage,
+  }) {
+    return SeedType(
+      animalName: animalName ?? this.animalName,
+      price: price ?? this.price,
+      yieldNoRain: yieldNoRain ?? this.yieldNoRain,
+      yieldRain: yieldRain ?? this.yieldRain,
+      seedColor: seedColor ?? this.seedColor,
+      animalImage: animalImage ?? this.animalImage,
+    );
+  }
 }
 
 // enum SeedTypeOld {

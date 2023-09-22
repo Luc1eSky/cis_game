@@ -14,7 +14,8 @@ import '../levels/levels.dart';
 import 'game_data.dart';
 
 final gameDataNotifierProvider =
-    StateNotifierProvider<GameDataNotifier, GameData>((ref) => GameDataNotifier());
+    StateNotifierProvider<GameDataNotifier, GameData>(
+        (ref) => GameDataNotifier());
 
 class GameDataNotifier extends StateNotifier<GameData> {
   GameDataNotifier()
@@ -100,7 +101,8 @@ class GameDataNotifier extends StateNotifier<GameData> {
     List<Field> growFieldList = [];
     for (int index = 0; index < state.currentFieldList.length; index++) {
       if (state.currentFieldList[index].fieldStatus != FieldStatus.empty) {
-        growFieldList.add(state.currentFieldList[index].copyWith(fieldStatus: FieldStatus.grown));
+        growFieldList.add(state.currentFieldList[index]
+            .copyWith(fieldStatus: FieldStatus.grown));
       } else {
         growFieldList.add(state.currentFieldList[index].copyWith());
       }
@@ -112,8 +114,8 @@ class GameDataNotifier extends StateNotifier<GameData> {
     List<Field> harvestFieldList = [];
     for (int index = 0; index < state.currentFieldList.length; index++) {
       if (state.currentFieldList[index].fieldStatus != FieldStatus.empty) {
-        harvestFieldList
-            .add(state.currentFieldList[index].copyWith(fieldStatus: FieldStatus.harvested));
+        harvestFieldList.add(state.currentFieldList[index]
+            .copyWith(fieldStatus: FieldStatus.harvested));
       } else {
         harvestFieldList.add(state.currentFieldList[index].copyWith());
       }
@@ -122,19 +124,24 @@ class GameDataNotifier extends StateNotifier<GameData> {
   }
 
   void selectSeedTypeAndBuySeed(int fieldIndex) {
+    SeedType? selectedSeedType = state.currentSeedType;
+    if (selectedSeedType == null) {
+      return;
+    }
     List<Field> updatedFieldList = [];
-
-    // Check if user has enough cash to buy the seed
-    if (state.cash >= state.currentSeedType!.price) {
+    double priceToPay = selectedSeedType.price -
+        (state.currentFieldList[fieldIndex].seedType?.price ?? 0);
+    // Check if user has enough cash to buy the selected seed
+    if (state.cash >= priceToPay) {
       // go through the list of fields
       for (int index = 0; index < state.currentFieldList.length; index++) {
         // update list with new field for the field clicked and seedType
         // selected
         if (index == fieldIndex) {
-          updatedFieldList
-              .add(Field(seedType: state.currentSeedType, fieldStatus: FieldStatus.seeded));
+          updatedFieldList.add(Field(
+              seedType: selectedSeedType, fieldStatus: FieldStatus.seeded));
           // adjust cash based on seed price
-          state = state.copyWith(cash: state.cash - state.currentSeedType!.price);
+          state = state.copyWith(cash: state.cash - priceToPay);
         } else {
           // if the fields are not selected just copy them over from the old
           // list
@@ -181,7 +188,8 @@ class GameDataNotifier extends StateNotifier<GameData> {
         (index) => Field(fieldStatus: FieldStatus.empty),
       ),
       levelIndex: state.levelIndex + 1,
-      currentLevel: state.currentCouple.currentPlayer!.levels[state.levelIndex + 1],
+      currentLevel:
+          state.currentCouple.currentPlayer!.levels[state.levelIndex + 1],
       currentSeedType: null,
       season: state.season + 1,
       isNewSeason: true,
@@ -346,13 +354,15 @@ class GameDataNotifier extends StateNotifier<GameData> {
   // change the current player and start first level
   void changePlayer({required PlayerType newPlayerType}) {
     state = state.copyWith(
-      currentCouple: state.currentCouple.copyWith(currentPlayerType: newPlayerType),
+      currentCouple:
+          state.currentCouple.copyWith(currentPlayerType: newPlayerType),
     );
     startNewSeasonAsNewPlayer();
   }
 
   void checkIfLastLevelWasPlayed() {
-    if (state.levelIndex + 1 == state.currentCouple.currentPlayer!.levels.length) {
+    if (state.levelIndex + 1 ==
+        state.currentCouple.currentPlayer!.levels.length) {
       _setCurrentPlayerToHasPlayed();
     }
   }
@@ -371,16 +381,19 @@ class GameDataNotifier extends StateNotifier<GameData> {
 
     // copy couple with the updated person
     if (currentPlayer.playerType == PlayerType.wife) {
-      state =
-          state.copyWith(currentCouple: state.currentCouple.copyWith(wife: currentPlayerHasPlayed));
+      state = state.copyWith(
+          currentCouple:
+              state.currentCouple.copyWith(wife: currentPlayerHasPlayed));
     }
     if (currentPlayer.playerType == PlayerType.husband) {
       state = state.copyWith(
-          currentCouple: state.currentCouple.copyWith(husband: currentPlayerHasPlayed));
+          currentCouple:
+              state.currentCouple.copyWith(husband: currentPlayerHasPlayed));
     }
     if (currentPlayer.playerType == PlayerType.both) {
-      state =
-          state.copyWith(currentCouple: state.currentCouple.copyWith(both: currentPlayerHasPlayed));
+      state = state.copyWith(
+          currentCouple:
+              state.currentCouple.copyWith(both: currentPlayerHasPlayed));
     }
   }
 
@@ -417,7 +430,8 @@ class GameDataNotifier extends StateNotifier<GameData> {
     print('The random number: $intValue');
     if (intValue <= rainForecast) {
       print('It rains');
-      state = state.copyWith(currentLevel: state.currentLevel.copyWith(isRaining: true));
+      state = state.copyWith(
+          currentLevel: state.currentLevel.copyWith(isRaining: true));
     } else {
       print('It does not rain');
     }
@@ -425,12 +439,14 @@ class GameDataNotifier extends StateNotifier<GameData> {
 
   Future<void> showGrowingAnimation() async {
     growFields();
-    await Future.delayed(const Duration(milliseconds: growingAnimationTimeInMs));
+    await Future.delayed(
+        const Duration(milliseconds: growingAnimationTimeInMs));
   }
 
   Future<void> showWeatherAnimation() async {
     state = state.copyWith(showingWeatherAnimation: true);
-    await Future.delayed(const Duration(milliseconds: weatherAnimationTimeInMs));
+    await Future.delayed(
+        const Duration(milliseconds: weatherAnimationTimeInMs));
     state = state.copyWith(showingWeatherAnimation: false);
   }
 

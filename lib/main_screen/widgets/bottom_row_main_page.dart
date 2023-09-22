@@ -54,24 +54,42 @@ class BottomRowMainPage extends ConsumerWidget {
                             );
                           });
                     } else {
-                      ref.read(gameDataNotifierProvider.notifier).checkIfLastLevelWasPlayed();
+                      ref
+                          .read(gameDataNotifierProvider.notifier)
+                          .checkIfLastLevelWasPlayed();
 
-                      ref.read(gameDataNotifierProvider.notifier).randomizeWeatherEvent();
+                      ref
+                          .read(gameDataNotifierProvider.notifier)
+                          .randomizeWeatherEvent();
 
                       ref.read(gameDataNotifierProvider.notifier).saveResult();
 
                       // show weather animation and wait until it is done
-                      await ref.read(gameDataNotifierProvider.notifier).showWeatherAnimation();
+                      await ref
+                          .read(gameDataNotifierProvider.notifier)
+                          .showWeatherAnimation();
 
+                      // check if something has been planted
                       if (ref.read(gameDataNotifierProvider).total[0] > 0) {
                         // show growing animation and wait until it is done
-                        await ref.read(gameDataNotifierProvider.notifier).showGrowingAnimation();
+                        await ref
+                            .read(gameDataNotifierProvider.notifier)
+                            .showGrowingAnimation();
 
                         await Future.delayed(
-                          const Duration(milliseconds: pauseAfterGrowingAnimationInMs),
+                          const Duration(
+                              milliseconds: pauseAfterGrowingAnimationInMs),
+                        );
+
+                        ref
+                            .read(gameDataNotifierProvider.notifier)
+                            .harvestFields();
+
+                        await Future.delayed(
+                          const Duration(
+                              milliseconds: pauseAfterHarvestShownOnFieldInMs),
                         );
                       }
-                      //ref.read(gameDataNotifierProvider.notifier).harvestFields();
 
                       if (context.mounted) {
                         showDialog(

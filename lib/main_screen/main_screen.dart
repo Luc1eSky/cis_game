@@ -1,6 +1,5 @@
 import 'package:cis_game/classes/couple.dart';
 import 'package:cis_game/main_screen/screen_too_small_page.dart';
-import 'package:cis_game/main_screen/widgets/forecast_widget.dart';
 import 'package:cis_game/main_screen/widgets/second_row_main_page.dart';
 import 'package:cis_game/main_screen/widgets/top_row_main_page.dart';
 import 'package:cis_game/main_screen/widgets/weather_widget.dart';
@@ -107,13 +106,7 @@ class LandScapeLayout extends ConsumerWidget {
                 height: secondRowHeight,
                 child: SecondRowMainPage(),
               ),
-              Expanded(
-                flex: 2,
-                child: FractionallySizedBox(
-                  heightFactor: 0.5,
-                  child: ForecastWidget(),
-                ),
-              ),
+              Spacer(flex: 2),
               Expanded(
                 flex: 8,
                 child: FieldsMainPage(),
