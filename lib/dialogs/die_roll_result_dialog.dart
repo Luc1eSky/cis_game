@@ -1,42 +1,108 @@
+import 'package:cis_game/dialogs/choose_player_for_summary_dialog.dart';
 import 'package:cis_game/dialogs/dialog_template.dart';
-import 'package:cis_game/dialogs/warning_dialog.dart';
+import 'package:cis_game/levels/levels.dart';
+import 'package:cis_game/state_management/game_data_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class DieRoleDialog extends ConsumerWidget {
-  const DieRoleDialog({super.key});
+import '../color_palette.dart';
+
+class DieRollDialog extends ConsumerStatefulWidget {
+  const DieRollDialog({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return DialogTemplate(
-      title: const Text('Result of Die Roll'),
-      content: Container(
-        // Add a text field for the enumerator to add in the result of the
-        // die roll
-        // save result of the die roll in the results of the game!!! If there
-        // is a question later about the result
-        color: Colors.blue,
+  ConsumerState<DieRollDialog> createState() => _DieRoleDialogState();
+}
+
+class _DieRoleDialogState extends ConsumerState<DieRollDialog> {
+  int? dropDownValue;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      body: DialogTemplate(
+        title: const Text('Result of Die Roll'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              height: 120,
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('assets/images/12_sided_die_small.png'),
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+            SizedBox(
+              height: 50,
+              child: InputDecorator(
+                decoration: const InputDecoration(border: OutlineInputBorder()),
+                child: DropdownButtonHideUnderline(
+                  child: DropdownButton(
+                      hint: const Text('please select'),
+                      value: dropDownValue,
+                      items: List.generate(
+                        // should be 12 (7 individual and 5 couple)
+                        individualLevels.length + coupleLevels.length,
+                        (index) {
+                          int number = index + 1;
+                          return DropdownMenuItem(
+                            value: number,
+                            child: Text(number.toString()),
+                          );
+                        },
+                      ),
+                      onChanged: (value) {
+                        setState(() {
+                          dropDownValue = value!;
+                        });
+                      }),
+                ),
+              ),
+            ),
+          ],
+        ),
+        actions: [
+          ElevatedButton(
+            onPressed: () {
+              int? dieRollResult = dropDownValue;
+              // show error if nothing is selected
+              if (dieRollResult == null) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    backgroundColor: ColorPalette().snackBar,
+                    content: const Center(
+                      child: Text('Please select die roll result.'),
+                    ),
+                  ),
+                );
+                // do nothing
+                return;
+              }
+
+              // save die roll result in game data
+              ref.read(gameDataNotifierProvider.notifier).setDieRollResult(result: dieRollResult);
+
+              // Close the current dialog
+              Navigator.of(context).pop();
+
+              // open selection dialog
+              showDialog(
+                barrierDismissible: false,
+                context: context,
+                builder: (context) {
+                  // Show the two buttons for wife and couple via a button
+                  // make the buttons showing up dependent on the die roll result
+                  return const ChoosePlayerForSummaryDialog();
+                },
+              );
+            },
+            child: const Text('CONTINUE'),
+          )
+        ],
       ),
-      actions: [
-        ElevatedButton(
-          onPressed: () {
-            // Close the current dialog
-            Navigator.of(context).pop();
-            // This should pop up the summary screens and highlight the row
-            // based on the die roll from this dialog
-            // open warning dialog
-            showDialog(
-              context: context,
-              builder: (context) {
-                // Show the two buttons for wife and couple via a button
-                // make the buttons showing up dependent on the die roll result
-                return const WarningDialog();
-              },
-            );
-          },
-          child: const Text('NEW GAME'),
-        )
-      ],
     );
   }
 }

@@ -20,6 +20,7 @@ class GameData {
   final bool allFieldsAreSeeded;
   final bool showingWeatherAnimation;
   final Enumerator? currentEnumerator;
+  final int? dieRollResult;
 
   // number of zebra fields in fieldLists
   List<int> get zebras {
@@ -102,6 +103,7 @@ class GameData {
     required this.allFieldsAreSeeded,
     this.showingWeatherAnimation = false,
     this.currentEnumerator,
+    this.dieRollResult,
   });
 
   GameData copyWith({
@@ -118,6 +120,7 @@ class GameData {
     bool? allFieldsAreSeeded,
     bool? showingWeatherAnimation,
     Enumerator? currentEnumerator,
+    int? dieRollResult,
   }) {
     return GameData(
       cash: cash ?? this.cash,
@@ -133,6 +136,7 @@ class GameData {
       allFieldsAreSeeded: allFieldsAreSeeded ?? this.allFieldsAreSeeded,
       showingWeatherAnimation: showingWeatherAnimation ?? this.showingWeatherAnimation,
       currentEnumerator: currentEnumerator ?? this.currentEnumerator?.copyWith(),
+      dieRollResult: dieRollResult ?? this.dieRollResult,
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:cis_game/dialogs/die_roll_result_dialog.dart';
 import 'package:cis_game/dialogs/select_new_couple_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -8,7 +9,6 @@ import '../color_palette.dart';
 import '../constants.dart';
 import '../state_management/game_data_notifier.dart';
 import 'choose_player_dialog.dart';
-import 'choose_player_for_summary_dialog.dart';
 
 class PinUnlockDialog extends StatefulWidget {
   const PinUnlockDialog({super.key});
@@ -158,7 +158,7 @@ class _PinUnlockDialogState extends State<PinUnlockDialog> {
                                                 .read(gameDataNotifierProvider)
                                                 .currentCouple
                                                 .everyoneHasPlayed) {
-                                              return const ChoosePlayerForSummaryDialog();
+                                              return const DieRollDialog();
                                             } else {
                                               return const ChoosePlayerDialog();
                                             }

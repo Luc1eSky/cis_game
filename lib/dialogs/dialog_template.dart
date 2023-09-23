@@ -6,11 +6,13 @@ import '../constants.dart';
 class DialogTemplate extends StatelessWidget {
   final Widget? title;
   final Widget content;
+  final bool scrollable;
   final List<Widget>? actions;
   const DialogTemplate({
     this.title,
     required this.content,
     this.actions,
+    this.scrollable = false,
     super.key,
   });
 
@@ -21,6 +23,7 @@ class DialogTemplate extends StatelessWidget {
       return const SizedBox();
     }
     return AlertDialog(
+      scrollable: scrollable,
       backgroundColor: ColorPalette().dialogBackgroundColor,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15),
