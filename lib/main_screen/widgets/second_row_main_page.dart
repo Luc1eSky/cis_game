@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../state_management/game_data_notifier.dart';
+import 'forecast_widget.dart';
 
 class SecondRowMainPage extends ConsumerWidget {
   const SecondRowMainPage({
@@ -26,8 +27,9 @@ class SecondRowMainPage extends ConsumerWidget {
         ),
         const Expanded(
           flex: 4,
-          child: FittedBox(
+          child: Align(
             alignment: Alignment.centerRight,
+            child: ForecastWidget(),
           ),
         ),
       ],

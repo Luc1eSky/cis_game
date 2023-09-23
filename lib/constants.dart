@@ -18,13 +18,14 @@ const double forecastDialogMaxHeight = 800;
 const int weatherAnimationTimeInMs = 5000;
 const int growingAnimationTimeInMs = 3000;
 const int pauseAfterGrowingAnimationInMs = 1000;
+const int pauseAfterHarvestShownOnFieldInMs = 2000;
 
 // starting values for cash and savings
 const double startingCash = 100;
 const double startingSavings = 0;
 
 // transfer step when moving cash between cash and savings
-const int cashTransferStep = 100;
+const int cashTransferStep = 10;
 
 // field parameters
 const int numberOfFields = 10;

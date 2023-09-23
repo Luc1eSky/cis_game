@@ -9,7 +9,8 @@ class ForecastWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    int? currentForecast = ref.watch(gameDataNotifierProvider).currentLevel.rainForecast;
+    int? currentForecast =
+        ref.watch(gameDataNotifierProvider).currentLevel.rainForecast;
     if (currentForecast == null) {
       return Container();
     }
@@ -26,13 +27,10 @@ class ForecastWidget extends ConsumerWidget {
       ),
     );
 
-    return FractionallySizedBox(
-      widthFactor: 0.6,
-      child: FittedBox(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: cloudList,
-        ),
+    return FittedBox(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: cloudList,
       ),
     );
   }
