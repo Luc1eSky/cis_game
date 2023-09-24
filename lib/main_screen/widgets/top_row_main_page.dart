@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../dialogs/select_dialog.dart';
+import '../../dialogs/settings_dialog.dart';
 import '../../state_management/game_data_notifier.dart';
 
 class TopRowMainPage extends ConsumerWidget {
@@ -22,7 +22,7 @@ class TopRowMainPage extends ConsumerWidget {
               showDialog(
                   context: context,
                   builder: (context) {
-                    return const SelectDialog();
+                    return const SettingsDialog();
                   });
             },
             icon: const Icon(Icons.settings),

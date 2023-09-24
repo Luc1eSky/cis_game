@@ -64,7 +64,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                 return const LandScapeLayout();
               },
             ),
-            if (ref.watch(gameDataNotifierProvider).isNewSeason == true &&
+            if (ref.watch(gameDataNotifierProvider).newSeasonHasStarted == true &&
                 ref.watch(gameDataNotifierProvider).currentCouple.currentPlayerType !=
                     PlayerType.none)
               Container(

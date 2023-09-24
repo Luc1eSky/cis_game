@@ -15,7 +15,7 @@ class GameData {
   final Couple currentCouple;
   final SeedType? currentSeedType;
   final int season;
-  final bool isNewSeason;
+  final bool newSeasonHasStarted;
   final bool allFieldsAreSeeded;
   final bool showingWeatherAnimation;
   final Enumerator? currentEnumerator;
@@ -100,7 +100,7 @@ class GameData {
     required this.currentCouple,
     this.currentSeedType,
     required this.season,
-    required this.isNewSeason,
+    required this.newSeasonHasStarted,
     required this.allFieldsAreSeeded,
     this.showingWeatherAnimation = false,
     this.currentEnumerator,
@@ -118,7 +118,7 @@ class GameData {
     Couple? currentCouple,
     SeedType? currentSeedType,
     int? season,
-    bool? isNewSeason,
+    bool? newSeasonHasStarted,
     bool? allFieldsAreSeeded,
     bool? showingWeatherAnimation,
     Enumerator? currentEnumerator,
@@ -135,7 +135,7 @@ class GameData {
       currentCouple: currentCouple ?? this.currentCouple.copyWith(),
       currentSeedType: currentSeedType ?? this.currentSeedType,
       season: season ?? this.season,
-      isNewSeason: isNewSeason ?? this.isNewSeason,
+      newSeasonHasStarted: newSeasonHasStarted ?? this.newSeasonHasStarted,
       allFieldsAreSeeded: allFieldsAreSeeded ?? this.allFieldsAreSeeded,
       showingWeatherAnimation: showingWeatherAnimation ?? this.showingWeatherAnimation,
       currentEnumerator: currentEnumerator ?? this.currentEnumerator?.copyWith(),

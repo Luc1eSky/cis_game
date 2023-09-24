@@ -4,8 +4,8 @@ import 'package:cis_game/state_management/game_data_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class SelectDialog extends ConsumerWidget {
-  const SelectDialog({super.key});
+class SettingsDialog extends ConsumerWidget {
+  const SettingsDialog({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -19,10 +19,10 @@ class SelectDialog extends ConsumerWidget {
 
           if (isInPracticeMode) {
             // create a new plain game data object that doesn't trigger forecast
-            ref.read(gameDataNotifierProvider.notifier).startNewGame(isNewSeason: false);
+            ref.read(gameDataNotifierProvider.notifier).startNewGame(newSeasonHasStarted: false);
           } else {
             // create a new plain game data that triggers forecast right away
-            ref.read(gameDataNotifierProvider.notifier).startNewGame(isNewSeason: true);
+            ref.read(gameDataNotifierProvider.notifier).startNewGame(newSeasonHasStarted: true);
           }
 
           // close dialog

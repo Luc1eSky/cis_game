@@ -139,13 +139,19 @@ class _PinUnlockDialogState extends State<PinUnlockDialog> {
 
                             // add submit button
                             if (number == 12) {
-                              return Consumer(builder: (context, ref, child) {
-                                return PinButton(
-                                  backgroundColor: Colors.green,
-                                  onTapFunction: () {
-                                    if (pinCode == unlockPin) {
-                                      Navigator.of(context).pop();
-                                      showDialog(
+                              return Consumer(
+                                builder: (context, ref, child) {
+                                  return PinButton(
+                                    backgroundColor: Colors.green,
+                                    onTapFunction: () {
+                                      // when code is correct
+                                      if (pinCode == unlockPin) {
+                                        // close pin unlock dialog
+                                        Navigator.of(context).pop();
+
+                                        // show next dialog
+                                        showDialog(
+                                          // don't allow to close without button
                                           barrierDismissible: false,
                                           context: context,
                                           builder: (context) {
@@ -159,24 +165,29 @@ class _PinUnlockDialogState extends State<PinUnlockDialog> {
                                                 .currentCouple
                                                 .everyoneHasPlayed) {
                                               return const DieRollDialog();
-                                            } else {
+                                            }
+                                            // if current couple continuous playing
+                                            // select next player
+                                            else {
                                               return const ChoosePlayerDialog();
                                             }
-                                          });
-                                    } else {
-                                      ScaffoldMessenger.of(context).showSnackBar(
-                                        SnackBar(
-                                          backgroundColor: ColorPalette().snackBar,
-                                          content: const Center(
-                                            child: Text('Code incorrect'),
+                                          },
+                                        );
+                                      } else {
+                                        ScaffoldMessenger.of(context).showSnackBar(
+                                          SnackBar(
+                                            backgroundColor: ColorPalette().snackBar,
+                                            content: const Center(
+                                              child: Text('Code incorrect'),
+                                            ),
                                           ),
-                                        ),
-                                      );
-                                    }
-                                  },
-                                  buttonIconData: Icons.check,
-                                );
-                              });
+                                        );
+                                      }
+                                    },
+                                    buttonIconData: Icons.check,
+                                  );
+                                },
+                              );
                             }
 
                             if (number == 11) {

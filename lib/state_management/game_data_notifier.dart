@@ -35,7 +35,7 @@ class GameDataNotifier extends StateNotifier<GameData> {
             currentCouple: practiceCouple,
             currentSeedType: null,
             season: 1,
-            isNewSeason: true,
+            newSeasonHasStarted: true,
             allFieldsAreSeeded: false,
             currentEnumerator: null,
             isInPracticeMode: true, // start in practice mode
@@ -191,13 +191,13 @@ class GameDataNotifier extends StateNotifier<GameData> {
       currentLevel: state.currentCouple.currentPlayer!.levels[state.levelIndex + 1],
       currentSeedType: null,
       season: state.season + 1,
-      isNewSeason: true,
+      newSeasonHasStarted: true,
       allFieldsAreSeeded: false,
       isInPracticeMode: state.isInPracticeMode,
     );
   }
 
-  void startNewGame({required isNewSeason}) {
+  void startNewGame({required newSeasonHasStarted}) {
     state = state.copyWith(
       cash: startingCash,
       savings: startingSavings,
@@ -213,7 +213,7 @@ class GameDataNotifier extends StateNotifier<GameData> {
       currentCouple: practiceCouple,
       currentSeedType: null,
       season: state.isInPracticeMode ? 1 : 0,
-      isNewSeason: isNewSeason,
+      newSeasonHasStarted: newSeasonHasStarted,
       allFieldsAreSeeded: false,
       isInPracticeMode: state.isInPracticeMode,
     );
@@ -232,7 +232,7 @@ class GameDataNotifier extends StateNotifier<GameData> {
       currentLevel: state.currentCouple.currentPlayer!.levels[0],
       currentSeedType: null,
       season: 1,
-      isNewSeason: true,
+      newSeasonHasStarted: true,
       allFieldsAreSeeded: false,
       isInPracticeMode: state.isInPracticeMode,
       // copied values: savedFieldLists, currentCouple
@@ -240,7 +240,7 @@ class GameDataNotifier extends StateNotifier<GameData> {
   }
 
   void setSeasonToCurrent() {
-    state = state.copyWith(isNewSeason: false);
+    state = state.copyWith(newSeasonHasStarted: false);
   }
 
   void _checkIfAllFieldsSeeded() {
