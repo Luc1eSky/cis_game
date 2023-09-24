@@ -1,5 +1,3 @@
-import 'classes/enumerator.dart';
-
 // pin for enumerators to unlock the next steps
 const String unlockPin = '7532';
 
@@ -25,7 +23,7 @@ const double startingCash = 100;
 const double startingSavings = 0;
 
 // transfer step when moving cash between cash and savings
-const int cashTransferStep = 10;
+const int cashTransferStep = 100;
 
 // field parameters
 const int numberOfFields = 10;
@@ -46,11 +44,3 @@ const String currency = 'kwacha';
 
 // max number of couples per location (for dropdown selection)
 const int maxNumberOfCouplesPerLocation = 99;
-
-// TODO: WHERE TO IMPLEMENT?
-// list of enumerators
-List<Enumerator> enumerators = [
-  Enumerator(firstName: "John", lastName: "Wick"),
-  Enumerator(firstName: "Petite", lastName: "Ecolier"),
-  Enumerator(firstName: "Peter", lastName: "Griffin"),
-];

@@ -1,5 +1,6 @@
 import 'package:cis_game/constants.dart';
 import 'package:cis_game/dialogs/season_summary_dialog.dart';
+import 'package:cis_game/dialogs/warning_use_cash_dialog.dart';
 import 'package:cis_game/main_screen/widgets/savings_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -46,50 +47,36 @@ class BottomRowMainPage extends ConsumerWidget {
                       showDialog(
                           context: context,
                           builder: (BuildContext context) {
-                            return const AlertDialog(
-                              title: Text("Warning"),
-                              content: Text('Please use or '
-                                  'save all '
-                                  'cash'),
-                            );
+                            return const WarningUseCashDialog();
                           });
                     } else {
-                      ref
-                          .read(gameDataNotifierProvider.notifier)
-                          .checkIfLastLevelWasPlayed();
+                      // simulate if it is raining or not
+                      ref.read(gameDataNotifierProvider.notifier).randomizeWeatherEvent();
 
-                      ref
-                          .read(gameDataNotifierProvider.notifier)
-                          .randomizeWeatherEvent();
-
+                      // save the results based on the fields and the weather
                       ref.read(gameDataNotifierProvider.notifier).saveResult();
 
                       // show weather animation and wait until it is done
-                      await ref
-                          .read(gameDataNotifierProvider.notifier)
-                          .showWeatherAnimation();
+                      await ref.read(gameDataNotifierProvider.notifier).showWeatherAnimation();
 
                       // check if something has been planted
                       if (ref.read(gameDataNotifierProvider).total[0] > 0) {
                         // show growing animation and wait until it is done
-                        await ref
-                            .read(gameDataNotifierProvider.notifier)
-                            .showGrowingAnimation();
+                        await ref.read(gameDataNotifierProvider.notifier).showGrowingAnimation();
 
                         await Future.delayed(
-                          const Duration(
-                              milliseconds: pauseAfterGrowingAnimationInMs),
+                          const Duration(milliseconds: pauseAfterGrowingAnimationInMs),
                         );
 
-                        ref
-                            .read(gameDataNotifierProvider.notifier)
-                            .harvestFields();
+                        ref.read(gameDataNotifierProvider.notifier).harvestFields();
 
                         await Future.delayed(
-                          const Duration(
-                              milliseconds: pauseAfterHarvestShownOnFieldInMs),
+                          const Duration(milliseconds: pauseAfterHarvestShownOnFieldInMs),
                         );
                       }
+
+                      // TODO: MOVE TO SEASON SUMMARY?
+                      ref.read(gameDataNotifierProvider.notifier).checkIfLastLevelWasPlayed();
 
                       if (context.mounted) {
                         showDialog(

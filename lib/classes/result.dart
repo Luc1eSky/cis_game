@@ -7,7 +7,6 @@ class Result {
   final Level level;
   final String personalID;
   final PlayerType playerType;
-  final double savings;
   final int zebraFields;
   final int lionFields;
   final int elephantFields;
@@ -15,13 +14,15 @@ class Result {
   final int lionPayout;
   final int elephantPayout;
   final int amountOfPlantedFields;
-  final int totalPayout;
+  final double startingCash;
+  final double savings;
+  final double moneySpent;
+  final double moneyEarned;
 
   Result({
     required this.level,
     required this.personalID,
     required this.playerType,
-    required this.savings,
     required this.zebraFields,
     required this.lionFields,
     required this.elephantFields,
@@ -29,14 +30,16 @@ class Result {
     required this.lionPayout,
     required this.elephantPayout,
     required this.amountOfPlantedFields,
-    required this.totalPayout,
+    required this.startingCash,
+    required this.savings,
+    required this.moneySpent,
+    required this.moneyEarned,
   });
 
   Result copyWith({
     Level? level,
     String? personalID,
     PlayerType? playerType,
-    double? savings,
     int? zebraFields,
     int? lionFields,
     int? elephantFields,
@@ -44,22 +47,30 @@ class Result {
     int? lionPayout,
     int? elephantPayout,
     int? amountOfPlantedFields,
-    int? totalPayout,
+    double? startingCash,
+    double? savings,
+    double? moneySpent,
+    double? moneyEarned,
   }) {
     return Result(
       level: level ?? this.level.copyWith(),
       personalID: personalID ?? this.personalID,
       playerType: playerType ?? this.playerType,
-      savings: savings ?? this.savings,
       zebraFields: zebraFields ?? this.zebraFields,
       lionFields: lionFields ?? this.lionFields,
       elephantFields: elephantFields ?? this.elephantFields,
       zebraPayout: zebraPayout ?? this.zebraPayout,
       lionPayout: lionPayout ?? this.lionPayout,
       elephantPayout: elephantPayout ?? this.elephantPayout,
-      amountOfPlantedFields:
-          amountOfPlantedFields ?? this.amountOfPlantedFields,
-      totalPayout: totalPayout ?? this.totalPayout,
+      amountOfPlantedFields: amountOfPlantedFields ?? this.amountOfPlantedFields,
+      startingCash: startingCash ?? this.startingCash,
+      savings: savings ?? this.savings,
+      moneySpent: moneySpent ?? this.moneySpent,
+      moneyEarned: moneyEarned ?? this.moneyEarned,
     );
+  }
+
+  double get moneyAtEndOfSeason {
+    return savings + moneyEarned;
   }
 }

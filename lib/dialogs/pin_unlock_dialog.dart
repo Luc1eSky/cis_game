@@ -173,7 +173,6 @@ class _PinUnlockDialogState extends State<PinUnlockDialog> {
                                         ),
                                       );
                                     }
-                                    print('submit');
                                   },
                                   buttonIconData: Icons.check,
                                 );
@@ -187,7 +186,6 @@ class _PinUnlockDialogState extends State<PinUnlockDialog> {
                             return PinButton(
                               backgroundColor: Colors.grey[700]!,
                               onTapFunction: () {
-                                print(number);
                                 addNumberToPin(number);
                               },
                               buttonText: number.toString(),

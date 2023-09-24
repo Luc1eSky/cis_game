@@ -1,6 +1,6 @@
 import 'package:cis_game/classes/couple.dart';
+import 'package:cis_game/data/levels.dart';
 import 'package:cis_game/dialogs/dialog_template.dart';
-import 'package:cis_game/levels/levels.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -30,7 +30,7 @@ class GameSummaryDialog extends ConsumerWidget {
             selected: index == dieRollResult,
             cells: <DataCell>[
               DataCell(Text(index.toString())),
-              DataCell(Text(result.totalPayout.toString())),
+              DataCell(Text(result.moneyEarned.toString())),
               DataCell(Text((result.playerType.name).toString())),
             ],
           ),

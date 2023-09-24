@@ -9,7 +9,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../color_palette.dart';
 import '../constants.dart';
 import '../dialogs/forecast_dialog.dart';
-import '../dialogs/pin_unlock_dialog.dart';
 import '../rive/rive_data_notifier.dart';
 import '../state_management/game_data_notifier.dart';
 import 'widgets/bottom_row_main_page.dart';
@@ -27,16 +26,16 @@ class _MainScreenState extends ConsumerState<MainScreen> {
   void initState() {
     ref.read(riveDataNotifierProvider.notifier).loadRiveData();
 
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      if (ref.watch(gameDataNotifierProvider).currentCouple.currentPlayerType == PlayerType.none) {
-        showDialog(
-            barrierDismissible: false,
-            context: context,
-            builder: (context) {
-              return const PinUnlockDialog();
-            });
-      }
-    });
+    // WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    //   if (ref.watch(gameDataNotifierProvider).currentCouple.currentPlayerType == PlayerType.none) {
+    //     showDialog(
+    //         barrierDismissible: false,
+    //         context: context,
+    //         builder: (context) {
+    //           return const PinUnlockDialog();
+    //         });
+    //   }
+    // });
 
     super.initState();
   }

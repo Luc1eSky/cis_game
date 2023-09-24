@@ -79,9 +79,7 @@ class _SeedSelectionState extends ConsumerState<SeedSelectionDialog> {
                   value: seedTypeList[0],
                   groupValue: selectedSeedType,
                   onChanged: (value) {
-                    ref
-                        .read(gameDataNotifierProvider.notifier)
-                        .updateSelection(value);
+                    ref.read(gameDataNotifierProvider.notifier).updateSelection(value);
                     setState(() {
                       selectedSeedType = value;
                     });
@@ -106,9 +104,7 @@ class _SeedSelectionState extends ConsumerState<SeedSelectionDialog> {
                   value: seedTypeList[1],
                   groupValue: selectedSeedType,
                   onChanged: (value) {
-                    ref
-                        .read(gameDataNotifierProvider.notifier)
-                        .updateSelection(value);
+                    ref.read(gameDataNotifierProvider.notifier).updateSelection(value);
                     setState(() {
                       selectedSeedType = value;
                     });
@@ -131,19 +127,19 @@ class _SeedSelectionState extends ConsumerState<SeedSelectionDialog> {
                   value: seedTypeList[2],
                   groupValue: selectedSeedType,
                   onChanged: (value) {
-                    ref
-                        .read(gameDataNotifierProvider.notifier)
-                        .updateSelection(value);
+                    ref.read(gameDataNotifierProvider.notifier).updateSelection(value);
                     setState(() {
                       selectedSeedType = value;
                     });
                   },
                 ),
               ),
-              DataCell(SizedBox(
-                width: 50,
-                child: Image.asset('assets/images/elephant.png'),
-              )),
+              DataCell(
+                SizedBox(
+                  width: 50,
+                  child: Image.asset('assets/images/elephant.png'),
+                ),
+              ),
               DataCell(Text('${seedTypeList[2].price} $currency')),
               DataCell(Text('${seedTypeList[2].yieldNoRain} $currency')),
               DataCell(Text('${seedTypeList[2].yieldRain} $currency')),
@@ -161,9 +157,7 @@ class _SeedSelectionState extends ConsumerState<SeedSelectionDialog> {
         TextButton(
           onPressed: () {
             Navigator.pop(context);
-            ref
-                .read(gameDataNotifierProvider.notifier)
-                .selectSeedTypeAndBuySeed(widget.fieldIndex);
+            ref.read(gameDataNotifierProvider.notifier).selectSeedTypeAndBuySeed(widget.fieldIndex);
           },
           child: const Text('Buy seeds'),
         ),

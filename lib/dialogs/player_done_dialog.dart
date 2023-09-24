@@ -76,6 +76,7 @@ class _SummaryPageState extends ConsumerState<PlayerDoneDialog> {
             // open the dialog to choose a new player
 
             showDialog(
+              barrierDismissible: false,
               context: context,
               builder: (context) {
                 return const PinUnlockDialog();

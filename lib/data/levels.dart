@@ -3,7 +3,7 @@ import '../classes/level.dart';
 List<Level> practiceLevels = [
   Level(
     levelID: "P1",
-    rainForecast: 3,
+    rainForecast: 0,
     isRaining: false,
     plantingAdvice: null,
   ),
@@ -19,6 +19,24 @@ List<Level> practiceLevels = [
     isRaining: false,
     plantingAdvice: null,
   ),
+  // Level(
+  //   levelID: "P4",
+  //   rainForecast: 0,
+  //   isRaining: false,
+  //   plantingAdvice: null,
+  // ),
+  // Level(
+  //   levelID: "P5",
+  //   rainForecast: 1,
+  //   isRaining: false,
+  //   plantingAdvice: null,
+  // ),
+  // Level(
+  //   levelID: "P6",
+  //   rainForecast: 3,
+  //   isRaining: false,
+  //   plantingAdvice: null,
+  // ),
 ];
 
 List<Level> individualLevels = [

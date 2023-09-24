@@ -14,13 +14,13 @@ class GameData {
   final Level currentLevel;
   final Couple currentCouple;
   final SeedType? currentSeedType;
-  // TODO: NEEDED OR MODIFY?
   final int season;
   final bool isNewSeason;
   final bool allFieldsAreSeeded;
   final bool showingWeatherAnimation;
   final Enumerator? currentEnumerator;
   final int? dieRollResult;
+  final bool isInPracticeMode;
 
   // number of zebra fields in fieldLists
   List<int> get zebras {
@@ -62,6 +62,7 @@ class GameData {
   List<int> get elephants {
     int elephants = 0;
     int yieldElephants = 0;
+
     for (Field field in currentFieldList) {
       SeedType? seedType = field.seedType;
       if (seedType != null && seedType.animalName == 'elephant') {
@@ -76,11 +77,11 @@ class GameData {
     return [elephants, yieldElephants];
   }
 
-  // number of total fields in fieldLists
+  // number of total fields in fieldLists and returns from all fields
   List<int> get total {
     return [
       zebras[0] + lions[0] + elephants[0],
-      zebras[1] + lions[1] + elephants[1] + savings.toInt()
+      zebras[1] + lions[1] + elephants[1], // + savings.toInt()
     ];
   }
 
@@ -104,6 +105,7 @@ class GameData {
     this.showingWeatherAnimation = false,
     this.currentEnumerator,
     this.dieRollResult,
+    required this.isInPracticeMode,
   });
 
   GameData copyWith({
@@ -121,6 +123,7 @@ class GameData {
     bool? showingWeatherAnimation,
     Enumerator? currentEnumerator,
     int? dieRollResult,
+    bool? isInPracticeMode,
   }) {
     return GameData(
       cash: cash ?? this.cash,
@@ -137,6 +140,7 @@ class GameData {
       showingWeatherAnimation: showingWeatherAnimation ?? this.showingWeatherAnimation,
       currentEnumerator: currentEnumerator ?? this.currentEnumerator?.copyWith(),
       dieRollResult: dieRollResult ?? this.dieRollResult,
+      isInPracticeMode: isInPracticeMode ?? this.isInPracticeMode,
     );
   }
 }

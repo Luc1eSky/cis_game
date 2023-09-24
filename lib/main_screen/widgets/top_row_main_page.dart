@@ -37,8 +37,9 @@ class TopRowMainPage extends ConsumerWidget {
                 const SizedBox(width: 10),
                 FittedBox(
                   child: Text(
-                    // TODO: GET FROM GAME DATA
-                    'Enumerator: ${ref.watch(gameDataNotifierProvider).currentEnumerator?.firstName ?? ""}',
+                    ref.watch(gameDataNotifierProvider).isInPracticeMode
+                        ? 'Practice Mode'
+                        : 'Enumerator: ${ref.watch(gameDataNotifierProvider).currentEnumerator?.firstName ?? ""}',
                     style: const TextStyle(fontSize: 100),
                   ),
                 ),

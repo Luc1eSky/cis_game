@@ -1,6 +1,6 @@
+import 'package:cis_game/data/levels.dart';
 import 'package:cis_game/dialogs/choose_player_for_summary_dialog.dart';
 import 'package:cis_game/dialogs/dialog_template.dart';
-import 'package:cis_game/levels/levels.dart';
 import 'package:cis_game/state_management/game_data_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

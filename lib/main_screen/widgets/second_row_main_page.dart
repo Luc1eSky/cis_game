@@ -20,7 +20,9 @@ class SecondRowMainPage extends ConsumerWidget {
           child: FittedBox(
             alignment: Alignment.centerLeft,
             child: Text(
-              'Participant: ${ref.watch(gameDataNotifierProvider).currentCouple.currentPlayer?.formattedID ?? ""}',
+              ref.watch(gameDataNotifierProvider).isInPracticeMode
+                  ? ' '
+                  : 'Participant: ${ref.watch(gameDataNotifierProvider).currentCouple.currentPlayer?.formattedID ?? ""}',
               style: const TextStyle(fontSize: 100),
             ),
           ),

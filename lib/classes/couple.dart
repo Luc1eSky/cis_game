@@ -1,3 +1,5 @@
+import 'package:cis_game/data/levels.dart';
+
 import 'level.dart';
 
 class Couple {
@@ -66,12 +68,6 @@ enum PlayerType {
   both,
 }
 
-List<String> allLocations = [
-  'AAA',
-  'BBB',
-  'CCC',
-];
-
 // class to store personal ID and if the person has played
 class Person {
   final String personalID;
@@ -104,9 +100,10 @@ class Person {
   String get formattedID {
     String firstLetter = personalID.substring(0, 1);
     String location = personalID.substring(1, 4);
-    String number = personalID.substring(4);
+    String session = personalID.substring(4, 6);
+    String number = personalID.substring(personalID.length - 2);
 
-    return '$firstLetter-$location-$number';
+    return '$firstLetter-$location-$session-$number';
   }
 }
 
@@ -118,11 +115,12 @@ List<Level> copyLevels(List<Level> listToCopy) {
   return copiedLevels;
 }
 
-Couple dummyCouple = Couple(
+Couple practiceCouple = Couple(
+  currentPlayerType: PlayerType.both,
   both: Person(
-    personalID: 'test',
+    personalID: 'Practice Mode !!!',
     hasPlayed: false,
-    levels: [],
+    levels: practiceLevels,
     playerType: PlayerType.both,
   ),
   wife: Person(

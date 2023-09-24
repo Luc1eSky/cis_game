@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:cis_game/classes/couple.dart';
 import 'package:cis_game/classes/enumerator.dart';
+import 'package:cis_game/dialogs/dialog_template.dart';
 import 'package:cis_game/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -10,7 +11,7 @@ import '../classes/field.dart';
 import '../classes/level.dart';
 import '../classes/result.dart';
 import '../constants.dart';
-import '../levels/levels.dart';
+import '../data/levels.dart';
 import 'game_data.dart';
 
 final gameDataNotifierProvider =
@@ -29,14 +30,15 @@ class GameDataNotifier extends StateNotifier<GameData> {
             ),
             savedResults: [],
             levelIndex: 0,
-            currentLevel: placeholderLevel,
-            // initialize first couple with dummy information
-            currentCouple: dummyCouple,
+            currentLevel: practiceLevels[0],
+            // initialize first couple with practice level information
+            currentCouple: practiceCouple,
             currentSeedType: null,
             season: 1,
             isNewSeason: true,
             allFieldsAreSeeded: false,
             currentEnumerator: null,
+            isInPracticeMode: true, // start in practice mode
           ),
         );
 
@@ -157,7 +159,7 @@ class GameDataNotifier extends StateNotifier<GameData> {
         builder: (BuildContext context) {
           // show alert dialog if the user does not have enough cash left to
           // buy seed
-          return AlertDialog(
+          return DialogTemplate(
             title: const Text('Not Enough Cash'),
             content: const Text('You do not have enough cash to buy this seed'
                 '.'),
@@ -184,13 +186,14 @@ class GameDataNotifier extends StateNotifier<GameData> {
         numberOfFields,
         (index) => Field(fieldStatus: FieldStatus.empty),
       ),
+      // increase level by one
       levelIndex: state.levelIndex + 1,
       currentLevel: state.currentCouple.currentPlayer!.levels[state.levelIndex + 1],
       currentSeedType: null,
       season: state.season + 1,
       isNewSeason: true,
       allFieldsAreSeeded: false,
-      // copied values: savedFieldLists, currentCouple
+      isInPracticeMode: state.isInPracticeMode,
     );
   }
 
@@ -205,36 +208,18 @@ class GameDataNotifier extends StateNotifier<GameData> {
       ),
       savedResults: [],
       levelIndex: 0,
-      currentLevel: placeholderLevel,
+      currentLevel: practiceLevels[0],
       // initialize first couple with dummy information
-      currentCouple: Couple(
-        both: Person(
-          personalID: 'test',
-          hasPlayed: false,
-          levels: [],
-          playerType: PlayerType.both,
-        ),
-        wife: Person(
-          personalID: 'test',
-          hasPlayed: false,
-          levels: [],
-          playerType: PlayerType.wife,
-        ),
-        husband: Person(
-          personalID: 'test',
-          hasPlayed: false,
-          levels: [],
-          playerType: PlayerType.husband,
-        ),
-      ),
+      currentCouple: practiceCouple,
       currentSeedType: null,
-      season: 0,
+      season: state.isInPracticeMode ? 1 : 0,
       isNewSeason: true,
       allFieldsAreSeeded: false,
+      isInPracticeMode: state.isInPracticeMode,
     );
   }
 
-  void startNewSeasonAsNewPlayer() {
+  void startNewGameAsNewPlayer() {
     state = state.copyWith(
       cash: startingCash,
       savings: startingSavings,
@@ -249,6 +234,7 @@ class GameDataNotifier extends StateNotifier<GameData> {
       season: 1,
       isNewSeason: true,
       allFieldsAreSeeded: false,
+      isInPracticeMode: state.isInPracticeMode,
       // copied values: savedFieldLists, currentCouple
     );
   }
@@ -352,10 +338,11 @@ class GameDataNotifier extends StateNotifier<GameData> {
     state = state.copyWith(
       currentCouple: state.currentCouple.copyWith(currentPlayerType: newPlayerType),
     );
-    startNewSeasonAsNewPlayer();
+    startNewGameAsNewPlayer();
   }
 
   void checkIfLastLevelWasPlayed() {
+    // otherwise check if it was the last level of the current player
     if (state.levelIndex + 1 == state.currentCouple.currentPlayer!.levels.length) {
       _setCurrentPlayerToHasPlayed();
     }
@@ -392,8 +379,9 @@ class GameDataNotifier extends StateNotifier<GameData> {
     // create new result object from current data
     Result newResult = Result(
       level: state.currentLevel,
-      personalID: state.currentCouple.currentPlayer!.personalID,
+      personalID: state.currentCouple.currentPlayer?.personalID ?? '',
       playerType: state.currentCouple.currentPlayerType,
+      startingCash: startingCash,
       savings: state.savings,
       zebraFields: state.zebras[0],
       lionFields: state.lions[0],
@@ -402,7 +390,8 @@ class GameDataNotifier extends StateNotifier<GameData> {
       lionPayout: state.lions[1],
       elephantPayout: state.elephants[1],
       amountOfPlantedFields: state.total[0],
-      totalPayout: state.total[1],
+      moneySpent: startingCash - state.savings,
+      moneyEarned: state.total[1].toDouble(),
     );
     // get a copy of results list
     List<Result> currentResults = copySavedResults(state.savedResults);

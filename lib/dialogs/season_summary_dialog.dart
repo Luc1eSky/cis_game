@@ -22,7 +22,10 @@ class _SummaryPageState extends ConsumerState<SeasonSummaryDialog> {
       content: Container(
         //color: Colors.blue,
         child: Text(
-          'Payoff: ${result.totalPayout.toString()} $currency',
+          'Money at beginning of season: ${result.startingCash} $currency\n'
+          'Money Spent: ${result.moneySpent} $currency\n'
+          'Money earned: ${result.moneyEarned} $currency\n'
+          'Money at end of season: ${result.moneyAtEndOfSeason} $currency',
           style: const TextStyle(fontSize: 20),
         ),
       ),
@@ -53,40 +56,51 @@ class _SummaryPageState extends ConsumerState<SeasonSummaryDialog> {
       // ],
 
       actions: [
-        ref
-                .read(gameDataNotifierProvider)
-                .currentCouple
-                .currentPlayer!
-                .hasPlayed
+        // if player has not yet finished their levels
+        !ref.read(gameDataNotifierProvider).currentCouple.currentPlayer!.hasPlayed
             ? ElevatedButton(
                 onPressed: () {
-                  // Close the current dialog
+                  // close the current dialog
                   Navigator.of(context).pop();
-                  // open a dialog for the enumerator to get results of one person
-
-                  showDialog(
-                      barrierDismissible: false,
-                      context: context,
-                      builder: (context) {
-                        return const PlayerDoneDialog();
-                      });
-                },
-                child: Text(
-                  ref
-                          .read(gameDataNotifierProvider)
-                          .currentCouple
-                          .everyoneHasPlayed
-                      ? 'Summary Page'
-                      : 'Next Player',
-                ),
-              )
-            : ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).pop(); // Close the current dialog
+                  // start a new season with the next level
                   ref.read(gameDataNotifierProvider.notifier).startNewSeason();
                 },
                 child: const Text('Next Season'),
               )
+            :
+            // if the player has finished their levels and is in practice mode
+            ref.read(gameDataNotifierProvider).isInPracticeMode
+                ? ElevatedButton(
+                    onPressed: () {
+                      // Close the current dialog
+                      Navigator.of(context).pop();
+                      // start a new game (is in practice mode by default)
+                      ref.read(gameDataNotifierProvider.notifier).startNewGame();
+                    },
+                    child: const Text('Keep Practicing'),
+                  )
+                :
+                // if the player has finished their levels and is NOT in practice mode
+                ElevatedButton(
+                    onPressed: () {
+                      // close the current dialog
+                      Navigator.of(context).pop();
+                      // ask player to hand tablet to enumerator
+                      showDialog(
+                        barrierDismissible: false,
+                        context: context,
+                        builder: (context) {
+                          return const PlayerDoneDialog();
+                        },
+                      );
+                    },
+                    child: Text(
+                      // change text of button based on if everyone has played already
+                      ref.read(gameDataNotifierProvider).currentCouple.everyoneHasPlayed
+                          ? 'Summary Page'
+                          : 'Next Player',
+                    ),
+                  ),
       ],
     );
   }
