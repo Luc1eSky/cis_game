@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../dialogs/select_dialog.dart';
 import '../../state_management/game_data_notifier.dart';
 
 class TopRowMainPage extends ConsumerWidget {
@@ -18,12 +19,11 @@ class TopRowMainPage extends ConsumerWidget {
             iconSize: 100,
             onPressed: () {
               // TODO: OPEN SETTINGS TO CHANGE PARTICIPANT
-              print('Icon pressed');
-              // showDialog(
-              //     context: context,
-              //     builder: (context) {
-              //       return Container();
-              //     });
+              showDialog(
+                  context: context,
+                  builder: (context) {
+                    return const SelectDialog();
+                  });
             },
             icon: const Icon(Icons.settings),
           ),

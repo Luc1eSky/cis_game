@@ -14,7 +14,6 @@ class ForecastDialog extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     double dialogHeight = min(MediaQuery.of(context).size.height, forecastDialogMaxHeight);
-
     return SizedBox(
       height: dialogHeight,
       child: DialogTemplate(

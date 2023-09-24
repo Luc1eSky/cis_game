@@ -197,7 +197,7 @@ class GameDataNotifier extends StateNotifier<GameData> {
     );
   }
 
-  void startNewGame() {
+  void startNewGame({required isNewSeason}) {
     state = state.copyWith(
       cash: startingCash,
       savings: startingSavings,
@@ -213,7 +213,7 @@ class GameDataNotifier extends StateNotifier<GameData> {
       currentCouple: practiceCouple,
       currentSeedType: null,
       season: state.isInPracticeMode ? 1 : 0,
-      isNewSeason: true,
+      isNewSeason: isNewSeason,
       allFieldsAreSeeded: false,
       isInPracticeMode: state.isInPracticeMode,
     );
@@ -433,5 +433,9 @@ class GameDataNotifier extends StateNotifier<GameData> {
 
   void setDieRollResult({required int result}) {
     state = state.copyWith(dieRollResult: result);
+  }
+
+  void changeGameMode() {
+    state = state.copyWith(isInPracticeMode: !state.isInPracticeMode);
   }
 }

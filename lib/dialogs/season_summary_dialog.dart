@@ -75,7 +75,7 @@ class _SummaryPageState extends ConsumerState<SeasonSummaryDialog> {
                       // Close the current dialog
                       Navigator.of(context).pop();
                       // start a new game (is in practice mode by default)
-                      ref.read(gameDataNotifierProvider.notifier).startNewGame();
+                      ref.read(gameDataNotifierProvider.notifier).startNewGame(isNewSeason: true);
                     },
                     child: const Text('Keep Practicing'),
                   )

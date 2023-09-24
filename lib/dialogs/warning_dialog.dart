@@ -44,7 +44,8 @@ class WarningDialog extends ConsumerWidget {
           onPressed: () {
             // Close the current dialog
             Navigator.of(context).pop();
-            ref.read(gameDataNotifierProvider.notifier).startNewGame();
+            // create a new plain game data object that doesn't trigger forecast
+            ref.read(gameDataNotifierProvider.notifier).startNewGame(isNewSeason: false);
             // open the dialog to choose a new player
             showDialog(
               barrierDismissible: false,

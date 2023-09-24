@@ -118,7 +118,7 @@ List<Level> copyLevels(List<Level> listToCopy) {
 Couple practiceCouple = Couple(
   currentPlayerType: PlayerType.both,
   both: Person(
-    personalID: 'Practice Mode !!!',
+    personalID: 'test',
     hasPlayed: false,
     levels: practiceLevels,
     playerType: PlayerType.both,
