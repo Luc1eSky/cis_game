@@ -13,6 +13,9 @@ class SettingsDialog extends ConsumerWidget {
     return DialogTemplate(
       title: const Text('Settings'),
       content: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: isInPracticeMode ? Colors.deepOrange : Colors.green,
+        ),
         onPressed: () {
           // change game mode
           ref.read(gameDataNotifierProvider.notifier).changeGameMode();
@@ -43,6 +46,14 @@ class SettingsDialog extends ConsumerWidget {
           isInPracticeMode ? 'CHANGE TO REAL MODE' : 'CHANGE TO PRACTICE MODE',
         ),
       ),
+      actions: [
+        ElevatedButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          child: const Text('Close'),
+        )
+      ],
     );
   }
 }
