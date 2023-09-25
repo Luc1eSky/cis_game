@@ -1,5 +1,5 @@
 import 'package:cis_game/dialogs/dialog_template.dart';
-import 'package:cis_game/dialogs/pin_unlock_dialog.dart';
+import 'package:cis_game/dialogs/select_new_couple_dialog.dart';
 import 'package:cis_game/state_management/game_data_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -34,7 +34,7 @@ class SettingsDialog extends ConsumerWidget {
               barrierDismissible: false,
               context: context,
               builder: (context) {
-                return const PinUnlockDialog();
+                return const SelectNewCoupleDialog();
               },
             );
           }

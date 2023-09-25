@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:cis_game/dialogs/die_roll_result_dialog.dart';
 import 'package:cis_game/dialogs/select_new_couple_dialog.dart';
+import 'package:cis_game/dialogs/settings_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -11,7 +12,11 @@ import '../state_management/game_data_notifier.dart';
 import 'choose_player_dialog.dart';
 
 class PinUnlockDialog extends StatefulWidget {
-  const PinUnlockDialog({super.key});
+  final bool showSettings;
+  const PinUnlockDialog({
+    this.showSettings = false,
+    super.key,
+  });
 
   @override
   State<PinUnlockDialog> createState() => _PinUnlockDialogState();
@@ -149,30 +154,41 @@ class _PinUnlockDialogState extends State<PinUnlockDialog> {
                                         // close pin unlock dialog
                                         Navigator.of(context).pop();
 
-                                        // show next dialog
-                                        showDialog(
-                                          // don't allow to close without button
-                                          barrierDismissible: false,
-                                          context: context,
-                                          builder: (context) {
-                                            if (ref
-                                                .read(gameDataNotifierProvider)
-                                                .currentCouple
-                                                .nooneHasPlayed) {
-                                              return const SelectNewCoupleDialog();
-                                            } else if (ref
-                                                .read(gameDataNotifierProvider)
-                                                .currentCouple
-                                                .everyoneHasPlayed) {
-                                              return const DieRollDialog();
-                                            }
-                                            // if current couple continuous playing
-                                            // select next player
-                                            else {
-                                              return const ChoosePlayerDialog();
-                                            }
-                                          },
-                                        );
+                                        if (widget.showSettings) {
+                                          // show next dialog
+                                          showDialog(
+                                              // don't allow to close without button
+                                              barrierDismissible: false,
+                                              context: context,
+                                              builder: (context) {
+                                                return const SettingsDialog();
+                                              });
+                                        } else {
+                                          // show next dialog
+                                          showDialog(
+                                            // don't allow to close without button
+                                            barrierDismissible: false,
+                                            context: context,
+                                            builder: (context) {
+                                              if (ref
+                                                  .read(gameDataNotifierProvider)
+                                                  .currentCouple
+                                                  .nooneHasPlayed) {
+                                                return const SelectNewCoupleDialog();
+                                              } else if (ref
+                                                  .read(gameDataNotifierProvider)
+                                                  .currentCouple
+                                                  .everyoneHasPlayed) {
+                                                return const DieRollDialog();
+                                              }
+                                              // if current couple continuous playing
+                                              // select next player
+                                              else {
+                                                return const ChoosePlayerDialog();
+                                              }
+                                            },
+                                          );
+                                        }
                                       } else {
                                         ScaffoldMessenger.of(context).showSnackBar(
                                           SnackBar(
