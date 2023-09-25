@@ -39,7 +39,7 @@ class TopRowMainPage extends ConsumerWidget {
                   child: Text(
                     ref.watch(gameDataNotifierProvider).isInPracticeMode
                         ? 'Practice Mode'
-                        : 'Enumerator: ${ref.watch(gameDataNotifierProvider).currentEnumerator?.firstName ?? ""}',
+                        : 'Participant: ${ref.watch(gameDataNotifierProvider).currentCouple.currentPlayer?.formattedID ?? ""}',
                     style: const TextStyle(fontSize: 100),
                   ),
                 ),

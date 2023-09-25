@@ -23,6 +23,7 @@ class _SummaryPageState extends ConsumerState<SeasonSummaryDialog> {
         //color: Colors.blue,
         child: Text(
           'Money at beginning of season: ${result.startingCash} $currency\n'
+          'Money saved during the season: ${result.startingCash - result.moneySpent} $currency\n'
           'Money Spent: ${result.moneySpent} $currency\n'
           'Money earned: ${result.moneyEarned} $currency\n'
           'Money at end of season: ${result.moneyAtEndOfSeason} $currency',
@@ -57,7 +58,11 @@ class _SummaryPageState extends ConsumerState<SeasonSummaryDialog> {
 
       actions: [
         // if player has not yet finished their levels
-        !ref.read(gameDataNotifierProvider).currentCouple.currentPlayer!.hasPlayed
+        !ref
+                .read(gameDataNotifierProvider)
+                .currentCouple
+                .currentPlayer!
+                .hasPlayed
             ? ElevatedButton(
                 onPressed: () {
                   // close the current dialog
@@ -98,7 +103,10 @@ class _SummaryPageState extends ConsumerState<SeasonSummaryDialog> {
                     },
                     child: Text(
                       // change text of button based on if everyone has played already
-                      ref.read(gameDataNotifierProvider).currentCouple.everyoneHasPlayed
+                      ref
+                              .read(gameDataNotifierProvider)
+                              .currentCouple
+                              .everyoneHasPlayed
                           ? 'Summary Page'
                           : 'Next Player',
                     ),

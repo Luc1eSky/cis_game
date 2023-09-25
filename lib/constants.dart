@@ -43,4 +43,5 @@ const int noForecastRainChance = 4; // 80% chance when no forecast
 const String currency = 'kwacha';
 
 // max number of couples per location (for dropdown selection)
-const int maxNumberOfCouplesPerLocation = 99;
+const int maxNumberOfCouplesPerLocation = 12;
+const int maxNumberOnDie = 12;
