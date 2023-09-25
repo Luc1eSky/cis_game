@@ -1,7 +1,7 @@
+import 'package:cis_game/dialogs/pin_unlock_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../dialogs/settings_dialog.dart';
 import '../../state_management/game_data_notifier.dart';
 
 class TopRowMainPage extends ConsumerWidget {
@@ -18,11 +18,11 @@ class TopRowMainPage extends ConsumerWidget {
           child: IconButton(
             iconSize: 100,
             onPressed: () {
-              // TODO: OPEN SETTINGS TO CHANGE PARTICIPANT
+              // unlock via pin before showing settings
               showDialog(
                   context: context,
                   builder: (context) {
-                    return const SettingsDialog();
+                    return const PinUnlockDialog(showSettings: true);
                   });
             },
             icon: const Icon(Icons.settings),
