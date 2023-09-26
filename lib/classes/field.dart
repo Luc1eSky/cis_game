@@ -1,4 +1,4 @@
-import 'package:flutter/painting.dart';
+import 'package:flutter/material.dart';
 
 import '../color_palette.dart';
 
@@ -47,10 +47,19 @@ SeedType normalMaturingHighYield = SeedType(
     seedColor: ColorPalette().seedNormalMaturingHighYield,
     animalImage: 'elephant.png');
 
+SeedType none = SeedType(
+    animalName: '',
+    price: 0,
+    yieldNoRain: 0,
+    yieldRain: 0,
+    seedColor: Colors.transparent,
+    animalImage: '');
+
 List<SeedType> seedTypeList = [
   earlyMaturing,
   normalMaturing,
-  normalMaturingHighYield
+  normalMaturingHighYield,
+  none
 ];
 
 class SeedType {

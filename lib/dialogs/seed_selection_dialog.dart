@@ -29,8 +29,8 @@ class _SeedSelectionState extends ConsumerState<SeedSelectionDialog> {
       title: Text('Select seed type for field ${widget.fieldIndex + 1}'),
       // content
       content: DataTable(
-        columns: const <DataColumn>[
-          DataColumn(
+        columns: <DataColumn>[
+          const DataColumn(
             label: Expanded(
               child: Text(
                 '',
@@ -40,35 +40,33 @@ class _SeedSelectionState extends ConsumerState<SeedSelectionDialog> {
           ),
           DataColumn(
             label: Expanded(
-              child: Text(
-                'Seed Type',
-                style: TextStyle(fontStyle: FontStyle.italic),
+              child: SizedBox(
+                width: 50,
+                child: Image.asset('assets/images/plant_icon_color.png'),
               ),
             ),
           ),
           DataColumn(
             label: Expanded(
-              child: Text(
-                'price ',
-                style: TextStyle(fontStyle: FontStyle.italic),
+              child: SizedBox(
+                width: 50,
+                child: Image.asset('assets/images/K100_note.jpeg'),
               ),
             ),
           ),
-          DataColumn(
+          const DataColumn(
             label: Expanded(
-              child: Text(
-                'yield no rain',
-                style: TextStyle(fontStyle: FontStyle.italic),
-              ),
-            ),
+                child: Icon(
+              Icons.cloud,
+              color: Colors.grey,
+            )),
           ),
-          DataColumn(
+          const DataColumn(
             label: Expanded(
-              child: Text(
-                'yield rain',
-                style: TextStyle(fontStyle: FontStyle.italic),
-              ),
-            ),
+                child: Icon(
+              Icons.cloudy_snowing,
+              color: Colors.blue,
+            )),
           ),
         ],
         rows: <DataRow>[
@@ -79,7 +77,9 @@ class _SeedSelectionState extends ConsumerState<SeedSelectionDialog> {
                   value: seedTypeList[0],
                   groupValue: selectedSeedType,
                   onChanged: (value) {
-                    ref.read(gameDataNotifierProvider.notifier).updateSelection(value);
+                    ref
+                        .read(gameDataNotifierProvider.notifier)
+                        .updateSelection(value);
                     setState(() {
                       selectedSeedType = value;
                     });
@@ -104,7 +104,9 @@ class _SeedSelectionState extends ConsumerState<SeedSelectionDialog> {
                   value: seedTypeList[1],
                   groupValue: selectedSeedType,
                   onChanged: (value) {
-                    ref.read(gameDataNotifierProvider.notifier).updateSelection(value);
+                    ref
+                        .read(gameDataNotifierProvider.notifier)
+                        .updateSelection(value);
                     setState(() {
                       selectedSeedType = value;
                     });
@@ -127,7 +129,9 @@ class _SeedSelectionState extends ConsumerState<SeedSelectionDialog> {
                   value: seedTypeList[2],
                   groupValue: selectedSeedType,
                   onChanged: (value) {
-                    ref.read(gameDataNotifierProvider.notifier).updateSelection(value);
+                    ref
+                        .read(gameDataNotifierProvider.notifier)
+                        .updateSelection(value);
                     setState(() {
                       selectedSeedType = value;
                     });
@@ -145,6 +149,34 @@ class _SeedSelectionState extends ConsumerState<SeedSelectionDialog> {
               DataCell(Text('${seedTypeList[2].yieldRain} $currency')),
             ],
           ),
+          DataRow(
+            cells: <DataCell>[
+              DataCell(
+                Radio<SeedType>(
+                  value: none,
+                  groupValue: selectedSeedType,
+                  onChanged: (value) {
+                    ref
+                        .read(gameDataNotifierProvider.notifier)
+                        .updateSelection(value);
+                    setState(() {
+                      selectedSeedType = value;
+                    });
+                  },
+                ),
+              ),
+              DataCell(
+                SizedBox(
+                  width: 40,
+                  height: 40,
+                  child: Image.asset('assets/images/cash_box.png'),
+                ),
+              ),
+              const DataCell(Text('')),
+              const DataCell(Text('')),
+              const DataCell(Text('')),
+            ],
+          ),
         ],
       ),
       actions: [
@@ -157,7 +189,9 @@ class _SeedSelectionState extends ConsumerState<SeedSelectionDialog> {
         TextButton(
           onPressed: () {
             Navigator.pop(context);
-            ref.read(gameDataNotifierProvider.notifier).selectSeedTypeAndBuySeed(widget.fieldIndex);
+            ref
+                .read(gameDataNotifierProvider.notifier)
+                .selectSeedTypeAndBuySeed(widget.fieldIndex);
           },
           child: const Text('Buy seeds'),
         ),
