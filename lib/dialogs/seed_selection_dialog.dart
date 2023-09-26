@@ -168,6 +168,7 @@ class _SeedSelectionState extends ConsumerState<SeedSelectionDialog> {
               DataCell(
                 SizedBox(
                   width: 50,
+                  height: 40,
                   child: Image.asset('assets/images/cash_box.png'),
                 ),
               ),
