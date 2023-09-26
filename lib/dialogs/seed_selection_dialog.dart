@@ -153,7 +153,7 @@ class _SeedSelectionState extends ConsumerState<SeedSelectionDialog> {
             cells: <DataCell>[
               DataCell(
                 Radio<SeedType>(
-                  value: none,
+                  value: seedTypeList[3],
                   groupValue: selectedSeedType,
                   onChanged: (value) {
                     ref
@@ -167,14 +167,13 @@ class _SeedSelectionState extends ConsumerState<SeedSelectionDialog> {
               ),
               DataCell(
                 SizedBox(
-                  width: 40,
-                  height: 40,
+                  width: 50,
                   child: Image.asset('assets/images/cash_box.png'),
                 ),
               ),
-              const DataCell(Text('')),
-              const DataCell(Text('')),
-              const DataCell(Text('')),
+              DataCell(Text('')),
+              DataCell(Text('')),
+              DataCell(Text('')),
             ],
           ),
         ],

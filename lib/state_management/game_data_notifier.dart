@@ -130,6 +130,7 @@ class GameDataNotifier extends StateNotifier<GameData> {
     if (selectedSeedType == null) {
       return;
     }
+    print(selectedSeedType.animalName);
     List<Field> updatedFieldList = [];
     double priceToPay = selectedSeedType.price -
         (state.currentFieldList[fieldIndex].seedType?.price ?? 0);
@@ -140,9 +141,9 @@ class GameDataNotifier extends StateNotifier<GameData> {
         // update list with new field for the field clicked and seedType
         // selected
         if (index == fieldIndex) {
-          if (SeedType == none) {
+          if (selectedSeedType == noneForUnplant) {
             updatedFieldList.add(
-              Field(seedType: none, fieldStatus: FieldStatus.empty),
+              Field(seedType: noneForUnplant, fieldStatus: FieldStatus.empty),
             );
           } else {
             updatedFieldList.add(
@@ -186,6 +187,10 @@ class GameDataNotifier extends StateNotifier<GameData> {
         },
       );
     }
+  }
+
+  void unplantSeed() {
+    state = state.copyWith(cash: state.cash + state.currentSeedType!.price);
   }
 
   void startNewSeason() {

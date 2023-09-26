@@ -47,7 +47,7 @@ SeedType normalMaturingHighYield = SeedType(
     seedColor: ColorPalette().seedNormalMaturingHighYield,
     animalImage: 'elephant.png');
 
-SeedType none = SeedType(
+SeedType noneForUnplant = SeedType(
     animalName: '',
     price: 0,
     yieldNoRain: 0,
@@ -59,7 +59,7 @@ List<SeedType> seedTypeList = [
   earlyMaturing,
   normalMaturing,
   normalMaturingHighYield,
-  none
+  noneForUnplant,
 ];
 
 class SeedType {
