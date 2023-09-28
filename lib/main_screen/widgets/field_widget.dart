@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../classes/field.dart';
+import '../../classes/seed_type.dart';
 import '../../color_palette.dart';
 import '../../constants.dart';
 import '../../dialogs/seed_selection_dialog.dart';

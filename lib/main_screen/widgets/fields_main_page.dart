@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../color_palette.dart';
+import '../../data/seedtypes.dart';
 import '../../state_management/game_data_notifier.dart';
 import 'field_widget.dart';
 import 'legend_widget.dart';
@@ -25,7 +26,8 @@ class FieldsMainPage extends ConsumerWidget {
       double fieldAreaWidthUnrestricted = maxHeight * fieldAreaAspectRatio;
       double fieldAreaWidthRestricted = maxWidth - legendWidth;
       // use smaller width as the actual width for widget
-      double actualFieldAreaWidth = min(fieldAreaWidthUnrestricted, fieldAreaWidthRestricted);
+      double actualFieldAreaWidth =
+          min(fieldAreaWidthUnrestricted, fieldAreaWidthRestricted);
 
       double theoreticalAreaHeight = maxWidth / fieldAreaAspectRatio;
 
@@ -56,24 +58,15 @@ class FieldsMainPage extends ConsumerWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         AnimalLegend(
-                          color: ColorPalette().seedEarlyMaturing,
-                          animalString: 'zebra',
-                          rainDropString: 'drop',
-                          price: 2,
+                          legendSeedType: seedTypeZebra,
                         ),
                         //const Spacer(),
                         AnimalLegend(
-                          color: ColorPalette().seedNormalMaturing,
-                          animalString: 'lion',
-                          rainDropString: 'drops',
-                          price: 3,
+                          legendSeedType: seedTypeLion,
                         ),
                         //const Spacer(),
                         AnimalLegend(
-                          color: ColorPalette().seedNormalMaturingHighYield,
-                          animalString: 'elephant',
-                          rainDropString: 'dropsandplus',
-                          price: 5,
+                          legendSeedType: seedTypeElephant,
                         ),
                       ],
                     ),
@@ -107,30 +100,21 @@ class FieldsMainPage extends ConsumerWidget {
                     Expanded(
                       flex: 3,
                       child: AnimalLegend(
-                        color: ColorPalette().seedEarlyMaturing,
-                        animalString: 'zebra',
-                        rainDropString: 'drop',
-                        price: 2,
+                        legendSeedType: seedTypeZebra,
                       ),
                     ),
                     const Spacer(),
                     Expanded(
                       flex: 3,
                       child: AnimalLegend(
-                        color: ColorPalette().seedNormalMaturing,
-                        animalString: 'lion',
-                        rainDropString: 'drops',
-                        price: 3,
+                        legendSeedType: seedTypeLion,
                       ),
                     ),
                     const Spacer(),
                     Expanded(
                       flex: 3,
                       child: AnimalLegend(
-                        color: ColorPalette().seedNormalMaturingHighYield,
-                        animalString: 'elephant',
-                        rainDropString: 'dropsandplus',
-                        price: 5,
+                        legendSeedType: seedTypeElephant,
                       ),
                     ),
                   ],
@@ -170,9 +154,14 @@ class FieldAreaWidget extends ConsumerWidget {
               heightFactor: 0.8,
               child: FieldWidget(
                 fieldID: index,
-                fieldStatus:
-                    ref.watch(gameDataNotifierProvider).currentFieldList[index].fieldStatus,
-                seedType: ref.watch(gameDataNotifierProvider).currentFieldList[index].seedType,
+                fieldStatus: ref
+                    .watch(gameDataNotifierProvider)
+                    .currentFieldList[index]
+                    .fieldStatus,
+                seedType: ref
+                    .watch(gameDataNotifierProvider)
+                    .currentFieldList[index]
+                    .seedType,
               ),
             ),
           ),

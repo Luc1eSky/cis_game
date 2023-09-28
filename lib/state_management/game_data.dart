@@ -4,6 +4,7 @@ import '../classes/couple.dart';
 import '../classes/field.dart';
 import '../classes/level.dart';
 import '../classes/result.dart';
+import '../classes/seed_type.dart';
 
 class GameData {
   final double cash;
@@ -128,7 +129,8 @@ class GameData {
     return GameData(
       cash: cash ?? this.cash,
       savings: savings ?? this.savings,
-      currentFieldList: currentFieldList ?? copyFieldList(this.currentFieldList),
+      currentFieldList:
+          currentFieldList ?? copyFieldList(this.currentFieldList),
       savedResults: savedResults ?? copySavedResults(this.savedResults),
       levelIndex: levelIndex ?? this.levelIndex,
       currentLevel: currentLevel ?? this.currentLevel.copyWith(),
@@ -137,8 +139,10 @@ class GameData {
       season: season ?? this.season,
       newSeasonHasStarted: newSeasonHasStarted ?? this.newSeasonHasStarted,
       allFieldsAreSeeded: allFieldsAreSeeded ?? this.allFieldsAreSeeded,
-      showingWeatherAnimation: showingWeatherAnimation ?? this.showingWeatherAnimation,
-      currentEnumerator: currentEnumerator ?? this.currentEnumerator?.copyWith(),
+      showingWeatherAnimation:
+          showingWeatherAnimation ?? this.showingWeatherAnimation,
+      currentEnumerator:
+          currentEnumerator ?? this.currentEnumerator?.copyWith(),
       dieRollResult: dieRollResult ?? this.dieRollResult,
       isInPracticeMode: isInPracticeMode ?? this.isInPracticeMode,
     );

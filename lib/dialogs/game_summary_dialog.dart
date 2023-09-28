@@ -30,7 +30,7 @@ class GameSummaryDialog extends ConsumerWidget {
             selected: index == dieRollResult,
             cells: <DataCell>[
               DataCell(Text(index.toString())),
-              DataCell(Text(result.moneyEarned.toString())),
+              DataCell(Text(result.moneyAtEndOfSeason.toString())),
               DataCell(Text((result.playerType.name).toString())),
             ],
           ),

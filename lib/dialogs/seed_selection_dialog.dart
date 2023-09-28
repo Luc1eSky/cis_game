@@ -1,8 +1,9 @@
-import 'package:cis_game/classes/field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../classes/seed_type.dart';
 import '../constants.dart';
+import '../data/seedtypes.dart';
 import '../state_management/game_data_notifier.dart';
 
 class SeedSelectionDialog extends ConsumerStatefulWidget {
@@ -169,12 +170,12 @@ class _SeedSelectionState extends ConsumerState<SeedSelectionDialog> {
                 SizedBox(
                   width: 50,
                   height: 40,
-                  child: Image.asset('assets/images/cash_box.png'),
+                  child: Image.asset('assets/images/K100_note.jpeg'),
                 ),
               ),
-              DataCell(Text('')),
-              DataCell(Text('')),
-              DataCell(Text('')),
+              const DataCell(Text('')),
+              const DataCell(Text('')),
+              const DataCell(Text('')),
             ],
           ),
         ],
@@ -193,7 +194,7 @@ class _SeedSelectionState extends ConsumerState<SeedSelectionDialog> {
                 .read(gameDataNotifierProvider.notifier)
                 .selectSeedTypeAndBuySeed(widget.fieldIndex);
           },
-          child: const Text('Buy seeds'),
+          child: const Text('Confirm'),
         ),
       ],
     );

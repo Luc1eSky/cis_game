@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:cis_game/classes/couple.dart';
 import 'package:cis_game/classes/enumerator.dart';
+import 'package:cis_game/data/seedtypes.dart';
 import 'package:cis_game/dialogs/dialog_template.dart';
 import 'package:cis_game/main.dart';
 import 'package:flutter/material.dart';
@@ -10,8 +11,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../classes/field.dart';
 import '../classes/level.dart';
 import '../classes/result.dart';
+import '../classes/seed_type.dart';
 import '../constants.dart';
 import '../data/levels.dart';
+import '../dialogs/not_enough_cash.dart';
 import 'game_data.dart';
 
 final gameDataNotifierProvider =
@@ -27,7 +30,8 @@ class GameDataNotifier extends StateNotifier<GameData> {
             // generates initial list of fields that are empty
             currentFieldList: List.generate(
               numberOfFields,
-              (index) => Field(fieldStatus: FieldStatus.empty),
+              (index) =>
+                  Field(fieldStatus: FieldStatus.empty, seedType: seedTypeNone),
             ),
             savedResults: [],
             levelIndex: 0,
@@ -130,7 +134,7 @@ class GameDataNotifier extends StateNotifier<GameData> {
     if (selectedSeedType == null) {
       return;
     }
-    print(selectedSeedType.animalName);
+    //print(selectedSeedType.animalName);
     List<Field> updatedFieldList = [];
     double priceToPay = selectedSeedType.price -
         (state.currentFieldList[fieldIndex].seedType?.price ?? 0);
@@ -141,11 +145,13 @@ class GameDataNotifier extends StateNotifier<GameData> {
         // update list with new field for the field clicked and seedType
         // selected
         if (index == fieldIndex) {
-          if (selectedSeedType == noneForUnplant) {
+          // case where the field gets unplanted
+          if (selectedSeedType == seedTypeNone) {
             updatedFieldList.add(
-              Field(seedType: noneForUnplant, fieldStatus: FieldStatus.empty),
+              Field(seedType: seedTypeNone, fieldStatus: FieldStatus.empty),
             );
           } else {
+            // buy seed for specific field
             updatedFieldList.add(
               Field(
                   seedType: selectedSeedType, fieldStatus: FieldStatus.seeded),
@@ -189,6 +195,46 @@ class GameDataNotifier extends StateNotifier<GameData> {
     }
   }
 
+  void plantAllFields(SeedType selectedSeedType) {
+    List<Field> updatedFieldList = [];
+    // go through the list of fields
+    int emptyFieldCounter = 0;
+    for (int index = 0; index < state.currentFieldList.length; index++) {
+      if (state.currentFieldList[index].seedType.animalName == '') {
+        emptyFieldCounter++;
+      }
+    }
+    double priceToPay = emptyFieldCounter * selectedSeedType.price;
+
+    if (state.cash >= priceToPay) {
+      for (int index = 0; index < state.currentFieldList.length; index++) {
+        // update list with new field for the field clicked and seedType
+        // selected
+        if (state.currentFieldList[index].seedType.animalName == "") {
+          // update cash and check if there is enough cash
+          updatedFieldList.add(Field(
+              seedType: selectedSeedType, fieldStatus: FieldStatus.seeded));
+        } else {
+          updatedFieldList.add(state.currentFieldList[index].copyWith());
+        }
+      }
+      state = state.copyWith(
+          currentFieldList: updatedFieldList, cash: state.cash - priceToPay);
+    } else {
+      showDialog(
+          context: navigatorKey.currentContext!,
+          builder: (context) {
+            return const NotEnoughCash();
+          });
+    }
+
+    // change the state by creating a new game data object with the new
+    // list of fields
+
+    // check if all fields have been seeded
+    //_checkIfAllFieldsSeeded();
+  }
+
   void unplantSeed() {
     state = state.copyWith(cash: state.cash + state.currentSeedType!.price);
   }
@@ -200,7 +246,8 @@ class GameDataNotifier extends StateNotifier<GameData> {
       // generates initial list of fields that are empty
       currentFieldList: List.generate(
         numberOfFields,
-        (index) => Field(fieldStatus: FieldStatus.empty),
+        (index) =>
+            Field(fieldStatus: FieldStatus.empty, seedType: seedTypeNone),
       ),
       // increase level by one
       levelIndex: state.levelIndex + 1,
@@ -221,7 +268,8 @@ class GameDataNotifier extends StateNotifier<GameData> {
       // generates initial list of fields that are empty
       currentFieldList: List.generate(
         numberOfFields,
-        (index) => Field(fieldStatus: FieldStatus.empty),
+        (index) =>
+            Field(fieldStatus: FieldStatus.empty, seedType: seedTypeNone),
       ),
       savedResults: [],
       levelIndex: 0,
@@ -243,7 +291,8 @@ class GameDataNotifier extends StateNotifier<GameData> {
       // generates initial list of fields that are empty
       currentFieldList: List.generate(
         numberOfFields,
-        (index) => Field(fieldStatus: FieldStatus.empty),
+        (index) =>
+            Field(fieldStatus: FieldStatus.empty, seedType: seedTypeNone),
       ),
       levelIndex: 0,
       currentLevel: state.currentCouple.currentPlayer!.levels[0],
