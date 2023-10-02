@@ -37,7 +37,7 @@ const double legendAspectRatio = 0.5;
 // forecast parameters
 const int maxNumberForecast = 5;
 const int thresholdLowRain = 3;
-const int noForecastRainChance = 4; // 80% chance when no forecast
+const int noForecastRainChance = 2; // 80% chance when no forecast
 
 // currency string
 const String currency = 'kwacha';

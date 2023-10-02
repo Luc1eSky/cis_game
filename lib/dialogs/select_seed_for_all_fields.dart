@@ -30,8 +30,8 @@ class PlantAllFieldDialog extends ConsumerWidget {
             ref
                 .read(gameDataNotifierProvider.notifier)
                 .plantAllFields(selectedSeedType);
-            print('Print from Dialog');
-            print(selectedSeedType.animalName);
+            // print('Print from Dialog');
+            // print(selectedSeedType.animalName);
           },
           child: const Text('Plant all fields'),
         ),

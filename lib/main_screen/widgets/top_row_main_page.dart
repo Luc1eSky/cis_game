@@ -30,7 +30,7 @@ class TopRowMainPage extends ConsumerWidget {
           ),
         ),
         Expanded(
-          flex: 11,
+          flex: 4,
           child: FittedBox(
             alignment: Alignment.centerLeft,
             child: Row(
@@ -45,6 +45,16 @@ class TopRowMainPage extends ConsumerWidget {
                   ),
                 ),
               ],
+            ),
+          ),
+        ),
+        Expanded(
+          flex: 4,
+          child: FittedBox(
+            alignment: Alignment.center,
+            child: Text(
+              'Level ID: ${ref.watch(gameDataNotifierProvider).currentLevel.levelID}',
+              style: const TextStyle(fontSize: 100, color: Colors.red),
             ),
           ),
         ),
