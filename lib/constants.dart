@@ -45,3 +45,8 @@ const String currency = 'kwacha';
 // max number of couples per location (for dropdown selection)
 const int maxNumberOfCouplesPerLocation = 12;
 const int maxNumberOnDie = 12;
+
+// Advice for planting
+const String adviceZebra = 'Advice: Plant Zebra';
+const String adviceLion = 'Advice: Plant Lion';
+const String adviceElephant = 'Advice: Plant Elephant';

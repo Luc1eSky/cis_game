@@ -11,12 +11,8 @@ class PlantAllFieldDialog extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return DialogTemplate(
-      content: const SizedBox(
-        width: 50,
-        child: Text(
-          "Plant all empty fields",
-        ),
-      ),
+      title: const Text('Plant all fields'),
+      content: Image.asset('assets/images/all_zebra.png'),
       actions: [
         ElevatedButton(
           onPressed: () {

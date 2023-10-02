@@ -1,3 +1,5 @@
+import 'package:cis_game/constants.dart';
+
 import '../classes/level.dart';
 
 List<Level> practiceLevels = [
@@ -11,7 +13,7 @@ List<Level> practiceLevels = [
     levelID: "P2",
     rainForecast: 5,
     isRaining: false,
-    plantingAdvice: 'Advice: Plant Elephant',
+    plantingAdvice: adviceElephant,
   ),
   Level(
     levelID: "P3",
@@ -75,7 +77,7 @@ List<Level> individualLevels = [
     levelID: "I2",
     rainForecast: 1,
     isRaining: false,
-    plantingAdvice: 'Advice: Plant Zebra',
+    plantingAdvice: adviceZebra,
   ),
   Level(
     levelID: "I3",
@@ -106,7 +108,7 @@ List<Level> individualLevels = [
     levelID: "I7",
     rainForecast: 4,
     isRaining: false,
-    plantingAdvice: 'Advice: Plant Elephant',
+    plantingAdvice: adviceElephant,
   ),
 ];
 
@@ -115,7 +117,7 @@ List<Level> coupleLevels = [
     levelID: "C1",
     rainForecast: 2,
     isRaining: false,
-    plantingAdvice: 'Advice: Plant Zebra',
+    plantingAdvice: adviceZebra,
   ),
   Level(
     levelID: "C2",
