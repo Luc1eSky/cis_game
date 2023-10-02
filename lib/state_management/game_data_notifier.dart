@@ -2,12 +2,15 @@ import 'dart:math';
 
 import 'package:cis_game/classes/couple.dart';
 import 'package:cis_game/classes/enumerator.dart';
+import 'package:cis_game/data/alternative_levels.dart';
 import 'package:cis_game/data/seedtypes.dart';
 import 'package:cis_game/dialogs/dialog_template.dart';
 import 'package:cis_game/main.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../classes/alternative_level_bundle.dart';
 import '../classes/field.dart';
 import '../classes/level.dart';
 import '../classes/result.dart';
@@ -18,8 +21,7 @@ import '../dialogs/not_enough_cash.dart';
 import 'game_data.dart';
 
 final gameDataNotifierProvider =
-    StateNotifierProvider<GameDataNotifier, GameData>(
-        (ref) => GameDataNotifier());
+    StateNotifierProvider<GameDataNotifier, GameData>((ref) => GameDataNotifier());
 
 class GameDataNotifier extends StateNotifier<GameData> {
   GameDataNotifier()
@@ -30,8 +32,7 @@ class GameDataNotifier extends StateNotifier<GameData> {
             // generates initial list of fields that are empty
             currentFieldList: List.generate(
               numberOfFields,
-              (index) =>
-                  Field(fieldStatus: FieldStatus.empty, seedType: seedTypeNone),
+              (index) => Field(fieldStatus: FieldStatus.empty, seedType: seedTypeNone),
             ),
             savedResults: [],
             levelIndex: 0,
@@ -107,8 +108,7 @@ class GameDataNotifier extends StateNotifier<GameData> {
     List<Field> growFieldList = [];
     for (int index = 0; index < state.currentFieldList.length; index++) {
       if (state.currentFieldList[index].fieldStatus != FieldStatus.empty) {
-        growFieldList.add(state.currentFieldList[index]
-            .copyWith(fieldStatus: FieldStatus.grown));
+        growFieldList.add(state.currentFieldList[index].copyWith(fieldStatus: FieldStatus.grown));
       } else {
         growFieldList.add(state.currentFieldList[index].copyWith());
       }
@@ -120,8 +120,8 @@ class GameDataNotifier extends StateNotifier<GameData> {
     List<Field> harvestFieldList = [];
     for (int index = 0; index < state.currentFieldList.length; index++) {
       if (state.currentFieldList[index].fieldStatus != FieldStatus.empty) {
-        harvestFieldList.add(state.currentFieldList[index]
-            .copyWith(fieldStatus: FieldStatus.harvested));
+        harvestFieldList
+            .add(state.currentFieldList[index].copyWith(fieldStatus: FieldStatus.harvested));
       } else {
         harvestFieldList.add(state.currentFieldList[index].copyWith());
       }
@@ -136,8 +136,8 @@ class GameDataNotifier extends StateNotifier<GameData> {
     }
     //print(selectedSeedType.animalName);
     List<Field> updatedFieldList = [];
-    double priceToPay = selectedSeedType.price -
-        (state.currentFieldList[fieldIndex].seedType?.price ?? 0);
+    double priceToPay =
+        selectedSeedType.price - (state.currentFieldList[fieldIndex].seedType.price);
     // Check if user has enough cash to buy the selected seed
     if (state.cash >= priceToPay) {
       // go through the list of fields
@@ -153,8 +153,7 @@ class GameDataNotifier extends StateNotifier<GameData> {
           } else {
             // buy seed for specific field
             updatedFieldList.add(
-              Field(
-                  seedType: selectedSeedType, fieldStatus: FieldStatus.seeded),
+              Field(seedType: selectedSeedType, fieldStatus: FieldStatus.seeded),
             );
           }
           // adjust cash based on seed price
@@ -212,14 +211,12 @@ class GameDataNotifier extends StateNotifier<GameData> {
         // selected
         if (state.currentFieldList[index].seedType.animalName == "") {
           // update cash and check if there is enough cash
-          updatedFieldList.add(Field(
-              seedType: selectedSeedType, fieldStatus: FieldStatus.seeded));
+          updatedFieldList.add(Field(seedType: selectedSeedType, fieldStatus: FieldStatus.seeded));
         } else {
           updatedFieldList.add(state.currentFieldList[index].copyWith());
         }
       }
-      state = state.copyWith(
-          currentFieldList: updatedFieldList, cash: state.cash - priceToPay);
+      state = state.copyWith(currentFieldList: updatedFieldList, cash: state.cash - priceToPay);
     } else {
       showDialog(
           context: navigatorKey.currentContext!,
@@ -246,13 +243,11 @@ class GameDataNotifier extends StateNotifier<GameData> {
       // generates initial list of fields that are empty
       currentFieldList: List.generate(
         numberOfFields,
-        (index) =>
-            Field(fieldStatus: FieldStatus.empty, seedType: seedTypeNone),
+        (index) => Field(fieldStatus: FieldStatus.empty, seedType: seedTypeNone),
       ),
       // increase level by one
       levelIndex: state.levelIndex + 1,
-      currentLevel:
-          state.currentCouple.currentPlayer!.levels[state.levelIndex + 1],
+      currentLevel: state.currentCouple.currentPlayer!.levels[state.levelIndex + 1],
       currentSeedType: null,
       season: state.season + 1,
       newSeasonHasStarted: true,
@@ -268,8 +263,7 @@ class GameDataNotifier extends StateNotifier<GameData> {
       // generates initial list of fields that are empty
       currentFieldList: List.generate(
         numberOfFields,
-        (index) =>
-            Field(fieldStatus: FieldStatus.empty, seedType: seedTypeNone),
+        (index) => Field(fieldStatus: FieldStatus.empty, seedType: seedTypeNone),
       ),
       savedResults: [],
       levelIndex: 0,
@@ -291,8 +285,7 @@ class GameDataNotifier extends StateNotifier<GameData> {
       // generates initial list of fields that are empty
       currentFieldList: List.generate(
         numberOfFields,
-        (index) =>
-            Field(fieldStatus: FieldStatus.empty, seedType: seedTypeNone),
+        (index) => Field(fieldStatus: FieldStatus.empty, seedType: seedTypeNone),
       ),
       levelIndex: 0,
       currentLevel: state.currentCouple.currentPlayer!.levels[0],
@@ -320,6 +313,68 @@ class GameDataNotifier extends StateNotifier<GameData> {
     state = state.copyWith(allFieldsAreSeeded: allFieldsPlanted);
   }
 
+  List<Level> createLevelListWithAlternatives({
+    required String coupleID,
+    required List<Level> originalLevelList,
+    required PlayerType playerType,
+  }) {
+    List<Level> levelListWithAlternatives = [];
+
+    // get ID number from couple ID
+    int idNumber = int.parse(coupleID.substring(coupleID.length - 2));
+
+    // for each level
+    for (Level level in originalLevelList) {
+      // get alternative levels for level ID (or null)
+      AlternativeLevels? altLevels = allAlternativeLevels
+          .firstWhereOrNull((altLevels) => altLevels.linkedLevelId == level.levelID);
+      // if alternatives do not exists
+      if (altLevels == null) {
+        // copy original level
+        levelListWithAlternatives.add(level.copyWith());
+      }
+      // if alternatives exist
+      else {
+        // get length of alternative levels
+        int altLevelsLength = altLevels.levels.length;
+
+        // and find alternative level
+        int? groupNumber;
+        Level? alternativeLevel;
+        for (int i = 1; i <= altLevelsLength; i++) {
+          if ((idNumber - i) % altLevelsLength == 0) {
+            groupNumber = i;
+            if (playerType == PlayerType.wife) {
+              AlternativeLevelBundle altLevelBundle = altLevels.levels[groupNumber - 1];
+              alternativeLevel = altLevelBundle.wifeLevel.copyWith();
+            }
+            if (playerType == PlayerType.husband) {
+              AlternativeLevelBundle altLevelBundle = altLevels.levels[groupNumber - 1];
+              alternativeLevel = altLevelBundle.husbandLevel.copyWith();
+            }
+            break;
+          }
+        }
+
+        // check if alternative level is null
+        if (alternativeLevel == null) {
+          debugPrint('ERROR - COULD NOT FIND ALTERNATIVE LEVEL FOR');
+          debugPrint('LEVEL ID: ${level.levelID}');
+          debugPrint('CALCULATED GROUP NUMBER: $groupNumber');
+          debugPrint('PLAYER TYPE: ${playerType.name}');
+          // copy original level
+          levelListWithAlternatives.add(level.copyWith());
+        }
+        // add alternative level
+        else {
+          levelListWithAlternatives.add(alternativeLevel);
+        }
+      }
+    }
+
+    return levelListWithAlternatives;
+  }
+
   void changeCouple({required String newCoupleID}) {
     // creating individual IDs from couple ID
     String newWifeID = 'W${newCoupleID.substring(1)}';
@@ -333,6 +388,14 @@ class GameDataNotifier extends StateNotifier<GameData> {
     // shuffle list randomly
     copiedWifeLevels.shuffle();
 
+    // replace levels with alternatives based on
+    // levelID, PlayerType, and coupleID
+    List<Level> wifeLevelsWithAlternatives = createLevelListWithAlternatives(
+      coupleID: newCoupleID,
+      originalLevelList: copiedWifeLevels,
+      playerType: PlayerType.wife,
+    );
+
     // copy individual level list
     List<Level> copiedHusbandLevels = [];
     for (Level level in individualLevels) {
@@ -341,6 +404,14 @@ class GameDataNotifier extends StateNotifier<GameData> {
     // shuffle list randomly
     copiedHusbandLevels.shuffle();
 
+    // replace levels with alternatives based on
+    // levelID, PlayerType, and coupleID
+    List<Level> husbandLevelsWithAlternatives = createLevelListWithAlternatives(
+      coupleID: newCoupleID,
+      originalLevelList: copiedHusbandLevels,
+      playerType: PlayerType.husband,
+    );
+
     // take 4 levels for each participant
     // List<Level> wifeLevels =
     //     copiedIndividualLevels.sublist(0, copiedIndividualLevels.length ~/ 2);
@@ -348,15 +419,17 @@ class GameDataNotifier extends StateNotifier<GameData> {
     //     copiedIndividualLevels.sublist(copiedIndividualLevels.length ~/ 2);
 
     print('husband:');
-    for (Level level in copiedHusbandLevels) {
+    for (Level level in husbandLevelsWithAlternatives) {
       print(level.levelID);
       print(level.rainForecast);
+      print(level.plantingAdvice);
       print('---');
     }
     print('wife:');
-    for (Level level in copiedWifeLevels) {
+    for (Level level in wifeLevelsWithAlternatives) {
       print(level.levelID);
       print(level.rainForecast);
+      print(level.plantingAdvice);
       print('---');
     }
 
@@ -368,12 +441,12 @@ class GameDataNotifier extends StateNotifier<GameData> {
     // shuffle list randomly
     copiedCoupleLevels.shuffle();
 
-    print('couple:');
-    for (Level level in copiedCoupleLevels) {
-      print(level.levelID);
-      print(level.rainForecast);
-      print('---');
-    }
+    // print('couple:');
+    // for (Level level in copiedCoupleLevels) {
+    //   print(level.levelID);
+    //   print(level.rainForecast);
+    //   print('---');
+    // }
 
     Couple newCouple = Couple(
       both: Person(
@@ -385,13 +458,13 @@ class GameDataNotifier extends StateNotifier<GameData> {
       wife: Person(
         personalID: newWifeID,
         hasPlayed: false,
-        levels: copiedWifeLevels,
+        levels: wifeLevelsWithAlternatives,
         playerType: PlayerType.wife,
       ),
       husband: Person(
         personalID: newHusbandID,
         hasPlayed: false,
-        levels: copiedHusbandLevels,
+        levels: husbandLevelsWithAlternatives,
         playerType: PlayerType.husband,
       ),
     );
@@ -402,16 +475,14 @@ class GameDataNotifier extends StateNotifier<GameData> {
   // change the current player and start first level
   void changePlayer({required PlayerType newPlayerType}) {
     state = state.copyWith(
-      currentCouple:
-          state.currentCouple.copyWith(currentPlayerType: newPlayerType),
+      currentCouple: state.currentCouple.copyWith(currentPlayerType: newPlayerType),
     );
     startNewGameAsNewPlayer();
   }
 
   void checkIfLastLevelWasPlayed() {
     // otherwise check if it was the last level of the current player
-    if (state.levelIndex + 1 ==
-        state.currentCouple.currentPlayer!.levels.length) {
+    if (state.levelIndex + 1 == state.currentCouple.currentPlayer!.levels.length) {
       _setCurrentPlayerToHasPlayed();
     }
   }
@@ -430,19 +501,16 @@ class GameDataNotifier extends StateNotifier<GameData> {
 
     // copy couple with the updated person
     if (currentPlayer.playerType == PlayerType.wife) {
-      state = state.copyWith(
-          currentCouple:
-              state.currentCouple.copyWith(wife: currentPlayerHasPlayed));
+      state =
+          state.copyWith(currentCouple: state.currentCouple.copyWith(wife: currentPlayerHasPlayed));
     }
     if (currentPlayer.playerType == PlayerType.husband) {
       state = state.copyWith(
-          currentCouple:
-              state.currentCouple.copyWith(husband: currentPlayerHasPlayed));
+          currentCouple: state.currentCouple.copyWith(husband: currentPlayerHasPlayed));
     }
     if (currentPlayer.playerType == PlayerType.both) {
-      state = state.copyWith(
-          currentCouple:
-              state.currentCouple.copyWith(both: currentPlayerHasPlayed));
+      state =
+          state.copyWith(currentCouple: state.currentCouple.copyWith(both: currentPlayerHasPlayed));
     }
   }
 
@@ -481,8 +549,7 @@ class GameDataNotifier extends StateNotifier<GameData> {
     print('The random number: $intValue');
     if (intValue <= rainForecast) {
       print('It rains');
-      state = state.copyWith(
-          currentLevel: state.currentLevel.copyWith(isRaining: true));
+      state = state.copyWith(currentLevel: state.currentLevel.copyWith(isRaining: true));
     } else {
       print('It does not rain');
     }
@@ -490,14 +557,12 @@ class GameDataNotifier extends StateNotifier<GameData> {
 
   Future<void> showGrowingAnimation() async {
     growFields();
-    await Future.delayed(
-        const Duration(milliseconds: growingAnimationTimeInMs));
+    await Future.delayed(const Duration(milliseconds: growingAnimationTimeInMs));
   }
 
   Future<void> showWeatherAnimation() async {
     state = state.copyWith(showingWeatherAnimation: true);
-    await Future.delayed(
-        const Duration(milliseconds: weatherAnimationTimeInMs));
+    await Future.delayed(const Duration(milliseconds: weatherAnimationTimeInMs));
     state = state.copyWith(showingWeatherAnimation: false);
   }
 

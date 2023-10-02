@@ -26,7 +26,7 @@ class SecondRowMainPage extends ConsumerWidget {
         //     ),
         //   ),
         // ),
-        const Expanded(
+        Expanded(
           flex: 4,
           child: Align(
             alignment: Alignment.centerRight,

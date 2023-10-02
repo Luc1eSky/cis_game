@@ -57,32 +57,63 @@ class _PinUnlockDialogState extends State<PinUnlockDialog> {
     }
     double dialogHeight = min(MediaQuery.of(context).size.height * 0.7, pinUnlockDialogMaxHeight);
     double dialogWidth = dialogHeight / 5.5 * 3;
-    return Scaffold(
-      backgroundColor: Colors.transparent,
-      body: Center(
-        child: Container(
-          decoration: BoxDecoration(
-            color: Colors.grey[800],
-            borderRadius: BorderRadius.circular(dialogWidth * 0.10),
-          ),
-          child: Padding(
-            padding: EdgeInsets.all(dialogWidth * 0.08),
-            child: SizedBox(
-              height: dialogHeight,
-              width: dialogWidth,
-              child: Column(
-                children: [
-                  Expanded(
-                    flex: 8,
+    return AlertDialog(
+      // titlePadding: EdgeInsets.zero,
+      // iconPadding: EdgeInsets.zero,
+      contentPadding: EdgeInsets.zero,
+      // actionsPadding: EdgeInsets.zero,
+
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(dialogWidth * 0.10),
+      ),
+      content: Container(
+        decoration: BoxDecoration(
+          color: Colors.grey[800],
+          borderRadius: BorderRadius.circular(dialogWidth * 0.10),
+        ),
+        child: Padding(
+          padding: EdgeInsets.all(dialogWidth * 0.08),
+          child: SizedBox(
+            height: dialogHeight,
+            width: dialogWidth,
+            child: Column(
+              children: [
+                Expanded(
+                  flex: 8,
+                  child: Container(
+                    //color: Colors.yellow,
+                    child: const FractionallySizedBox(
+                      widthFactor: 0.8,
+                      heightFactor: 0.8,
+                      child: FittedBox(
+                        child: Text(
+                          'Enumerator unlock',
+                          style: TextStyle(
+                            fontSize: 100,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  flex: 16,
+                  child: FractionallySizedBox(
+                    widthFactor: 0.6,
+                    heightFactor: 0.8,
                     child: Container(
-                      //color: Colors.yellow,
-                      child: const FractionallySizedBox(
-                        widthFactor: 0.8,
-                        heightFactor: 0.8,
+                      decoration: BoxDecoration(
+                        color: Colors.grey[700],
+                        borderRadius: BorderRadius.circular(dialogWidth * 0.06),
+                      ),
+                      child: FractionallySizedBox(
+                        widthFactor: 0.7,
+                        heightFactor: 0.7,
                         child: FittedBox(
                           child: Text(
-                            'Enumerator unlock',
-                            style: TextStyle(
+                            formatPinCode(pinCode),
+                            style: const TextStyle(
                               fontSize: 100,
                               color: Colors.white,
                             ),
@@ -91,139 +122,113 @@ class _PinUnlockDialogState extends State<PinUnlockDialog> {
                       ),
                     ),
                   ),
-                  Expanded(
-                    flex: 16,
-                    child: FractionallySizedBox(
-                      widthFactor: 0.6,
-                      heightFactor: 0.8,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.grey[700],
-                          borderRadius: BorderRadius.circular(dialogWidth * 0.06),
-                        ),
-                        child: FractionallySizedBox(
-                          widthFactor: 0.7,
-                          heightFactor: 0.7,
-                          child: FittedBox(
-                            child: Text(
-                              formatPinCode(pinCode),
-                              style: const TextStyle(
-                                fontSize: 100,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    flex: 69,
-                    child: FractionallySizedBox(
-                      widthFactor: 0.9,
-                      heightFactor: 0.9,
-                      child: GridView.count(
-                        crossAxisCount: 3,
-                        mainAxisSpacing: dialogWidth * 0.07,
-                        crossAxisSpacing: dialogWidth * 0.07,
-                        children: List.generate(
-                          12,
-                          (index) {
-                            int number = index + 1;
+                ),
+                Expanded(
+                  flex: 69,
+                  child: FractionallySizedBox(
+                    widthFactor: 0.9,
+                    heightFactor: 0.9,
+                    child: GridView.count(
+                      crossAxisCount: 3,
+                      mainAxisSpacing: dialogWidth * 0.07,
+                      crossAxisSpacing: dialogWidth * 0.07,
+                      children: List.generate(
+                        12,
+                        (index) {
+                          int number = index + 1;
 
-                            // add delete button
-                            if (number == 10) {
-                              return PinButton(
-                                backgroundColor: Colors.red,
-                                onTapFunction: () {
-                                  deleteLastNumber();
-                                },
-                                buttonIconData: Icons.backspace_outlined,
-                              );
-                            }
+                          // add delete button
+                          if (number == 10) {
+                            return PinButton(
+                              backgroundColor: Colors.red,
+                              onTapFunction: () {
+                                deleteLastNumber();
+                              },
+                              buttonIconData: Icons.backspace_outlined,
+                            );
+                          }
 
-                            // add submit button
-                            if (number == 12) {
-                              return Consumer(
-                                builder: (context, ref, child) {
-                                  return PinButton(
-                                    backgroundColor: Colors.green,
-                                    onTapFunction: () {
-                                      // when code is correct
-                                      if (pinCode == unlockPin) {
-                                        // close pin unlock dialog
-                                        Navigator.of(context).pop();
+                          // add submit button
+                          if (number == 12) {
+                            return Consumer(
+                              builder: (context, ref, child) {
+                                return PinButton(
+                                  backgroundColor: Colors.green,
+                                  onTapFunction: () {
+                                    // when code is correct
+                                    if (pinCode == unlockPin) {
+                                      // close pin unlock dialog
+                                      Navigator.of(context).pop();
 
-                                        if (widget.showSettings) {
-                                          // show next dialog
-                                          showDialog(
-                                              // don't allow to close without button
-                                              barrierDismissible: false,
-                                              context: context,
-                                              builder: (context) {
-                                                return const SettingsDialog();
-                                              });
-                                        } else {
-                                          // show next dialog
-                                          showDialog(
+                                      if (widget.showSettings) {
+                                        // show next dialog
+                                        showDialog(
                                             // don't allow to close without button
                                             barrierDismissible: false,
                                             context: context,
                                             builder: (context) {
-                                              if (ref
-                                                  .read(gameDataNotifierProvider)
-                                                  .currentCouple
-                                                  .nooneHasPlayed) {
-                                                return const SelectNewCoupleDialog();
-                                              } else if (ref
-                                                  .read(gameDataNotifierProvider)
-                                                  .currentCouple
-                                                  .everyoneHasPlayed) {
-                                                return const DieRollDialog();
-                                              }
-                                              // if current couple continuous playing
-                                              // select next player
-                                              else {
-                                                return const ChoosePlayerDialog();
-                                              }
-                                            },
-                                          );
-                                        }
+                                              return const SettingsDialog();
+                                            });
                                       } else {
-                                        ScaffoldMessenger.of(context).showSnackBar(
-                                          SnackBar(
-                                            backgroundColor: ColorPalette().snackBar,
-                                            content: const Center(
-                                              child: Text('Code incorrect'),
-                                            ),
-                                          ),
+                                        // show next dialog
+                                        showDialog(
+                                          // don't allow to close without button
+                                          barrierDismissible: false,
+                                          context: context,
+                                          builder: (context) {
+                                            if (ref
+                                                .read(gameDataNotifierProvider)
+                                                .currentCouple
+                                                .nooneHasPlayed) {
+                                              return const SelectNewCoupleDialog();
+                                            } else if (ref
+                                                .read(gameDataNotifierProvider)
+                                                .currentCouple
+                                                .everyoneHasPlayed) {
+                                              return const DieRollDialog();
+                                            }
+                                            // if current couple continuous playing
+                                            // select next player
+                                            else {
+                                              return const ChoosePlayerDialog();
+                                            }
+                                          },
                                         );
                                       }
-                                    },
-                                    buttonIconData: Icons.check,
-                                  );
-                                },
-                              );
-                            }
-
-                            if (number == 11) {
-                              number = 0;
-                            }
-
-                            return PinButton(
-                              backgroundColor: Colors.grey[700]!,
-                              onTapFunction: () {
-                                addNumberToPin(number);
+                                    } else {
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                          backgroundColor: ColorPalette().snackBar,
+                                          content: const Center(
+                                            child: Text('Code incorrect'),
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                  },
+                                  buttonIconData: Icons.check,
+                                );
                               },
-                              buttonText: number.toString(),
                             );
-                          },
-                        ),
+                          }
+
+                          if (number == 11) {
+                            number = 0;
+                          }
+
+                          return PinButton(
+                            backgroundColor: Colors.grey[700]!,
+                            onTapFunction: () {
+                              addNumberToPin(number);
+                            },
+                            buttonText: number.toString(),
+                          );
+                        },
                       ),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),

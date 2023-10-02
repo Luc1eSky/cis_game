@@ -38,6 +38,7 @@ dependencies:
   flutter_riverpod: ^2.3.7
   patterns_canvas: ^0.4.0
   rive: ^0.11.16
+  collection: ^1.17.2
 
 dev_dependencies:
   flutter_test:

@@ -20,6 +20,7 @@ class TopRowMainPage extends ConsumerWidget {
             onPressed: () {
               // unlock via pin before showing settings
               showDialog(
+                  barrierDismissible: true,
                   context: context,
                   builder: (context) {
                     return const PinUnlockDialog(showSettings: true);

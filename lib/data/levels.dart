@@ -64,6 +64,7 @@ List<Level> practiceLevels = [
 ];
 
 List<Level> individualLevels = [
+  // INFO: I1 has alternative levels
   Level(
     levelID: "I1",
     rainForecast: 0,
@@ -100,6 +101,7 @@ List<Level> individualLevels = [
     isRaining: false,
     plantingAdvice: null,
   ),
+  // INFO: I7 has alternative levels
   Level(
     levelID: "I7",
     rainForecast: 4,
