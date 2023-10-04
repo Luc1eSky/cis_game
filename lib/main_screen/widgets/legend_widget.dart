@@ -1,3 +1,4 @@
+import 'package:cis_game/dialogs/not_enough_cash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -20,17 +21,34 @@ class AnimalLegend extends ConsumerWidget {
               ref.read(gameDataNotifierProvider.notifier).selectAllEmptyFields(legendSeedType);
 
           if (emptyFieldsCount > 0) {
-            bool shouldPlant = await showDialog(
-                context: context,
-                builder: (context) {
-                  return PlantAllSelectedFieldsDialog(
-                    emptyFieldsCount: emptyFieldsCount,
-                    selectedSeedType: legendSeedType,
-                  );
-                });
-            if (shouldPlant) {
-              ref.read(gameDataNotifierProvider.notifier).plantAllSelectedFields(legendSeedType);
-            } else {
+            // check if enough cash to plant all empty fields
+            if (ref
+                .read(gameDataNotifierProvider.notifier)
+                .enoughCashForSelectedFields(legendSeedType)) {
+              // if not show NotEnoughCash Dialog and unselect fields
+              // else plant empty fields
+              bool shouldPlant = await showDialog(
+                  barrierDismissible: false,
+                  context: context,
+                  builder: (context) {
+                    return PlantAllSelectedFieldsDialog(
+                      emptyFieldsCount: emptyFieldsCount,
+                      selectedSeedType: legendSeedType,
+                    );
+                  });
+              if (shouldPlant) {
+                ref.read(gameDataNotifierProvider.notifier).plantAllSelectedFields(legendSeedType);
+              } else {
+                ref.read(gameDataNotifierProvider.notifier).unselectAllSelectedFields();
+              }
+            }
+            // if not enough cash - deselect
+            else {
+              showDialog(
+                  context: context,
+                  builder: (context) {
+                    return const NotEnoughCash();
+                  });
               ref.read(gameDataNotifierProvider.notifier).unselectAllSelectedFields();
             }
           }

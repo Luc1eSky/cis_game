@@ -17,7 +17,6 @@ import '../classes/result.dart';
 import '../classes/seed_type.dart';
 import '../constants.dart';
 import '../data/levels.dart';
-import '../dialogs/not_enough_cash.dart';
 import 'game_data.dart';
 
 final gameDataNotifierProvider =
@@ -224,47 +223,42 @@ class GameDataNotifier extends StateNotifier<GameData> {
     state = state.copyWith(currentFieldList: updatedFieldList);
   }
 
-  /// planting all empty fields with a selected SeedType
-  void plantAllSelectedFields(SeedType selectedSeedType) {
-    List<Field> updatedFieldList = [];
-    // go through the list of fields
+  /// calculate needed cash to plant all empty fields with selected SeedType
+  double calculatePriceForSelectedFields(SeedType selectedSeedType) {
     int emptyFieldCounter = 0;
+    // go through the list of fields
     for (int index = 0; index < state.currentFieldList.length; index++) {
       if (state.currentFieldList[index].fieldStatus == FieldStatus.selected) {
         emptyFieldCounter++;
       }
     }
     // calculate price to pay for all selected fields
-    double priceToPay = emptyFieldCounter * selectedSeedType.price;
+    return emptyFieldCounter * selectedSeedType.price;
+  }
 
-    // check if there is enough cash
-    if (state.cash >= priceToPay) {
-      for (int index = 0; index < state.currentFieldList.length; index++) {
-        // update list with new field for the field clicked
-        // and seedType selected
-        if (state.currentFieldList[index].fieldStatus == FieldStatus.selected) {
-          // add new field with see type and status seeded
-          updatedFieldList.add(Field(seedType: selectedSeedType, fieldStatus: FieldStatus.seeded));
-        } else {
-          // copy existing field
-          updatedFieldList.add(state.currentFieldList[index].copyWith());
-        }
+  /// check if enough money to plant all selected fields
+  bool enoughCashForSelectedFields(SeedType selectedSeedType) {
+    bool enoughCash = (state.cash - calculatePriceForSelectedFields(selectedSeedType)) >= 0;
+    return enoughCash;
+  }
+
+  /// planting all empty fields with a selected SeedType
+  void plantAllSelectedFields(SeedType selectedSeedType) {
+    List<Field> updatedFieldList = [];
+    double priceToPay = calculatePriceForSelectedFields(selectedSeedType);
+    for (int index = 0; index < state.currentFieldList.length; index++) {
+      // update list with new field for the field clicked
+      // and seedType selected
+      if (state.currentFieldList[index].fieldStatus == FieldStatus.selected) {
+        // add new field with see type and status seeded
+        updatedFieldList.add(Field(seedType: selectedSeedType, fieldStatus: FieldStatus.seeded));
+      } else {
+        // copy existing field
+        updatedFieldList.add(state.currentFieldList[index].copyWith());
       }
-      // update game data with updated field list and cash
-      state = state.copyWith(currentFieldList: updatedFieldList, cash: state.cash - priceToPay);
-    } else {
-      showDialog(
-          context: navigatorKey.currentContext!,
-          builder: (context) {
-            return const NotEnoughCash();
-          });
     }
-
-    // change the state by creating a new game data object with the new
-    // list of fields
-
-    // check if all fields have been seeded
-    //_checkIfAllFieldsSeeded();
+    // update game data with updated field list and cash
+    state = state.copyWith(currentFieldList: updatedFieldList, cash: state.cash - priceToPay);
   }
 
   void unplantSeed() {
