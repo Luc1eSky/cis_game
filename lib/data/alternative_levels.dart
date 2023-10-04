@@ -1,5 +1,4 @@
 import 'package:cis_game/classes/alternative_level_bundle.dart';
-import 'package:cis_game/constants.dart';
 
 import '../classes/level.dart';
 
@@ -59,13 +58,13 @@ AlternativeLevels alternativeLevelsI7 = const AlternativeLevels(
         levelID: "I7AH",
         rainForecast: 4,
         isRaining: false,
-        plantingAdvice: adviceElephant,
+        plantingAdvice: true,
       ),
       wifeLevel: Level(
         levelID: "I7AW",
         rainForecast: 4,
         isRaining: false,
-        plantingAdvice: adviceElephant,
+        plantingAdvice: true,
       ),
     ),
     // 2)
@@ -82,7 +81,7 @@ AlternativeLevels alternativeLevelsI7 = const AlternativeLevels(
         levelID: "I7BW",
         rainForecast: 4,
         isRaining: false,
-        plantingAdvice: adviceElephant,
+        plantingAdvice: true,
       ),
     ),
     // 3)
@@ -93,7 +92,7 @@ AlternativeLevels alternativeLevelsI7 = const AlternativeLevels(
         levelID: "I7CH",
         rainForecast: 4,
         isRaining: false,
-        plantingAdvice: adviceElephant,
+        plantingAdvice: true,
       ),
       wifeLevel: Level(
         levelID: "I7CW",

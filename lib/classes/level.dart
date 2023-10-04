@@ -3,7 +3,7 @@ class Level {
   final String levelID;
   final int? rainForecast;
   final bool isRaining;
-  final String? plantingAdvice;
+  final bool? plantingAdvice;
 
   const Level({
     required this.levelID,
@@ -16,7 +16,7 @@ class Level {
     String? levelID,
     int? rainForecast,
     bool? isRaining,
-    String? plantingAdvice,
+    bool? plantingAdvice,
   }) {
     return Level(
       levelID: levelID ?? this.levelID,
