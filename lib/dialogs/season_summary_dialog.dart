@@ -79,6 +79,25 @@ class _SummaryPageState extends ConsumerState<SeasonSummaryDialog> {
                     child: SizedBox(
                       width: 100,
                       height: 50,
+                      child: Image.asset('assets/images/cash_box.png'),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Center(
+                    child: SizedBox(
+                        child: Text(
+                      '+ ${result.savings}',
+                      style: const TextStyle(fontSize: 25, color: Colors.green),
+                    )),
+                  ),
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: SizedBox(
+                      width: 100,
+                      height: 50,
                       child: Image.asset('assets/images/planting_seed.png'),
                     ),
                   ),
@@ -87,7 +106,7 @@ class _SummaryPageState extends ConsumerState<SeasonSummaryDialog> {
                   child: Center(
                     child: SizedBox(
                         child: Text(
-                      '- ${result.moneySpent} $currency',
+                      '- ${result.moneySpent}',
                       style: const TextStyle(
                         fontSize: 25,
                         color: Colors.red,
@@ -119,25 +138,6 @@ class _SummaryPageState extends ConsumerState<SeasonSummaryDialog> {
                     child: SizedBox(
                       width: 100,
                       height: 50,
-                      child: Image.asset('assets/images/cash_box.png'),
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: Center(
-                    child: SizedBox(
-                        child: Text(
-                      '+ ${result.savings}',
-                      style: const TextStyle(fontSize: 25, color: Colors.green),
-                    )),
-                  ),
-                ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: SizedBox(
-                      width: 100,
-                      height: 50,
                       child: Image.asset('assets/images/harvest_icon.png'),
                     ),
                   ),
@@ -146,7 +146,7 @@ class _SummaryPageState extends ConsumerState<SeasonSummaryDialog> {
                   child: Center(
                     child: SizedBox(
                         child: Text(
-                      '+ ${result.moneyEarned}',
+                      '+ ${result.moneyEarned} $currency',
                       style: const TextStyle(fontSize: 25, color: Colors.green),
                     )),
                   ),
