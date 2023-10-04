@@ -26,19 +26,31 @@ class _SummaryPageState extends ConsumerState<SeasonSummaryDialog> {
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Expanded(
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: const BorderRadius.all(
+                Radius.circular(10),
+              ),
+              color: Colors.grey[300],
+            ),
+            width: 400,
             child: Row(
               children: [
                 Expanded(
-                  child: SizedBox(
-                    child: Image.asset('assets/images/K100_note.jpeg'),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: SizedBox(
+                      width: 100,
+                      height: 50,
+                      child: Image.asset('assets/images/K100_note.jpeg'),
+                    ),
                   ),
                 ),
                 const Expanded(
                   child: Center(
                     child: SizedBox(
                         child: Text(
-                      '$startingCash',
+                      '$startingCash $currency',
                       style: TextStyle(fontSize: 25),
                     )),
                   ),
@@ -46,82 +58,132 @@ class _SummaryPageState extends ConsumerState<SeasonSummaryDialog> {
               ],
             ),
           ),
-          const Expanded(
-            child: Icon(Icons.arrow_downward),
+          Container(
+            height: 40,
+            //color: Colors.orangeAccent,
+            child: const Icon(Icons.arrow_downward),
           ),
-          Expanded(
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: const BorderRadius.all(
+                Radius.circular(10),
+              ),
+              color: Colors.grey[300],
+            ),
+            width: 400,
             child: Row(
               children: [
                 Expanded(
-                  child: SizedBox(
-                    child: Image.asset('assets/images/planting_seed.png'),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: SizedBox(
+                      width: 100,
+                      height: 50,
+                      child: Image.asset('assets/images/planting_seed.png'),
+                    ),
                   ),
                 ),
                 Expanded(
                   child: Center(
                     child: SizedBox(
                         child: Text(
-                      '${result.moneySpent}',
-                      style: const TextStyle(fontSize: 25),
+                      '- ${result.moneySpent} $currency',
+                      style: const TextStyle(
+                        fontSize: 25,
+                        color: Colors.red,
+                      ),
                     )),
                   ),
                 ),
               ],
             ),
           ),
-          const Expanded(
-            child: Icon(Icons.arrow_downward),
+          Container(
+            height: 40,
+            //color: Colors.orangeAccent,
+            child: const Icon(Icons.arrow_downward),
           ),
-          Expanded(
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: const BorderRadius.all(
+                Radius.circular(10),
+              ),
+              color: Colors.grey[300],
+            ),
+            width: 400,
             child: Row(
               children: [
                 Expanded(
-                  child: SizedBox(
-                    child: Image.asset('assets/images/cash_box.png'),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: SizedBox(
+                      width: 100,
+                      height: 50,
+                      child: Image.asset('assets/images/cash_box.png'),
+                    ),
                   ),
                 ),
                 Expanded(
                   child: Center(
                     child: SizedBox(
                         child: Text(
-                      '${result.savings}',
-                      style: const TextStyle(fontSize: 25),
+                      '+ ${result.savings}',
+                      style: const TextStyle(fontSize: 25, color: Colors.green),
                     )),
                   ),
                 ),
                 Expanded(
-                  child: SizedBox(
-                    child: Image.asset('assets/images/harvest_icon.png'),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: SizedBox(
+                      width: 100,
+                      height: 50,
+                      child: Image.asset('assets/images/harvest_icon.png'),
+                    ),
                   ),
                 ),
                 Expanded(
                   child: Center(
                     child: SizedBox(
                         child: Text(
-                      '${result.moneyEarned}',
-                      style: const TextStyle(fontSize: 25),
+                      '+ ${result.moneyEarned}',
+                      style: const TextStyle(fontSize: 25, color: Colors.green),
                     )),
                   ),
                 ),
               ],
             ),
           ),
-          const Expanded(
-            child: Icon(Icons.arrow_downward),
+          Container(
+            height: 40,
+            //color: Colors.orangeAccent,
+            child: const Icon(Icons.arrow_downward),
           ),
-          Expanded(
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: const BorderRadius.all(
+                Radius.circular(10),
+              ),
+              color: Colors.grey[300],
+            ),
+            width: 400,
             child: Row(
               children: [
                 Expanded(
-                  child: SizedBox(
-                    child: Image.asset('assets/images/K100_note.jpeg'),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: SizedBox(
+                      width: 100,
+                      height: 50,
+                      child: Image.asset('assets/images/K100_note.jpeg'),
+                    ),
                   ),
                 ),
                 Expanded(
                   child: Center(
                     child: SizedBox(
                         child: Text(
-                      '${result.moneyAtEndOfSeason}',
+                      '${result.moneyAtEndOfSeason} $currency',
                       style: const TextStyle(fontSize: 25),
                     )),
                   ),
