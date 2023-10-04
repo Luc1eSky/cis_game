@@ -31,20 +31,26 @@ class FieldWidget extends ConsumerWidget {
         fieldWidgetColor = ColorPalette().fieldColorSeeded;
         break;
       case FieldStatus.grown:
-        fieldWidgetColor = ColorPalette().fieldColorGrown;
+        fieldWidgetColor = ColorPalette().fieldColorSeeded;
         break;
       case FieldStatus.harvested:
-        fieldWidgetColor = ColorPalette().fieldColorGrown;
+        fieldWidgetColor = ColorPalette().fieldColorHarvested;
         break;
     }
 
     return GestureDetector(
-      onTap: () {
-        showDialog(
+      onTap: () async {
+        bool buySeed = await showDialog(
+            barrierDismissible: false,
             context: context,
             builder: (context) {
               return SeedSelectionDialog(fieldIndex: fieldID);
             });
+        if (buySeed) {
+          ref
+              .read(gameDataNotifierProvider.notifier)
+              .selectSeedTypeAndBuySeed(fieldID);
+        }
       },
 
       child: LayoutBuilder(
@@ -55,25 +61,32 @@ class FieldWidget extends ConsumerWidget {
               color: fieldWidgetColor,
               border: fieldStatus == FieldStatus.empty
                   ? Border.all(width: 0.0)
-                  : Border.all(color: seedType.seedColor, width: constraints.maxWidth * 0.05),
+                  : Border.all(
+                      color: seedType.seedColor,
+                      width: constraints.maxWidth * 0.05),
               borderRadius: BorderRadius.circular(constraints.maxWidth * 0.1),
             ),
             child: fieldStatus == FieldStatus.harvested
                 ? Center(
                     child: FittedBox(
                       child: Text(
-                        ref.read(gameDataNotifierProvider).currentLevel.isRaining
+                        ref
+                                .read(gameDataNotifierProvider)
+                                .currentLevel
+                                .isRaining
                             ? '${seedType.yieldRain} kwacha'
                             : '${seedType.yieldNoRain} kwacha',
                         style: const TextStyle(fontSize: 25),
                       ),
                     ),
                   )
-                : fieldStatus == FieldStatus.empty || fieldStatus == FieldStatus.selected
+                : fieldStatus == FieldStatus.empty ||
+                        fieldStatus == FieldStatus.selected
                     ? Container()
                     : GridView.builder(
                         gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 5),
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 5),
                         itemCount: 25,
                         itemBuilder: (context, index) {
                           return LayoutBuilder(
@@ -83,17 +96,24 @@ class FieldWidget extends ConsumerWidget {
                                   height: fieldStatus == FieldStatus.seeded
                                       // initial size of the dots on the field
                                       ? constraints.maxHeight * 0.40
-                                      : ref.read(gameDataNotifierProvider).currentLevel.isRaining
+                                      : ref
+                                              .read(gameDataNotifierProvider)
+                                              .currentLevel
+                                              .isRaining
                                           // size of dots when it rains
                                           ? constraints.maxHeight * 0.80
                                           // size of dots when it does not rain
                                           : constraints.maxHeight * 0.50,
-                                  duration: const Duration(milliseconds: growingAnimationTimeInMs),
+                                  duration: const Duration(
+                                      milliseconds: growingAnimationTimeInMs),
                                   //curve: Curves.easeInOut,
                                   decoration: BoxDecoration(
                                     color: fieldStatus == FieldStatus.seeded
                                         ? Colors.brown
-                                        : ref.read(gameDataNotifierProvider).currentLevel.isRaining
+                                        : ref
+                                                .read(gameDataNotifierProvider)
+                                                .currentLevel
+                                                .isRaining
                                             ? Colors.lightGreen[800]
                                             : Colors.lightGreen[300],
                                     shape: BoxShape.circle,

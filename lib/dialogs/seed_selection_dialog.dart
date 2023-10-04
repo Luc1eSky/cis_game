@@ -1,3 +1,5 @@
+import 'package:cis_game/dialogs/dialog_template.dart';
+import 'package:cis_game/main_screen/widgets/interaction_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -26,8 +28,8 @@ class _SeedSelectionState extends ConsumerState<SeedSelectionDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-      title: Text('Select seed type for field ${widget.fieldIndex + 1}'),
+    return DialogTemplate(
+      title: Text('Field ${widget.fieldIndex + 1}'),
       // content
       content: DataTable(
         columns: <DataColumn>[
@@ -42,8 +44,8 @@ class _SeedSelectionState extends ConsumerState<SeedSelectionDialog> {
           DataColumn(
             label: Expanded(
               child: SizedBox(
-                width: 50,
-                child: Image.asset('assets/images/plant_icon_color.png'),
+                width: 35,
+                child: Image.asset('assets/images/harvest_icon.png'),
               ),
             ),
           ),
@@ -55,11 +57,12 @@ class _SeedSelectionState extends ConsumerState<SeedSelectionDialog> {
               ),
             ),
           ),
-          const DataColumn(
+          DataColumn(
             label: Expanded(
                 child: Icon(
               Icons.cloud,
-              color: Colors.grey,
+              color: Colors.grey[400],
+              size: 50,
             )),
           ),
           const DataColumn(
@@ -67,6 +70,7 @@ class _SeedSelectionState extends ConsumerState<SeedSelectionDialog> {
                 child: Icon(
               Icons.cloudy_snowing,
               color: Colors.blue,
+              size: 50,
             )),
           ),
         ],
@@ -180,22 +184,11 @@ class _SeedSelectionState extends ConsumerState<SeedSelectionDialog> {
           ),
         ],
       ),
-      actions: [
-        TextButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          child: const Text('Close'),
-        ),
-        TextButton(
-          onPressed: () {
-            Navigator.pop(context);
-            ref
-                .read(gameDataNotifierProvider.notifier)
-                .selectSeedTypeAndBuySeed(widget.fieldIndex);
-          },
-          child: const Text('Confirm'),
-        ),
+      actions: const [
+        InteractionButton(
+            color: Colors.red, icon: Icon(Icons.close), returnBoolean: false),
+        InteractionButton(
+            color: Colors.green, icon: Icon(Icons.check), returnBoolean: true)
       ],
     );
   }

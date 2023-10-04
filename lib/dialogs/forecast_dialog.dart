@@ -13,7 +13,8 @@ class ForecastDialog extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    double dialogHeight = min(MediaQuery.of(context).size.height, forecastDialogMaxHeight);
+    double dialogHeight =
+        min(MediaQuery.of(context).size.height, forecastDialogMaxHeight);
     return SizedBox(
       height: dialogHeight,
       child: DialogTemplate(
@@ -38,14 +39,21 @@ class ForecastDialog extends ConsumerWidget {
                     child: ForecastWidget(),
                   ),
                   const Spacer(flex: 5),
-                  ref.read(gameDataNotifierProvider).currentLevel.plantingAdvice != null
+                  ref
+                              .read(gameDataNotifierProvider)
+                              .currentLevel
+                              .plantingAdvice !=
+                          null
                       ? Expanded(
                           flex: 1,
                           child: FractionallySizedBox(
                             widthFactor: 0.4,
                             child: FittedBox(
                               child: Text(
-                                ref.read(gameDataNotifierProvider).currentLevel.plantingAdvice!,
+                                ref
+                                    .read(gameDataNotifierProvider)
+                                    .currentLevel
+                                    .plantingAdvice!,
                                 style: const TextStyle(
                                   fontSize: 100,
                                   fontWeight: FontWeight.bold,
