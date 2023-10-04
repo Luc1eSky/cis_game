@@ -1,10 +1,10 @@
-import 'package:cis_game/constants.dart';
 import 'package:cis_game/dialogs/dialog_template.dart';
 import 'package:cis_game/dialogs/player_done_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../classes/result.dart';
+import '../constants.dart';
 import '../state_management/game_data_notifier.dart';
 
 class SeasonSummaryDialog extends ConsumerStatefulWidget {
@@ -19,16 +19,129 @@ class _SummaryPageState extends ConsumerState<SeasonSummaryDialog> {
   Widget build(BuildContext context) {
     Result result = ref.read(gameDataNotifierProvider).savedResults.last;
     return DialogTemplate(
-      content: Container(
-        //color: Colors.blue,
-        child: Text(
-          'Money at beginning of season: ${result.startingCash} $currency\n'
-          'Money saved during the season: ${result.startingCash - result.moneySpent} $currency\n'
-          'Money Spent: ${result.moneySpent} $currency\n'
-          'Money earned: ${result.moneyEarned} $currency\n'
-          'Money at end of season: ${result.moneyAtEndOfSeason} $currency',
-          style: const TextStyle(fontSize: 20),
-        ),
+      title: Text(
+        'Season ${ref.read(gameDataNotifierProvider).season}',
+        textAlign: TextAlign.center,
+      ),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Expanded(
+            child: Row(
+              children: [
+                Expanded(
+                  child: SizedBox(
+                    child: Image.asset('assets/images/K100_note.jpeg'),
+                  ),
+                ),
+                const Expanded(
+                  child: Center(
+                    child: SizedBox(
+                        child: Text(
+                      '$startingCash',
+                      style: TextStyle(fontSize: 25),
+                    )),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const Expanded(
+            child: Icon(Icons.arrow_downward),
+          ),
+          Expanded(
+            child: Row(
+              children: [
+                Expanded(
+                  child: SizedBox(
+                    child: Image.asset('assets/images/planting_seed.png'),
+                  ),
+                ),
+                Expanded(
+                  child: Center(
+                    child: SizedBox(
+                        child: Text(
+                      '${result.moneySpent}',
+                      style: const TextStyle(fontSize: 25),
+                    )),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const Expanded(
+            child: Icon(Icons.arrow_downward),
+          ),
+          Expanded(
+            child: Row(
+              children: [
+                Expanded(
+                  child: SizedBox(
+                    child: Image.asset('assets/images/cash_box.png'),
+                  ),
+                ),
+                Expanded(
+                  child: Center(
+                    child: SizedBox(
+                        child: Text(
+                      '${result.savings}',
+                      style: const TextStyle(fontSize: 25),
+                    )),
+                  ),
+                ),
+                Expanded(
+                  child: SizedBox(
+                    child: Image.asset('assets/images/harvest_icon.png'),
+                  ),
+                ),
+                Expanded(
+                  child: Center(
+                    child: SizedBox(
+                        child: Text(
+                      '${result.moneyEarned}',
+                      style: const TextStyle(fontSize: 25),
+                    )),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const Expanded(
+            child: Icon(Icons.arrow_downward),
+          ),
+          Expanded(
+            child: Row(
+              children: [
+                Expanded(
+                  child: SizedBox(
+                    child: Image.asset('assets/images/K100_note.jpeg'),
+                  ),
+                ),
+                Expanded(
+                  child: Center(
+                    child: SizedBox(
+                        child: Text(
+                      '${result.moneyAtEndOfSeason}',
+                      style: const TextStyle(fontSize: 25),
+                    )),
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+          // Container(
+          //   //color: Colors.blue,
+          //   child: Text(
+          //     'Money at beginning of season: ${result.startingCash} $currency\n'
+          //     'Money saved during the season: ${result.startingCash - result.moneySpent} $currency\n'
+          //     'Money Spent: ${result.moneySpent} $currency\n'
+          //     'Money earned: ${result.moneyEarned} $currency\n'
+          //     'Money at end of season: ${result.moneyAtEndOfSeason} $currency',
+          //     style: const TextStyle(fontSize: 20),
+          //   ),
+          // ),
+        ],
       ),
       //   DataRow(
       //     cells: <DataCell>[

@@ -6,9 +6,35 @@ class WarningUseCashDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const DialogTemplate(
-      title: Text("Warning"),
-      content: Text('Please use or save all cash.'),
+    return DialogTemplate(
+      //title: Text("Warning"),
+      content: SizedBox(
+        height: 80,
+        width: 250,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            FittedBox(
+              child: Image.asset(
+                'assets/images/K100_note.jpeg',
+                height: 50,
+              ),
+            ),
+            const FittedBox(
+                child: Icon(
+              Icons.arrow_forward,
+              size: 200,
+            )),
+            FittedBox(
+              child: Image.asset(
+                'assets/images/cash_box.png',
+                height: 50,
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
