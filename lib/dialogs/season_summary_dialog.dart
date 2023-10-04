@@ -191,46 +191,8 @@ class _SummaryPageState extends ConsumerState<SeasonSummaryDialog> {
               ],
             ),
           ),
-
-          // Container(
-          //   //color: Colors.blue,
-          //   child: Text(
-          //     'Money at beginning of season: ${result.startingCash} $currency\n'
-          //     'Money saved during the season: ${result.startingCash - result.moneySpent} $currency\n'
-          //     'Money Spent: ${result.moneySpent} $currency\n'
-          //     'Money earned: ${result.moneyEarned} $currency\n'
-          //     'Money at end of season: ${result.moneyAtEndOfSeason} $currency',
-          //     style: const TextStyle(fontSize: 20),
-          //   ),
-          // ),
         ],
       ),
-      //   DataRow(
-      //     cells: <DataCell>[
-      //       const DataCell(
-      //         Text(
-      //           "Total Payoff",
-      //           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-      //         ),
-      //       ),
-      //       DataCell(
-      //         Text(
-      //           result.amountOfPlantedFields.toString(),
-      //           style: const TextStyle(
-      //               fontWeight: FontWeight.bold, fontSize: 20),
-      //         ),
-      //       ),
-      //       DataCell(
-      //         Text(
-      //           '${result.totalPayout.toString()} $currency',
-      //           style: const TextStyle(
-      //               fontWeight: FontWeight.bold, fontSize: 20),
-      //         ),
-      //       ),
-      //     ],
-      //   ),
-      // ],
-
       actions: [
         // if player has not yet finished their levels
         !ref
@@ -245,7 +207,7 @@ class _SummaryPageState extends ConsumerState<SeasonSummaryDialog> {
                   // start a new season with the next level
                   ref.read(gameDataNotifierProvider.notifier).startNewSeason();
                 },
-                child: const Text('Next Season'),
+                child: const Text('NEXT'),
               )
             :
             // if the player has finished their levels and is in practice mode
