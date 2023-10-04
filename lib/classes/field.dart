@@ -23,6 +23,7 @@ class Field {
 
 enum FieldStatus {
   empty,
+  selected,
   seeded,
   grown,
   harvested,

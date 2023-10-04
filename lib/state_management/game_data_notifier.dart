@@ -194,28 +194,63 @@ class GameDataNotifier extends StateNotifier<GameData> {
     }
   }
 
-  void plantAllFields(SeedType selectedSeedType) {
+  /// select all empty fields with a selected SeedType
+  int selectAllEmptyFields(SeedType selectedSeedType) {
+    List<Field> updatedFieldList = [];
+    int emptyFieldsCount = 0;
+    for (int index = 0; index < state.currentFieldList.length; index++) {
+      if (state.currentFieldList[index].fieldStatus == FieldStatus.empty) {
+        emptyFieldsCount++;
+        updatedFieldList.add(Field(seedType: selectedSeedType, fieldStatus: FieldStatus.selected));
+      } else {
+        updatedFieldList.add(state.currentFieldList[index].copyWith());
+      }
+    }
+    state = state.copyWith(currentFieldList: updatedFieldList);
+    return emptyFieldsCount;
+  }
+
+  /// unselect all selected fields
+  void unselectAllSelectedFields() {
+    List<Field> updatedFieldList = [];
+
+    for (int index = 0; index < state.currentFieldList.length; index++) {
+      if (state.currentFieldList[index].fieldStatus == FieldStatus.selected) {
+        updatedFieldList.add(Field(seedType: seedTypeNone, fieldStatus: FieldStatus.empty));
+      } else {
+        updatedFieldList.add(state.currentFieldList[index].copyWith());
+      }
+    }
+    state = state.copyWith(currentFieldList: updatedFieldList);
+  }
+
+  /// planting all empty fields with a selected SeedType
+  void plantAllSelectedFields(SeedType selectedSeedType) {
     List<Field> updatedFieldList = [];
     // go through the list of fields
     int emptyFieldCounter = 0;
     for (int index = 0; index < state.currentFieldList.length; index++) {
-      if (state.currentFieldList[index].seedType.animalName == '') {
+      if (state.currentFieldList[index].fieldStatus == FieldStatus.selected) {
         emptyFieldCounter++;
       }
     }
+    // calculate price to pay for all selected fields
     double priceToPay = emptyFieldCounter * selectedSeedType.price;
 
+    // check if there is enough cash
     if (state.cash >= priceToPay) {
       for (int index = 0; index < state.currentFieldList.length; index++) {
-        // update list with new field for the field clicked and seedType
-        // selected
-        if (state.currentFieldList[index].seedType.animalName == "") {
-          // update cash and check if there is enough cash
+        // update list with new field for the field clicked
+        // and seedType selected
+        if (state.currentFieldList[index].fieldStatus == FieldStatus.selected) {
+          // add new field with see type and status seeded
           updatedFieldList.add(Field(seedType: selectedSeedType, fieldStatus: FieldStatus.seeded));
         } else {
+          // copy existing field
           updatedFieldList.add(state.currentFieldList[index].copyWith());
         }
       }
+      // update game data with updated field list and cash
       state = state.copyWith(currentFieldList: updatedFieldList, cash: state.cash - priceToPay);
     } else {
       showDialog(

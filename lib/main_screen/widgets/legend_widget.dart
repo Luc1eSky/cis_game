@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../classes/seed_type.dart';
-import '../../dialogs/select_seed_for_all_fields.dart';
+import '../../dialogs/plant_all_selected_fields_dialog.dart';
+import '../../state_management/game_data_notifier.dart';
 
 class AnimalLegend extends ConsumerWidget {
   final SeedType legendSeedType;
@@ -14,16 +15,25 @@ class AnimalLegend extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return GestureDetector(
-        onTap: () {
-          // print animal name that was selected
-          //print(legendSeedType.animalName);
-          showDialog(
-              context: context,
-              builder: (context) {
-                return PlantAllFieldDialog(
-                  selectedSeedType: legendSeedType,
-                );
-              });
+        onTap: () async {
+          int emptyFieldsCount =
+              ref.read(gameDataNotifierProvider.notifier).selectAllEmptyFields(legendSeedType);
+
+          if (emptyFieldsCount > 0) {
+            bool shouldPlant = await showDialog(
+                context: context,
+                builder: (context) {
+                  return PlantAllSelectedFieldsDialog(
+                    emptyFieldsCount: emptyFieldsCount,
+                    selectedSeedType: legendSeedType,
+                  );
+                });
+            if (shouldPlant) {
+              ref.read(gameDataNotifierProvider.notifier).plantAllSelectedFields(legendSeedType);
+            } else {
+              ref.read(gameDataNotifierProvider.notifier).unselectAllSelectedFields();
+            }
+          }
         },
         child: AspectRatio(
           aspectRatio: 1.6,
@@ -41,13 +51,11 @@ class AnimalLegend extends ConsumerWidget {
                 children: [
                   Expanded(
                     flex: 3,
-                    child: Image.asset(
-                        'assets/images/${legendSeedType.animalImage}'),
+                    child: Image.asset('assets/images/${legendSeedType.animalImage}'),
                   ),
                   Expanded(
                     flex: 2,
-                    child: Image.asset(
-                        'assets/images/${legendSeedType.rainImage}'),
+                    child: Image.asset('assets/images/${legendSeedType.rainImage}'),
                   ),
                 ],
               ),

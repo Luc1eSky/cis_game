@@ -24,6 +24,8 @@ class DialogTemplate extends StatelessWidget {
     }
     return AlertDialog(
       scrollable: scrollable,
+      actionsAlignment: MainAxisAlignment.center,
+      actionsPadding: const EdgeInsets.all(15),
       backgroundColor: ColorPalette().dialogBackgroundColor,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15),

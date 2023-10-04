@@ -10,11 +10,11 @@ import '../../state_management/game_data_notifier.dart';
 
 class FieldWidget extends ConsumerWidget {
   final int fieldID;
-  final SeedType? seedType;
+  final SeedType seedType;
   final FieldStatus fieldStatus;
   const FieldWidget({
     required this.fieldID,
-    this.seedType,
+    required this.seedType,
     required this.fieldStatus,
     super.key,
   });
@@ -25,14 +25,16 @@ class FieldWidget extends ConsumerWidget {
     switch (fieldStatus) {
       case FieldStatus.empty:
         break;
+      case FieldStatus.selected:
+        break;
       case FieldStatus.seeded:
         fieldWidgetColor = ColorPalette().fieldColorSeeded;
         break;
-      case FieldStatus.harvested:
+      case FieldStatus.grown:
         fieldWidgetColor = ColorPalette().fieldColorGrown;
         break;
-      // if there is no field status provided
-      default:
+      case FieldStatus.harvested:
+        fieldWidgetColor = ColorPalette().fieldColorGrown;
         break;
     }
 
@@ -51,9 +53,9 @@ class FieldWidget extends ConsumerWidget {
           return Container(
             decoration: BoxDecoration(
               color: fieldWidgetColor,
-              border: seedType == null || fieldStatus == FieldStatus.empty
+              border: fieldStatus == FieldStatus.empty
                   ? Border.all(width: 0.0)
-                  : Border.all(color: seedType!.seedColor, width: constraints.maxWidth * 0.05),
+                  : Border.all(color: seedType.seedColor, width: constraints.maxWidth * 0.05),
               borderRadius: BorderRadius.circular(constraints.maxWidth * 0.1),
             ),
             child: fieldStatus == FieldStatus.harvested
@@ -61,13 +63,13 @@ class FieldWidget extends ConsumerWidget {
                     child: FittedBox(
                       child: Text(
                         ref.read(gameDataNotifierProvider).currentLevel.isRaining
-                            ? '${seedType!.yieldRain} kwacha'
-                            : '${seedType!.yieldNoRain} kwacha',
+                            ? '${seedType.yieldRain} kwacha'
+                            : '${seedType.yieldNoRain} kwacha',
                         style: const TextStyle(fontSize: 25),
                       ),
                     ),
                   )
-                : fieldStatus == FieldStatus.empty
+                : fieldStatus == FieldStatus.empty || fieldStatus == FieldStatus.selected
                     ? Container()
                     : GridView.builder(
                         gridDelegate:
