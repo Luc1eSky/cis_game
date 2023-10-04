@@ -5,7 +5,7 @@ class Level {
   final bool isRaining;
   final String? plantingAdvice;
 
-  Level({
+  const Level({
     required this.levelID,
     required this.rainForecast,
     required this.isRaining,

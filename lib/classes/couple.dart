@@ -4,16 +4,16 @@ import 'level.dart';
 
 class Couple {
   // playing together
-  Person both;
+  final Person both;
   // wive playing solo
-  Person wife;
+  final Person wife;
   // husband playing solo
-  Person husband;
+  final Person husband;
 
   // tracks who is currently playing
-  PlayerType currentPlayerType;
+  final PlayerType currentPlayerType;
 
-  Couple({
+  const Couple({
     required this.both,
     required this.wife,
     required this.husband,

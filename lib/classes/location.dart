@@ -3,7 +3,7 @@ class Location {
   final String name;
   final String acronym;
 
-  Location({
+  const Location({
     required this.name,
     required this.acronym,
   });

@@ -9,7 +9,7 @@ class SeedType {
   final String animalImage;
   final String rainImage;
 
-  SeedType(
+  const SeedType(
       {required this.animalName,
       required this.price,
       required this.yieldNoRain,

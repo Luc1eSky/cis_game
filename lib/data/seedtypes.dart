@@ -30,7 +30,7 @@ SeedType seedTypeElephant = SeedType(
     animalImage: 'elephant.png',
     rainImage: 'dropsandplus.png');
 
-SeedType seedTypeNone = SeedType(
+SeedType seedTypeNone = const SeedType(
   animalName: '',
   price: 0,
   yieldNoRain: 0,

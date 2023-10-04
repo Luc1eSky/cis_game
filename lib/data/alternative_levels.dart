@@ -8,7 +8,7 @@ List<AlternativeLevels> allAlternativeLevels = [
   alternativeLevelsI7,
 ];
 
-AlternativeLevels alternativeLevelsI1 = AlternativeLevels(
+AlternativeLevels alternativeLevelsI1 = const AlternativeLevels(
   linkedLevelId: 'I1',
   levels: [
     // 1)
@@ -48,7 +48,7 @@ AlternativeLevels alternativeLevelsI1 = AlternativeLevels(
   ],
 );
 
-AlternativeLevels alternativeLevelsI7 = AlternativeLevels(
+AlternativeLevels alternativeLevelsI7 = const AlternativeLevels(
   linkedLevelId: 'I7',
   levels: [
     // 1)
