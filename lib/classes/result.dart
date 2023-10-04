@@ -19,7 +19,7 @@ class Result {
   final double moneySpent;
   final double moneyEarned;
 
-  Result({
+  const Result({
     required this.level,
     required this.personalID,
     required this.playerType,

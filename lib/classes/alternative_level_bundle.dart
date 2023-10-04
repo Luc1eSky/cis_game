@@ -1,16 +1,17 @@
 import 'level.dart';
 
 class AlternativeLevels {
-  AlternativeLevels({
+  const AlternativeLevels({
     required this.linkedLevelId,
     required this.levels,
   });
+
   final String linkedLevelId;
   final List<AlternativeLevelBundle> levels;
 }
 
 class AlternativeLevelBundle {
-  AlternativeLevelBundle({
+  const AlternativeLevelBundle({
     required this.husbandLevel,
     required this.wifeLevel,
   });

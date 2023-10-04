@@ -7,7 +7,7 @@ class Enumerator {
     return '$firstName $lastName';
   }
 
-  Enumerator({
+  const Enumerator({
     required this.firstName,
     required this.lastName,
     this.id,

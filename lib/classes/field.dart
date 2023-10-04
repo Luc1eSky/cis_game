@@ -5,7 +5,7 @@ class Field {
   final SeedType seedType;
   final FieldStatus fieldStatus;
 
-  Field({
+  const Field({
     required this.seedType,
     required this.fieldStatus,
   });

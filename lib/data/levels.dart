@@ -2,7 +2,7 @@ import 'package:cis_game/constants.dart';
 
 import '../classes/level.dart';
 
-List<Level> practiceLevels = [
+List<Level> practiceLevels = const [
   Level(
     levelID: "P1",
     rainForecast: 4,
