@@ -609,7 +609,7 @@ class GameDataNotifier extends StateNotifier<GameData> {
     int? currentForecast = state.currentLevel.rainForecast;
     switch (currentForecast) {
       case 0:
-        return 'cash_box.png';
+        return 'no_planting.png';
       case 1:
         return 'zebra.png';
       case 2:
@@ -627,9 +627,9 @@ class GameDataNotifier extends StateNotifier<GameData> {
     int? currentForecast = state.currentLevel.rainForecast;
     switch (currentForecast) {
       case 0:
-        return 'cash_box.png';
+        return 'no_planting.png';
       case 1:
-        return 'cash_box.png';
+        return 'no_planting.png';
       case 2:
         return 'zebra.png';
       case 4:

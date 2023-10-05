@@ -47,7 +47,7 @@ List<Level> practiceLevels = const [
     levelID: "P8",
     rainForecast: 0,
     isRaining: false,
-    plantingAdvice: false,
+    plantingAdvice: true,
   ),
   Level(
     levelID: "P9",
@@ -75,7 +75,7 @@ List<Level> individualLevels = [
     levelID: "I2",
     rainForecast: 1,
     isRaining: false,
-    plantingAdvice: false,
+    plantingAdvice: true,
   ),
   const Level(
     levelID: "I3",
