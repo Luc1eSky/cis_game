@@ -74,9 +74,12 @@ class FieldWidget extends ConsumerWidget {
                                 .read(gameDataNotifierProvider)
                                 .currentLevel
                                 .isRaining
-                            ? '${seedType.yieldRain} kwacha'
-                            : '${seedType.yieldNoRain} kwacha',
-                        style: const TextStyle(fontSize: 25),
+                            ? '${seedType.yieldRain}\nkwacha'
+                            : '${seedType.yieldNoRain}\nkwacha',
+                        style: const TextStyle(
+                          fontSize: 20,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                   )

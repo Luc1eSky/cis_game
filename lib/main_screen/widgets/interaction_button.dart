@@ -15,16 +15,20 @@ class InteractionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Container(
         decoration: BoxDecoration(
           color: color,
           borderRadius: BorderRadius.circular(7),
         ),
-        child: IconButton(
-          color: Colors.white,
-          onPressed: () => Navigator.of(context).pop(returnBoolean),
-          icon: icon,
+        child: SizedBox(
+          width: 100,
+          height: 50,
+          child: IconButton(
+            color: Colors.white,
+            onPressed: () => Navigator.of(context).pop(returnBoolean),
+            icon: icon,
+          ),
         ),
       ),
     );

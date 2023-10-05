@@ -82,11 +82,24 @@ class ForecastDialog extends ConsumerWidget {
           ],
         ),
         actions: <Widget>[
-          ElevatedButton(
-            onPressed: () {
-              ref.read(gameDataNotifierProvider.notifier).setSeasonToCurrent();
-            },
-            child: const Text('Close'),
+          SizedBox(
+            height: 50,
+            width: 150,
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.green,
+              ),
+              onPressed: () {
+                ref
+                    .read(gameDataNotifierProvider.notifier)
+                    .setSeasonToCurrent();
+              },
+              child: const FittedBox(
+                  child: Icon(
+                Icons.arrow_forward,
+                size: 100,
+              )),
+            ),
           ),
         ],
       ),

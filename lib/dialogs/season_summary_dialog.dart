@@ -22,6 +22,7 @@ class _SummaryPageState extends ConsumerState<SeasonSummaryDialog> {
       title: Text(
         'Season ${ref.read(gameDataNotifierProvider).season}',
         textAlign: TextAlign.center,
+        style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
       ),
       content: Column(
         mainAxisSize: MainAxisSize.min,
@@ -33,7 +34,7 @@ class _SummaryPageState extends ConsumerState<SeasonSummaryDialog> {
               ),
               color: Colors.grey[300],
             ),
-            width: 400,
+            width: 350,
             child: Row(
               children: [
                 Expanded(
@@ -51,7 +52,7 @@ class _SummaryPageState extends ConsumerState<SeasonSummaryDialog> {
                     child: SizedBox(
                         child: Text(
                       '$startingCash $currency',
-                      style: TextStyle(fontSize: 25),
+                      style: TextStyle(fontSize: 20),
                     )),
                   ),
                 ),
@@ -70,7 +71,7 @@ class _SummaryPageState extends ConsumerState<SeasonSummaryDialog> {
               ),
               color: Colors.grey[300],
             ),
-            width: 400,
+            width: 350,
             child: Row(
               children: [
                 Expanded(
@@ -106,7 +107,7 @@ class _SummaryPageState extends ConsumerState<SeasonSummaryDialog> {
                   child: Center(
                     child: SizedBox(
                         child: Text(
-                      '- ${result.moneySpent} $currency',
+                      '- ${result.moneySpent}\n$currency',
                       style: const TextStyle(
                         fontSize: 20,
                         color: Colors.red,
@@ -129,7 +130,7 @@ class _SummaryPageState extends ConsumerState<SeasonSummaryDialog> {
               ),
               color: Colors.grey[300],
             ),
-            width: 400,
+            width: 350,
             child: Row(
               children: [
                 Expanded(
@@ -147,7 +148,10 @@ class _SummaryPageState extends ConsumerState<SeasonSummaryDialog> {
                     child: SizedBox(
                         child: Text(
                       '+ ${result.moneyEarned} $currency',
-                      style: const TextStyle(fontSize: 25, color: Colors.green),
+                      style: const TextStyle(
+                        fontSize: 20,
+                        color: Colors.green,
+                      ),
                     )),
                   ),
                 ),
@@ -166,7 +170,7 @@ class _SummaryPageState extends ConsumerState<SeasonSummaryDialog> {
               ),
               color: Colors.grey[300],
             ),
-            width: 400,
+            width: 350,
             child: Row(
               children: [
                 Expanded(
@@ -184,7 +188,9 @@ class _SummaryPageState extends ConsumerState<SeasonSummaryDialog> {
                     child: SizedBox(
                         child: Text(
                       '${result.moneyAtEndOfSeason} $currency',
-                      style: const TextStyle(fontSize: 25),
+                      style: const TextStyle(
+                        fontSize: 20,
+                      ),
                     )),
                   ),
                 ),
@@ -200,28 +206,49 @@ class _SummaryPageState extends ConsumerState<SeasonSummaryDialog> {
                 .currentCouple
                 .currentPlayer!
                 .hasPlayed
-            ? ElevatedButton(
-                onPressed: () {
-                  // close the current dialog
-                  Navigator.of(context).pop();
-                  // start a new season with the next level
-                  ref.read(gameDataNotifierProvider.notifier).startNewSeason();
-                },
-                child: const Text('NEXT'),
+            ? SizedBox(
+                height: 50,
+                width: 150,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.green,
+                  ),
+                  onPressed: () {
+                    // close the current dialog
+                    Navigator.of(context).pop();
+                    // start a new season with the next level
+                    ref
+                        .read(gameDataNotifierProvider.notifier)
+                        .startNewSeason();
+                  },
+                  child: const FittedBox(
+                    child: Icon(
+                      Icons.arrow_forward,
+                      size: 100,
+                    ),
+                  ),
+                ),
               )
             :
             // if the player has finished their levels and is in practice mode
             ref.read(gameDataNotifierProvider).isInPracticeMode
-                ? ElevatedButton(
-                    onPressed: () {
-                      // Close the current dialog
-                      Navigator.of(context).pop();
-                      // start a new game (is in practice mode by default)
-                      ref
-                          .read(gameDataNotifierProvider.notifier)
-                          .startNewGame(newSeasonHasStarted: true);
-                    },
-                    child: const Text('Keep Practicing'),
+                ? SizedBox(
+                    height: 50,
+                    width: 150,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.green,
+                      ),
+                      onPressed: () {
+                        // Close the current dialog
+                        Navigator.of(context).pop();
+                        // start a new game (is in practice mode by default)
+                        ref
+                            .read(gameDataNotifierProvider.notifier)
+                            .startNewGame(newSeasonHasStarted: true);
+                      },
+                      child: const Text('Keep Practicing'),
+                    ),
                   )
                 :
                 // if the player has finished their levels and is NOT in practice mode

@@ -15,7 +15,7 @@ class ColorPalette {
   Color get fieldBackground => const Color.fromRGBO(206, 149, 41, 1.0);
   Color get fieldColorEmpty => const Color.fromRGBO(155, 95, 32, 1.0);
   Color get fieldColorSeeded => const Color.fromRGBO(155, 95, 32, 1.0);
-  Color get fieldColorHarvested => const Color.fromRGBO(164, 208, 114, 1.0);
+  Color get fieldColorHarvested => const Color.fromRGBO(155, 95, 32, 1.0);
 // seed legend color
   Color get seedEarlyMaturing => const Color.fromRGBO(227, 7, 7, 1.0);
   Color get seedNormalMaturing => const Color.fromRGBO(7, 143, 227, 1.0);

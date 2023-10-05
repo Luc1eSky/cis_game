@@ -24,7 +24,7 @@ class SavingsWidget extends ConsumerWidget {
         child: Row(
           children: [
             Expanded(
-              flex: 1,
+              flex: 2,
               child: CircleAvatar(
                 backgroundColor: ColorPalette().plusMinusButtonColor,
                 radius: 500,
@@ -47,7 +47,7 @@ class SavingsWidget extends ConsumerWidget {
               child: Column(
                 children: [
                   Expanded(
-                    flex: 3,
+                    flex: 4,
                     child: AspectRatio(
                         aspectRatio: 2.0,
                         child: Image.asset('assets/images/cash_box.png')),
@@ -66,11 +66,11 @@ class SavingsWidget extends ConsumerWidget {
               ),
             ),
             Expanded(
-              flex: 1,
+              flex: 2,
               child: CircleAvatar(
                 backgroundColor:
                     ref.watch(gameDataNotifierProvider).allSeededAndCashLeft
-                        ? Colors.blueAccent
+                        ? Colors.lightGreen
                         : ColorPalette().plusMinusButtonColor,
                 radius: 500,
                 child: FittedBox(
