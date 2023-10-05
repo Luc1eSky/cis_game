@@ -57,7 +57,7 @@ class ForecastDialog extends ConsumerWidget {
                                 children: [
                                   Expanded(
                                     child: AdviceWidget(
-                                      adviceImageName: 'speedometer_high.png',
+                                      adviceImageName: 'profit_max.png',
                                       animalImageName:
                                           notifier.getAnimalRiskHigh()!,
                                     ),
