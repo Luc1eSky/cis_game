@@ -3,8 +3,12 @@
 import '../classes/enumerator.dart';
 
 List<Enumerator> enumerators = const [
-  Enumerator(firstName: "Bruce", lastName: "Wayne"),
-  Enumerator(firstName: "Luke", lastName: "Skywalker"),
-  Enumerator(firstName: "Ron", lastName: "Weasly"),
-  Enumerator(firstName: "Tyrion", lastName: "Lannister"),
+  Enumerator(firstName: "Dexter", lastName: "Simuulu"),
+  Enumerator(firstName: "Ellimo", lastName: "Mwiinga"),
+  Enumerator(firstName: "Emelia", lastName: "Banda"),
+  Enumerator(firstName: "Hendrix", lastName: "Katiyo"),
+  Enumerator(firstName: "Joseph", lastName: "Mwiinga"),
+  Enumerator(firstName: "Sikananu", lastName: "Sikananu"),
+  Enumerator(firstName: "Sylvia", lastName: "Sakala"),
+  Enumerator(firstName: "Tapiwa", lastName: "Janda"),
 ];

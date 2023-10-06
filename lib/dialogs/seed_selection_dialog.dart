@@ -45,7 +45,7 @@ class _SeedSelectionState extends ConsumerState<SeedSelectionDialog> {
             label: Expanded(
               child: SizedBox(
                 width: 35,
-                child: Image.asset('assets/images/harvest_icon.png'),
+                child: Image.asset('assets/images/plant_icon_color.png'),
               ),
             ),
           ),
