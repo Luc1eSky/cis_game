@@ -1,3 +1,9 @@
+// TODO: SET FALSE BEFORE GOING LIVE
+// activates level indication in top bar for test mode
+const bool isTestingMode = true;
+
+const double practiceModeSlowDownFactor = 2.0;
+
 // pin for enumerators to unlock the next steps
 const String unlockPin = '7532';
 
@@ -6,7 +12,7 @@ const double minimumScreenHeight = 250;
 
 // fixed height of two top rows
 const double topRowHeight = 30;
-const double secondRowHeight = 30;
+const double secondRowHeight = 50;
 
 // limit dialog sizes so they don't become too huge
 const double pinUnlockDialogMaxHeight = 500;

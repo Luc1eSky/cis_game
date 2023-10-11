@@ -29,7 +29,7 @@ class GameData {
     int yieldZebras = 0;
     for (Field field in currentFieldList) {
       SeedType? seedType = field.seedType;
-      if (seedType != null && seedType.animalName == 'zebra') {
+      if (seedType.animalName == 'zebra') {
         zebras++;
         if (currentLevel.isRaining) {
           yieldZebras += seedType.yieldRain;
@@ -47,7 +47,7 @@ class GameData {
     int yieldLions = 0;
     for (Field field in currentFieldList) {
       SeedType? seedType = field.seedType;
-      if (seedType != null && seedType.animalName == 'lion') {
+      if (seedType.animalName == 'lion') {
         lions++;
         if (currentLevel.isRaining) {
           yieldLions += seedType.yieldRain;
@@ -66,7 +66,7 @@ class GameData {
 
     for (Field field in currentFieldList) {
       SeedType? seedType = field.seedType;
-      if (seedType != null && seedType.animalName == 'elephant') {
+      if (seedType.animalName == 'elephant') {
         elephants++;
         if (currentLevel.isRaining) {
           yieldElephants += seedType.yieldRain;
@@ -129,8 +129,7 @@ class GameData {
     return GameData(
       cash: cash ?? this.cash,
       savings: savings ?? this.savings,
-      currentFieldList:
-          currentFieldList ?? copyFieldList(this.currentFieldList),
+      currentFieldList: currentFieldList ?? copyFieldList(this.currentFieldList),
       savedResults: savedResults ?? copySavedResults(this.savedResults),
       levelIndex: levelIndex ?? this.levelIndex,
       currentLevel: currentLevel ?? this.currentLevel.copyWith(),
@@ -139,10 +138,8 @@ class GameData {
       season: season ?? this.season,
       newSeasonHasStarted: newSeasonHasStarted ?? this.newSeasonHasStarted,
       allFieldsAreSeeded: allFieldsAreSeeded ?? this.allFieldsAreSeeded,
-      showingWeatherAnimation:
-          showingWeatherAnimation ?? this.showingWeatherAnimation,
-      currentEnumerator:
-          currentEnumerator ?? this.currentEnumerator?.copyWith(),
+      showingWeatherAnimation: showingWeatherAnimation ?? this.showingWeatherAnimation,
+      currentEnumerator: currentEnumerator ?? this.currentEnumerator?.copyWith(),
       dieRollResult: dieRollResult ?? this.dieRollResult,
       isInPracticeMode: isInPracticeMode ?? this.isInPracticeMode,
     );

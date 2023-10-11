@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:cis_game/constants.dart';
+import 'package:cis_game/main_screen/widgets/unplant_all_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -26,8 +27,7 @@ class FieldsMainPage extends ConsumerWidget {
       double fieldAreaWidthUnrestricted = maxHeight * fieldAreaAspectRatio;
       double fieldAreaWidthRestricted = maxWidth - legendWidth;
       // use smaller width as the actual width for widget
-      double actualFieldAreaWidth =
-          min(fieldAreaWidthUnrestricted, fieldAreaWidthRestricted);
+      double actualFieldAreaWidth = min(fieldAreaWidthUnrestricted, fieldAreaWidthRestricted);
 
       double theoreticalAreaHeight = maxWidth / fieldAreaAspectRatio;
 
@@ -53,7 +53,7 @@ class FieldsMainPage extends ConsumerWidget {
                 child: Padding(
                   padding: const EdgeInsets.only(top: 15.0),
                   child: SizedBox(
-                    width: 500,
+                    width: 550,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
@@ -68,6 +68,7 @@ class FieldsMainPage extends ConsumerWidget {
                         AnimalLegend(
                           legendSeedType: seedTypeElephant,
                         ),
+                        const UnplantAllWidget(),
                       ],
                     ),
                   ),
@@ -93,7 +94,7 @@ class FieldsMainPage extends ConsumerWidget {
               width: legendWidth,
               child: FractionallySizedBox(
                 widthFactor: 0.8,
-                heightFactor: 0.8,
+                heightFactor: 0.9,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -116,6 +117,11 @@ class FieldsMainPage extends ConsumerWidget {
                       child: AnimalLegend(
                         legendSeedType: seedTypeElephant,
                       ),
+                    ),
+                    const Spacer(),
+                    const Expanded(
+                      flex: 3,
+                      child: UnplantAllWidget(),
                     ),
                   ],
                 ),
@@ -154,14 +160,9 @@ class FieldAreaWidget extends ConsumerWidget {
               heightFactor: 0.8,
               child: FieldWidget(
                 fieldID: index,
-                fieldStatus: ref
-                    .watch(gameDataNotifierProvider)
-                    .currentFieldList[index]
-                    .fieldStatus,
-                seedType: ref
-                    .watch(gameDataNotifierProvider)
-                    .currentFieldList[index]
-                    .seedType,
+                fieldStatus:
+                    ref.watch(gameDataNotifierProvider).currentFieldList[index].fieldStatus,
+                seedType: ref.watch(gameDataNotifierProvider).currentFieldList[index].seedType,
               ),
             ),
           ),

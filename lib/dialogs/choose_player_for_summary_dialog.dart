@@ -125,6 +125,7 @@ class ChoosePlayerForSummaryDialog extends ConsumerWidget {
                   Navigator.of(context).pop();
                   // open warning dialog
                   showDialog(
+                    barrierDismissible: false,
                     context: context,
                     builder: (context) {
                       // Show Warning

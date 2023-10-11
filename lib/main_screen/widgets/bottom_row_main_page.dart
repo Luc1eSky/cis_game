@@ -64,15 +64,17 @@ class BottomRowMainPage extends ConsumerWidget {
                         // show growing animation and wait until it is done
                         await ref.read(gameDataNotifierProvider.notifier).showGrowingAnimation();
 
-                        await Future.delayed(
-                          const Duration(milliseconds: pauseAfterGrowingAnimationInMs),
-                        );
+                        // slow animation down in practice mode
+                        bool inPracticeMode = ref.read(gameDataNotifierProvider).isInPracticeMode;
+                        double slowDown = inPracticeMode ? practiceModeSlowDownFactor : 1.0;
+
+                        await Future.delayed(Duration(
+                            milliseconds: (pauseAfterGrowingAnimationInMs * slowDown).toInt()));
 
                         ref.read(gameDataNotifierProvider.notifier).harvestFields();
 
-                        await Future.delayed(
-                          const Duration(milliseconds: pauseAfterHarvestShownOnFieldInMs),
-                        );
+                        await Future.delayed(Duration(
+                            milliseconds: (pauseAfterHarvestShownOnFieldInMs * slowDown).toInt()));
                       }
 
                       // TODO: MOVE TO SEASON SUMMARY?

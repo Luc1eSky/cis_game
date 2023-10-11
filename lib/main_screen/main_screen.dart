@@ -64,12 +64,8 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                 return const LandScapeLayout();
               },
             ),
-            if (ref.watch(gameDataNotifierProvider).newSeasonHasStarted ==
-                    true &&
-                ref
-                        .watch(gameDataNotifierProvider)
-                        .currentCouple
-                        .currentPlayerType !=
+            if (ref.watch(gameDataNotifierProvider).newSeasonHasStarted == true &&
+                ref.watch(gameDataNotifierProvider).currentCouple.currentPlayerType !=
                     PlayerType.none)
               Container(
                 color: Colors.black.withOpacity(0.4),
@@ -97,19 +93,13 @@ class LandScapeLayout extends ConsumerWidget {
         children: [
           const Column(
             children: [
-              Expanded(
-                flex: 1,
-                child: SizedBox(
-                  height: topRowHeight,
-                  child: TopRowMainPage(),
-                ),
+              SizedBox(
+                height: topRowHeight,
+                child: TopRowMainPage(),
               ),
-              Expanded(
-                flex: 2,
-                child: SizedBox(
-                  height: secondRowHeight,
-                  child: SecondRowMainPage(),
-                ),
+              SizedBox(
+                height: secondRowHeight,
+                child: SecondRowMainPage(),
               ),
               Spacer(flex: 1),
               Expanded(
@@ -125,8 +115,7 @@ class LandScapeLayout extends ConsumerWidget {
           ),
           if (ref.watch(gameDataNotifierProvider).showingWeatherAnimation)
             Container(color: Colors.transparent),
-          if (ref.watch(gameDataNotifierProvider).showingWeatherAnimation)
-            const WeatherWidget(),
+          if (ref.watch(gameDataNotifierProvider).showingWeatherAnimation) const WeatherWidget(),
         ],
       ),
     );
