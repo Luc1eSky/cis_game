@@ -11,7 +11,7 @@ void main() {
   //   setPathUrlStrategy();
   //   debugPrint("its a web app");
   // }
-  runApp(const MyApp());
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -20,16 +20,14 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return ProviderScope(
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: const MainScreen(),
-        // global context that can be used in the app
-        navigatorKey: navigatorKey,
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
       ),
+      home: const MainScreen(),
+      // global context that can be used in the app
+      navigatorKey: navigatorKey,
     );
   }
 }
