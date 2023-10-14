@@ -1,10 +1,13 @@
 // results class that contains all data that needs to be saved
 import 'package:cis_game/classes/couple.dart';
+import 'package:cis_game/classes/plantingAdvice.dart';
 
 import 'level.dart';
 
 class Result {
   final Level level;
+  final PlantingAdvice plantingAdviceHighRisk;
+  final PlantingAdvice plantingAdviceLowRisk;
   final String personalID;
   final PlayerType playerType;
   final int zebraFields;
@@ -21,6 +24,8 @@ class Result {
 
   const Result({
     required this.level,
+    required this.plantingAdviceHighRisk,
+    required this.plantingAdviceLowRisk,
     required this.personalID,
     required this.playerType,
     required this.zebraFields,
@@ -38,6 +43,8 @@ class Result {
 
   Result copyWith({
     Level? level,
+    PlantingAdvice? plantingAdviceHighRisk,
+    PlantingAdvice? plantingAdviceLowRisk,
     String? personalID,
     PlayerType? playerType,
     int? zebraFields,
@@ -54,6 +61,8 @@ class Result {
   }) {
     return Result(
       level: level ?? this.level.copyWith(),
+      plantingAdviceHighRisk: plantingAdviceHighRisk ?? this.plantingAdviceHighRisk,
+      plantingAdviceLowRisk: plantingAdviceLowRisk ?? this.plantingAdviceLowRisk,
       personalID: personalID ?? this.personalID,
       playerType: playerType ?? this.playerType,
       zebraFields: zebraFields ?? this.zebraFields,

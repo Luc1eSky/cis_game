@@ -201,11 +201,7 @@ class _SummaryPageState extends ConsumerState<SeasonSummaryDialog> {
       ),
       actions: [
         // if player has not yet finished their levels
-        !ref
-                .read(gameDataNotifierProvider)
-                .currentCouple
-                .currentPlayer!
-                .hasPlayed
+        !ref.read(gameDataNotifierProvider).currentCouple.currentPlayer!.hasPlayed
             ? SizedBox(
                 height: 50,
                 width: 150,
@@ -217,9 +213,7 @@ class _SummaryPageState extends ConsumerState<SeasonSummaryDialog> {
                     // close the current dialog
                     Navigator.of(context).pop();
                     // start a new season with the next level
-                    ref
-                        .read(gameDataNotifierProvider.notifier)
-                        .startNewSeason();
+                    ref.read(gameDataNotifierProvider.notifier).startNewSeason();
                   },
                   child: const FittedBox(
                     child: Icon(
@@ -261,16 +255,15 @@ class _SummaryPageState extends ConsumerState<SeasonSummaryDialog> {
                         barrierDismissible: false,
                         context: context,
                         builder: (context) {
+                          // TODO: SAVE RESULTS OF ALL PLAYED SEASONS OF PLAYER
+                          ref.read(gameDataNotifierProvider.notifier).printPlayerResults();
                           return const PlayerDoneDialog();
                         },
                       );
                     },
                     child: Text(
                       // change text of button based on if everyone has played already
-                      ref
-                              .read(gameDataNotifierProvider)
-                              .currentCouple
-                              .everyoneHasPlayed
+                      ref.read(gameDataNotifierProvider).currentCouple.everyoneHasPlayed
                           ? 'Summary Page'
                           : 'Next Player',
                     ),

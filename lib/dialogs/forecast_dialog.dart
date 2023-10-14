@@ -15,8 +15,7 @@ class ForecastDialog extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     var notifier = ref.read(gameDataNotifierProvider.notifier);
     var gameDataNotifier = ref.read(gameDataNotifierProvider);
-    double dialogHeight =
-        min(MediaQuery.of(context).size.height, forecastDialogMaxHeight);
+    double dialogHeight = min(MediaQuery.of(context).size.height, forecastDialogMaxHeight);
     return SizedBox(
       height: dialogHeight,
       child: DialogTemplate(
@@ -43,7 +42,7 @@ class ForecastDialog extends ConsumerWidget {
                   const Spacer(flex: 2),
                   gameDataNotifier.currentLevel.plantingAdvice == true &&
                           notifier.getAnimalRiskHigh() != null &&
-                          notifier.getAnimalLowHigh() != null
+                          notifier.getAnimalRiskLow() != null
                       ? Expanded(
                           flex: 6,
                           child: FractionallySizedBox(
@@ -58,15 +57,13 @@ class ForecastDialog extends ConsumerWidget {
                                   Expanded(
                                     child: AdviceWidget(
                                       adviceImageName: 'profit_max.png',
-                                      animalImageName:
-                                          notifier.getAnimalRiskHigh()!,
+                                      animalImageName: notifier.getAnimalRiskHigh()!,
                                     ),
                                   ),
                                   Expanded(
                                     child: AdviceWidget(
                                       adviceImageName: 'speedometer_low.png',
-                                      animalImageName:
-                                          notifier.getAnimalLowHigh()!,
+                                      animalImageName: notifier.getAnimalRiskLow()!,
                                     ),
                                   ),
                                 ],
@@ -90,9 +87,7 @@ class ForecastDialog extends ConsumerWidget {
                 backgroundColor: Colors.green,
               ),
               onPressed: () {
-                ref
-                    .read(gameDataNotifierProvider.notifier)
-                    .setSeasonToCurrent();
+                ref.read(gameDataNotifierProvider.notifier).setSeasonToCurrent();
               },
               child: const FittedBox(
                   child: Icon(

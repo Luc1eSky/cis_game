@@ -152,6 +152,7 @@ class FieldAreaWidget extends ConsumerWidget {
       child: AspectRatio(
         aspectRatio: fieldAreaAspectRatio,
         child: GridView.count(
+          physics: const NeverScrollableScrollPhysics(),
           crossAxisCount: fieldsPerRow,
           children: List.generate(
             numberOfFields,

@@ -13,6 +13,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../classes/alternative_level_bundle.dart';
 import '../classes/field.dart';
 import '../classes/level.dart';
+import '../classes/plantingAdvice.dart';
 import '../classes/result.dart';
 import '../classes/seed_type.dart';
 import '../constants.dart';
@@ -571,6 +572,8 @@ class GameDataNotifier extends StateNotifier<GameData> {
     // create new result object from current data
     Result newResult = Result(
       level: state.currentLevel,
+      plantingAdviceHighRisk: getAdviceRiskHigh(),
+      plantingAdviceLowRisk: getAdviceRiskLow(),
       personalID: state.currentCouple.currentPlayer?.personalID ?? '',
       playerType: state.currentCouple.currentPlayerType,
       startingCash: startingCash,
@@ -593,6 +596,12 @@ class GameDataNotifier extends StateNotifier<GameData> {
     state = state.copyWith(savedResults: currentResults);
   }
 
+  void printPlayerResults() {
+    for (Result result in state.savedResults) {
+      print('LEVEL: ${result.level.levelID}');
+    }
+  }
+
   void randomizeWeatherEvent() {
     int? rainForecast = state.currentLevel.rainForecast;
 
@@ -608,36 +617,68 @@ class GameDataNotifier extends StateNotifier<GameData> {
     }
   }
 
-  String? getAnimalRiskHigh() {
+  PlantingAdvice getAdviceRiskHigh() {
     int? currentForecast = state.currentLevel.rainForecast;
     switch (currentForecast) {
       case 0:
-        return 'no_planting.png';
+        return PlantingAdvice.dontPlant;
       case 1:
-        return 'zebra.png';
+        return PlantingAdvice.plantZebra;
       case 2:
-        return 'zebra.png';
+        return PlantingAdvice.plantZebra;
       case 4:
-        return 'elephant.png';
+        return PlantingAdvice.plantElephant;
       case 5:
+        return PlantingAdvice.plantElephant;
+      default:
+        return PlantingAdvice.noAdvice;
+    }
+  }
+
+  PlantingAdvice getAdviceRiskLow() {
+    int? currentForecast = state.currentLevel.rainForecast;
+    switch (currentForecast) {
+      case 0:
+        return PlantingAdvice.dontPlant;
+      case 1:
+        return PlantingAdvice.dontPlant;
+      case 2:
+        return PlantingAdvice.plantZebra;
+      case 4:
+        return PlantingAdvice.plantLion;
+      case 5:
+        return PlantingAdvice.plantElephant;
+      default:
+        return PlantingAdvice.noAdvice;
+    }
+  }
+
+  String? getAnimalRiskHigh() {
+    PlantingAdvice adviceHighRisk = getAdviceRiskHigh();
+    switch (adviceHighRisk) {
+      case PlantingAdvice.dontPlant:
+        return 'no_planting.png';
+      case PlantingAdvice.plantZebra:
+        return 'zebra.png';
+      case PlantingAdvice.plantLion:
+        return 'zebra.png';
+      case PlantingAdvice.plantElephant:
         return 'elephant.png';
       default:
         return null;
     }
   }
 
-  String? getAnimalLowHigh() {
-    int? currentForecast = state.currentLevel.rainForecast;
-    switch (currentForecast) {
-      case 0:
+  String? getAnimalRiskLow() {
+    PlantingAdvice adviceLowRisk = getAdviceRiskLow();
+    switch (adviceLowRisk) {
+      case PlantingAdvice.dontPlant:
         return 'no_planting.png';
-      case 1:
-        return 'no_planting.png';
-      case 2:
+      case PlantingAdvice.plantZebra:
         return 'zebra.png';
-      case 4:
-        return 'lion.png';
-      case 5:
+      case PlantingAdvice.plantLion:
+        return 'zebra.png';
+      case PlantingAdvice.plantElephant:
         return 'elephant.png';
       default:
         return null;
