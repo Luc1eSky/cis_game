@@ -2,7 +2,6 @@ import 'package:cis_game/dialogs/pin_unlock_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../constants.dart';
 import '../../state_management/game_data_notifier.dart';
 
 class TopRowMainPage extends ConsumerWidget {
@@ -49,17 +48,6 @@ class TopRowMainPage extends ConsumerWidget {
             ),
           ),
         ),
-        if (isTestingMode)
-          Expanded(
-            flex: 1,
-            child: FittedBox(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                'Level ID: ${ref.watch(gameDataNotifierProvider).currentLevel.levelID}',
-                style: const TextStyle(fontSize: 100, color: Colors.red),
-              ),
-            ),
-          ),
         Expanded(
           flex: 1,
           child: FittedBox(
