@@ -2,7 +2,7 @@
     "name": "CIS Game",
     "short_name": "CIS Game",
     "start_url": ".",
-    "display": "fullscreen",
+    "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
     "description": "CIS Game for Zambia",

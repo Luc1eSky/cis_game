@@ -1,17 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pwa_install/pwa_install.dart';
 
 import 'main_screen/main_screen.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
 
-void main() {
+void main() async {
   //if (kIsWeb) {
   //   // removes the # in front of the web address
   //   setPathUrlStrategy();
   //debugPrint("its a web app");
   //document.documentElement?.requestFullscreen();
   //}
+
+  WidgetsFlutterBinding.ensureInitialized();
+
+  PWAInstall().setup(installCallback: () {
+    debugPrint('APP INSTALLED!');
+  });
+
+  if (PWAInstall().installPromptEnabled) {
+    try {
+      PWAInstall().promptInstall_();
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
+
   runApp(const ProviderScope(child: MyApp()));
 }
 
