@@ -14,12 +14,11 @@ void main() async {
   //document.documentElement?.requestFullscreen();
   //}
 
+  // make sure that everything is initialized (e.g. all assets are ready)
   WidgetsFlutterBinding.ensureInitialized();
 
-  PWAInstall().setup(installCallback: () {
-    debugPrint('APP INSTALLED!');
-  });
-
+  // check if install prompt is available
+  // PWA e.g. should not show the prompt
   if (PWAInstall().installPromptEnabled) {
     try {
       PWAInstall().promptInstall_();
