@@ -17,6 +17,9 @@ void main() async {
   // make sure that everything is initialized (e.g. all assets are ready)
   WidgetsFlutterBinding.ensureInitialized();
 
+  // setup PWA install
+  PWAInstall().setup();
+
   // check if install prompt is available
   // PWA e.g. should not show the prompt
   if (PWAInstall().installPromptEnabled) {
