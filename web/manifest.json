@@ -1,12 +1,12 @@
 {
-    "name": "cis_game",
-    "short_name": "cis_game",
+    "name": "CIS Game",
+    "short_name": "CIS Game",
     "start_url": ".",
-    "display": "standalone",
+    "display": "fullscreen",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
-    "orientation": "portrait-primary",
+    "description": "CIS Game for Zambia",
+    "orientation": "landscape",
     "prefer_related_applications": false,
     "icons": [
         {
