@@ -221,12 +221,19 @@ class _SelectNewCoupleDialogState extends ConsumerState<SelectNewCoupleDialog> {
               String newCoupleID =
                   'C$locationAcronym$sessionShort${coupleNumberDropdownValue.toString().padLeft(2, '0')}';
 
-              // change the current couple to the selected one
-              ref.read(gameDataNotifierProvider.notifier).changeCouple(newCoupleID: newCoupleID);
+              final notifier = ref.read(gameDataNotifierProvider.notifier);
 
-              ref
-                  .read(gameDataNotifierProvider.notifier)
-                  .setCurrentEnumerator(newEnumerator: enumeratorDropdownValue!);
+              // change the current couple to the selected one
+              notifier.changeCouple(newCoupleID: newCoupleID);
+
+              // set current location
+              notifier.setCurrentLocation(newLocation: locationDropdownValue!);
+
+              // set current session
+              notifier.setCurrentSession(newSession: sessionDropdownValue!);
+
+              // set currentEnumerator
+              notifier.setCurrentEnumerator(newEnumerator: enumeratorDropdownValue!);
 
               Navigator.of(context).pop();
 

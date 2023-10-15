@@ -88,7 +88,7 @@ class _SummaryPageState extends ConsumerState<SeasonSummaryDialog> {
                   child: Center(
                     child: SizedBox(
                         child: Text(
-                      '${result.savings}\n$currency',
+                      '${result.storedInSavings}\n$currency',
                       style: const TextStyle(fontSize: 20, color: Colors.green),
                     )),
                   ),
@@ -107,7 +107,7 @@ class _SummaryPageState extends ConsumerState<SeasonSummaryDialog> {
                   child: Center(
                     child: SizedBox(
                         child: Text(
-                      '- ${result.moneySpent}\n$currency',
+                      '- ${result.costsTotal}\n$currency',
                       style: const TextStyle(
                         fontSize: 20,
                         color: Colors.red,
@@ -147,7 +147,7 @@ class _SummaryPageState extends ConsumerState<SeasonSummaryDialog> {
                   child: Center(
                     child: SizedBox(
                         child: Text(
-                      '+ ${result.moneyEarned} $currency',
+                      '+ ${result.earningsTotal} $currency',
                       style: const TextStyle(
                         fontSize: 20,
                         color: Colors.green,
@@ -187,7 +187,7 @@ class _SummaryPageState extends ConsumerState<SeasonSummaryDialog> {
                   child: Center(
                     child: SizedBox(
                         child: Text(
-                      '${result.moneyAtEndOfSeason} $currency',
+                      '${result.totalMoneyAtEnd} $currency',
                       style: const TextStyle(
                         fontSize: 20,
                       ),

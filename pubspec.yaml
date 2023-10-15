@@ -40,6 +40,7 @@ dependencies:
   rive: ^0.11.16
   collection: ^1.17.2
   pwa_install: ^0.0.5
+  url_strategy: ^0.2.0
 
 dev_dependencies:
   flutter_test:

@@ -6,8 +6,11 @@ import '../../state_management/game_data_notifier.dart';
 
 class SavingsWidget extends ConsumerWidget {
   const SavingsWidget({
+    required this.isActive,
     super.key,
   });
+
+  final bool isActive;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -33,11 +36,11 @@ class SavingsWidget extends ConsumerWidget {
                     iconSize: 100,
                     color: ColorPalette().iconColor,
                     icon: const Icon(Icons.remove),
-                    onPressed: () {
-                      ref
-                          .read(gameDataNotifierProvider.notifier)
-                          .savingsToCash();
-                    },
+                    onPressed: isActive
+                        ? () {
+                            ref.read(gameDataNotifierProvider.notifier).savingsToCash();
+                          }
+                        : null,
                   ),
                 ),
               ),
@@ -49,8 +52,7 @@ class SavingsWidget extends ConsumerWidget {
                   Expanded(
                     flex: 4,
                     child: AspectRatio(
-                        aspectRatio: 2.0,
-                        child: Image.asset('assets/images/cash_box.png')),
+                        aspectRatio: 2.0, child: Image.asset('assets/images/cash_box.png')),
                   ),
                   const Spacer(),
                   Expanded(
@@ -68,22 +70,22 @@ class SavingsWidget extends ConsumerWidget {
             Expanded(
               flex: 2,
               child: CircleAvatar(
-                backgroundColor:
-                    ref.watch(gameDataNotifierProvider).allSeededAndCashLeft
-                        ? Colors.lightGreen
-                        : ColorPalette().plusMinusButtonColor,
+                backgroundColor: ref.watch(gameDataNotifierProvider).allSeededAndCashLeft
+                    ? Colors.lightGreen
+                    : ColorPalette().plusMinusButtonColor,
                 radius: 500,
                 child: FittedBox(
                   child: IconButton(
                     iconSize: 100,
                     color: ColorPalette().iconColor,
                     icon: const Icon(Icons.add),
-                    onPressed: () {
-                      ref.read(gameDataNotifierProvider.notifier).cashToSavings(
-                          transferAll: ref
-                              .read(gameDataNotifierProvider)
-                              .allSeededAndCashLeft);
-                    },
+                    onPressed: isActive
+                        ? () {
+                            ref.read(gameDataNotifierProvider.notifier).cashToSavings(
+                                transferAll:
+                                    ref.read(gameDataNotifierProvider).allSeededAndCashLeft);
+                          }
+                        : null,
                   ),
                 ),
               ),

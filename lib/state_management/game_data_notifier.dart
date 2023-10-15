@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:cis_game/classes/couple.dart';
 import 'package:cis_game/classes/enumerator.dart';
+import 'package:cis_game/classes/session.dart';
 import 'package:cis_game/data/alternative_levels.dart';
 import 'package:cis_game/data/seedtypes.dart';
 import 'package:cis_game/dialogs/dialog_template.dart';
@@ -13,6 +14,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../classes/alternative_level_bundle.dart';
 import '../classes/field.dart';
 import '../classes/level.dart';
+import '../classes/location.dart';
 import '../classes/plantingAdvice.dart';
 import '../classes/result.dart';
 import '../classes/seed_type.dart';
@@ -39,6 +41,8 @@ class GameDataNotifier extends StateNotifier<GameData> {
             currentLevel: practiceLevels[0],
             // initialize first couple with practice level information
             currentCouple: practiceCouple,
+            currentLocation: dummyLocation,
+            currentSession: Session.morning,
             currentSeedType: null,
             season: 1,
             newSeasonHasStarted: true,
@@ -574,19 +578,15 @@ class GameDataNotifier extends StateNotifier<GameData> {
       level: state.currentLevel,
       plantingAdviceHighRisk: getAdviceRiskHigh(),
       plantingAdviceLowRisk: getAdviceRiskLow(),
-      personalID: state.currentCouple.currentPlayer?.personalID ?? '',
       playerType: state.currentCouple.currentPlayerType,
       startingCash: startingCash,
-      savings: state.savings,
+      startingSavings: startingSavings,
       zebraFields: state.zebras[0],
       lionFields: state.lions[0],
       elephantFields: state.elephants[0],
-      zebraPayout: state.zebras[1],
-      lionPayout: state.lions[1],
-      elephantPayout: state.elephants[1],
-      amountOfPlantedFields: state.total[0],
-      moneySpent: startingCash - state.savings,
-      moneyEarned: state.total[1].toDouble(),
+      earningsZebras: state.zebras[1].toDouble(),
+      earningsLions: state.lions[1].toDouble(),
+      earningsElephants: state.elephants[1].toDouble(),
     );
     // get a copy of results list
     List<Result> currentResults = copySavedResults(state.savedResults);
@@ -598,7 +598,40 @@ class GameDataNotifier extends StateNotifier<GameData> {
 
   void printPlayerResults() {
     for (Result result in state.savedResults) {
-      print('LEVEL: ${result.level.levelID}');
+      print('----------');
+      print('----------');
+      print('PLAYER ID: ${state.currentCouple.currentPlayer?.personalID}');
+      print('PLAYER TYPE: ${result.playerType}');
+      print('-----');
+      print('LOCATION: ${state.currentLocation}');
+      print('SESSION: ${state.currentSession}');
+      //print('ID: ${result.level.levelID}'); // CALCULATE
+      print('-----');
+      print('LEVEL ID: ${result.level.levelID}');
+      print('FORECAST: ${result.level.rainForecast}');
+      print('RAINING: ${result.level.isRaining}');
+      print('ADVICE: ${result.level.plantingAdvice}');
+      print('ADV. LOW RISK: ${result.plantingAdviceLowRisk.name}');
+      print('ADV. HIGH RISK: ${result.plantingAdviceHighRisk.name}');
+      print('-----');
+      print('STARTING CASH: ${result.startingCash}');
+      print('STARTING SAVINGS: ${result.startingSavings}');
+      print('MONEY SPENT: ${result.costsTotal}');
+      print('MONEY EARNED: ${result.earningsTotal}');
+      print('MONEY EARNED: ${result.earningsTotal}');
+      print('STORED IN SAVINGS: ${result.storedInSavings}');
+      print('TOTAL MONEY AT END: ${result.totalMoneyAtEnd}');
+      print('-----');
+      print('ZEBRAS: ${result.zebraFields}');
+      print('LIONS: ${result.lionFields}');
+      print('ELEPHANTS: ${result.elephantFields}');
+      print('ALL FIELDS: ${result.fieldsTotal}');
+      print('-----');
+      print('ZEBRA EARNINGS: ${result.earningsZebras}');
+      print('LION EARNINGS: ${result.earningsLions}');
+      print('ELEPHANT EARNINGS: ${result.earningsElephants}');
+      print('----------');
+      print('----------');
     }
   }
 
@@ -698,6 +731,14 @@ class GameDataNotifier extends StateNotifier<GameData> {
 
   void setCurrentEnumerator({required Enumerator newEnumerator}) {
     state = state.copyWith(currentEnumerator: newEnumerator);
+  }
+
+  void setCurrentLocation({required Location newLocation}) {
+    state = state.copyWith(currentLocation: newLocation);
+  }
+
+  void setCurrentSession({required Session newSession}) {
+    state = state.copyWith(currentSession: newSession);
   }
 
   void setDieRollResult({required int result}) {

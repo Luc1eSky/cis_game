@@ -18,3 +18,5 @@ class Location {
     );
   }
 }
+
+const Location dummyLocation = Location(name: '', acronym: '');

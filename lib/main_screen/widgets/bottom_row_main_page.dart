@@ -9,13 +9,19 @@ import '../../../color_palette.dart';
 import '../../state_management/game_data_notifier.dart';
 import 'cash_widget.dart';
 
-class BottomRowMainPage extends ConsumerWidget {
+class BottomRowMainPage extends ConsumerStatefulWidget {
   const BottomRowMainPage({
     super.key,
   });
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<BottomRowMainPage> createState() => _BottomRowMainPageState();
+}
+
+class _BottomRowMainPageState extends ConsumerState<BottomRowMainPage> {
+  bool buttonsAreActive = true;
+  @override
+  Widget build(BuildContext context) {
     return Row(
       children: [
         const Expanded(
@@ -26,12 +32,12 @@ class BottomRowMainPage extends ConsumerWidget {
             child: CashWidget(),
           ),
         ),
-        const Expanded(
+        Expanded(
           flex: 3,
           child: FractionallySizedBox(
             widthFactor: 0.8,
             heightFactor: 0.8,
-            child: SavingsWidget(),
+            child: SavingsWidget(isActive: buttonsAreActive),
           ),
         ),
         Expanded(
@@ -42,55 +48,71 @@ class BottomRowMainPage extends ConsumerWidget {
             child: Center(
               child: FittedBox(
                 child: ElevatedButton(
-                  onPressed: () async {
-                    if (ref.read(gameDataNotifierProvider).cash > 0) {
-                      showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return const WarningUseCashDialog();
-                          });
-                    } else {
-                      // simulate if it is raining or not
-                      ref.read(gameDataNotifierProvider.notifier).randomizeWeatherEvent();
+                  onPressed: buttonsAreActive
+                      ? () async {
+                          if (ref.read(gameDataNotifierProvider).cash > 0) {
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return const WarningUseCashDialog();
+                                });
+                          } else {
+                            // deactivate button to not prevent double click
+                            setState(() => buttonsAreActive = false);
 
-                      // save the results based on the fields and the weather
-                      ref.read(gameDataNotifierProvider.notifier).saveResult();
+                            // simulate if it is raining or not
+                            ref.read(gameDataNotifierProvider.notifier).randomizeWeatherEvent();
 
-                      // show weather animation and wait until it is done
-                      await ref.read(gameDataNotifierProvider.notifier).showWeatherAnimation();
+                            // save the results based on the fields and the weather
+                            ref.read(gameDataNotifierProvider.notifier).saveResult();
 
-                      // check if something has been planted
-                      if (ref.read(gameDataNotifierProvider).total[0] > 0) {
-                        // show growing animation and wait until it is done
-                        await ref.read(gameDataNotifierProvider.notifier).showGrowingAnimation();
+                            // show weather animation and wait until it is done
+                            await ref
+                                .read(gameDataNotifierProvider.notifier)
+                                .showWeatherAnimation();
 
-                        // slow animation down in practice mode
-                        bool inPracticeMode = ref.read(gameDataNotifierProvider).isInPracticeMode;
-                        double slowDown = inPracticeMode ? practiceModeSlowDownFactor : 1.0;
+                            // check if something has been planted
+                            if (ref.read(gameDataNotifierProvider).total[0] > 0) {
+                              // show growing animation and wait until it is done
+                              await ref
+                                  .read(gameDataNotifierProvider.notifier)
+                                  .showGrowingAnimation();
 
-                        await Future.delayed(Duration(
-                            milliseconds: (pauseAfterGrowingAnimationInMs * slowDown).toInt()));
+                              // slow animation down in practice mode
+                              bool inPracticeMode =
+                                  ref.read(gameDataNotifierProvider).isInPracticeMode;
+                              double slowDown = inPracticeMode ? practiceModeSlowDownFactor : 1.0;
 
-                        ref.read(gameDataNotifierProvider.notifier).harvestFields();
+                              await Future.delayed(Duration(
+                                  milliseconds:
+                                      (pauseAfterGrowingAnimationInMs * slowDown).toInt()));
 
-                        await Future.delayed(Duration(
-                            milliseconds: (pauseAfterHarvestShownOnFieldInMs * slowDown).toInt()));
-                      }
+                              ref.read(gameDataNotifierProvider.notifier).harvestFields();
 
-                      // TODO: MOVE TO SEASON SUMMARY?
-                      ref.read(gameDataNotifierProvider.notifier).checkIfLastLevelWasPlayed();
+                              await Future.delayed(Duration(
+                                  milliseconds:
+                                      (pauseAfterHarvestShownOnFieldInMs * slowDown).toInt()));
+                            }
 
-                      if (context.mounted) {
-                        showDialog(
-                          barrierDismissible: false,
-                          context: context,
-                          builder: (context) {
-                            return const SeasonSummaryDialog();
-                          },
-                        );
-                      }
-                    }
-                  },
+                            // check if he last level was played by current player
+                            ref.read(gameDataNotifierProvider.notifier).checkIfLastLevelWasPlayed();
+
+                            // activate button again
+                            setState(() => buttonsAreActive = true);
+
+                            // open the season summary dialog
+                            if (context.mounted) {
+                              showDialog(
+                                barrierDismissible: false,
+                                context: context,
+                                builder: (context) {
+                                  return const SeasonSummaryDialog();
+                                },
+                              );
+                            }
+                          }
+                        }
+                      : null,
                   style: ElevatedButton.styleFrom(
                     elevation: 10,
                     shape: const CircleBorder(),

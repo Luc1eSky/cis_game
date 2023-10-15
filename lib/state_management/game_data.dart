@@ -3,23 +3,27 @@ import 'package:cis_game/classes/enumerator.dart';
 import '../classes/couple.dart';
 import '../classes/field.dart';
 import '../classes/level.dart';
+import '../classes/location.dart';
 import '../classes/result.dart';
 import '../classes/seed_type.dart';
+import '../classes/session.dart';
 
 class GameData {
+  final Enumerator? currentEnumerator;
+  final Couple currentCouple;
+  final Location currentLocation;
+  final Session currentSession;
   final double cash;
   final double savings;
   final List<Field> currentFieldList;
   final List<Result> savedResults;
   final int levelIndex;
   final Level currentLevel;
-  final Couple currentCouple;
   final SeedType? currentSeedType;
   final int season;
   final bool newSeasonHasStarted;
   final bool allFieldsAreSeeded;
   final bool showingWeatherAnimation;
-  final Enumerator? currentEnumerator;
   final int? dieRollResult;
   final bool isInPracticeMode;
 
@@ -92,54 +96,60 @@ class GameData {
   }
 
   GameData({
+    this.currentEnumerator,
+    required this.currentCouple,
+    required this.currentLocation,
+    required this.currentSession,
     required this.cash,
     required this.savings,
     required this.currentFieldList,
     required this.savedResults,
     required this.levelIndex,
     required this.currentLevel,
-    required this.currentCouple,
     this.currentSeedType,
     required this.season,
     required this.newSeasonHasStarted,
     required this.allFieldsAreSeeded,
     this.showingWeatherAnimation = false,
-    this.currentEnumerator,
     this.dieRollResult,
     required this.isInPracticeMode,
   });
 
   GameData copyWith({
+    Enumerator? currentEnumerator,
+    Couple? currentCouple,
+    Location? currentLocation,
+    Session? currentSession,
     double? cash,
     double? savings,
     List<Field>? currentFieldList,
     List<Result>? savedResults,
     int? levelIndex,
     Level? currentLevel,
-    Couple? currentCouple,
     SeedType? currentSeedType,
     int? season,
     bool? newSeasonHasStarted,
     bool? allFieldsAreSeeded,
     bool? showingWeatherAnimation,
-    Enumerator? currentEnumerator,
     int? dieRollResult,
     bool? isInPracticeMode,
   }) {
     return GameData(
+      currentEnumerator: currentEnumerator ?? this.currentEnumerator?.copyWith(),
+      currentCouple: currentCouple ?? this.currentCouple.copyWith(),
+      currentLocation: currentLocation ?? this.currentLocation.copyWith(),
+      currentSession: currentSession ?? this.currentSession,
       cash: cash ?? this.cash,
       savings: savings ?? this.savings,
       currentFieldList: currentFieldList ?? copyFieldList(this.currentFieldList),
       savedResults: savedResults ?? copySavedResults(this.savedResults),
       levelIndex: levelIndex ?? this.levelIndex,
       currentLevel: currentLevel ?? this.currentLevel.copyWith(),
-      currentCouple: currentCouple ?? this.currentCouple.copyWith(),
       currentSeedType: currentSeedType ?? this.currentSeedType,
       season: season ?? this.season,
       newSeasonHasStarted: newSeasonHasStarted ?? this.newSeasonHasStarted,
       allFieldsAreSeeded: allFieldsAreSeeded ?? this.allFieldsAreSeeded,
       showingWeatherAnimation: showingWeatherAnimation ?? this.showingWeatherAnimation,
-      currentEnumerator: currentEnumerator ?? this.currentEnumerator?.copyWith(),
       dieRollResult: dieRollResult ?? this.dieRollResult,
       isInPracticeMode: isInPracticeMode ?? this.isInPracticeMode,
     );
