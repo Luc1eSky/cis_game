@@ -13,6 +13,7 @@ class GameData {
   final Couple currentCouple;
   final Location currentLocation;
   final Session currentSession;
+  final DateTime startingTime;
   final double cash;
   final double savings;
   final List<Field> currentFieldList;
@@ -100,6 +101,7 @@ class GameData {
     required this.currentCouple,
     required this.currentLocation,
     required this.currentSession,
+    required this.startingTime,
     required this.cash,
     required this.savings,
     required this.currentFieldList,
@@ -120,6 +122,7 @@ class GameData {
     Couple? currentCouple,
     Location? currentLocation,
     Session? currentSession,
+    DateTime? startingTime,
     double? cash,
     double? savings,
     List<Field>? currentFieldList,
@@ -139,6 +142,7 @@ class GameData {
       currentCouple: currentCouple ?? this.currentCouple.copyWith(),
       currentLocation: currentLocation ?? this.currentLocation.copyWith(),
       currentSession: currentSession ?? this.currentSession,
+      startingTime: startingTime ?? this.startingTime.copyWith(),
       cash: cash ?? this.cash,
       savings: savings ?? this.savings,
       currentFieldList: currentFieldList ?? copyFieldList(this.currentFieldList),

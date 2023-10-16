@@ -105,6 +105,8 @@ class Person {
 
     return '$firstLetter-$location-$session-$number';
   }
+
+  int get number => int.parse(personalID.substring(personalID.length - 2));
 }
 
 List<Level> copyLevels(List<Level> listToCopy) {

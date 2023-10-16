@@ -7,7 +7,10 @@ import 'level.dart';
 
 class Result {
   const Result({
+    required this.playerID,
     required this.playerType,
+    required this.startedOn,
+    required this.endedOn,
     required this.level,
     required this.plantingAdviceHighRisk,
     required this.plantingAdviceLowRisk,
@@ -22,10 +25,16 @@ class Result {
   });
 
   // get enumerator, couple, location, session from game data
-  // level data
 
+  // player ID and type of player needed to show results later
+  final String? playerID;
   final PlayerType playerType;
 
+  // time stamps
+  final DateTime startedOn;
+  final DateTime endedOn;
+
+  // level data and advice
   final Level level;
   final PlantingAdvice plantingAdviceHighRisk;
   final PlantingAdvice plantingAdviceLowRisk;
@@ -45,7 +54,10 @@ class Result {
   final double earningsElephants;
 
   Result copyWith({
+    String? playerID,
     PlayerType? playerType,
+    DateTime? startedOn,
+    DateTime? endedOn,
     Level? level,
     PlantingAdvice? plantingAdviceHighRisk,
     PlantingAdvice? plantingAdviceLowRisk,
@@ -59,7 +71,10 @@ class Result {
     double? earningsElephants,
   }) {
     return Result(
+      playerID: playerID ?? this.playerID,
       playerType: playerType ?? this.playerType,
+      startedOn: startedOn ?? this.startedOn.copyWith(),
+      endedOn: endedOn ?? this.endedOn.copyWith(),
       level: level ?? this.level.copyWith(),
       plantingAdviceHighRisk: plantingAdviceHighRisk ?? this.plantingAdviceHighRisk,
       plantingAdviceLowRisk: plantingAdviceLowRisk ?? this.plantingAdviceLowRisk,
@@ -73,6 +88,9 @@ class Result {
       earningsElephants: earningsElephants ?? this.earningsElephants,
     );
   }
+
+  // calculate time played for this level
+  Duration get timePlayed => endedOn.difference(startedOn);
 
   // calculate total amount of fields
   int get fieldsTotal => zebraFields + lionFields + elephantFields;

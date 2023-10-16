@@ -26,6 +26,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
   void initState() {
     ref.read(riveDataNotifierProvider.notifier).loadRiveData();
 
+    print('This app was started at: ${DateTime.now()}');
     // WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
     //   if (ref.watch(gameDataNotifierProvider).currentCouple.currentPlayerType == PlayerType.none) {
     //     showDialog(

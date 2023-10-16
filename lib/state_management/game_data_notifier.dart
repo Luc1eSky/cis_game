@@ -29,6 +29,7 @@ class GameDataNotifier extends StateNotifier<GameData> {
   GameDataNotifier()
       : super(
           GameData(
+            startingTime: DateTime.now(),
             cash: startingCash,
             savings: startingSavings,
             // generates initial list of fields that are empty
@@ -296,6 +297,7 @@ class GameDataNotifier extends StateNotifier<GameData> {
 
   void startNewSeason() {
     state = state.copyWith(
+      startingTime: DateTime.now(),
       cash: startingCash,
       savings: startingSavings,
       // generates initial list of fields that are empty
@@ -316,6 +318,7 @@ class GameDataNotifier extends StateNotifier<GameData> {
 
   void startNewGame({required newSeasonHasStarted}) {
     state = state.copyWith(
+      startingTime: DateTime.now(),
       cash: startingCash,
       savings: startingSavings,
       // generates initial list of fields that are empty
@@ -338,6 +341,7 @@ class GameDataNotifier extends StateNotifier<GameData> {
 
   void startNewGameAsNewPlayer() {
     state = state.copyWith(
+      startingTime: DateTime.now(),
       cash: startingCash,
       savings: startingSavings,
       // generates initial list of fields that are empty
@@ -476,20 +480,20 @@ class GameDataNotifier extends StateNotifier<GameData> {
     // List<Level> husbandLevels =
     //     copiedIndividualLevels.sublist(copiedIndividualLevels.length ~/ 2);
 
-    print('husband:');
-    for (Level level in husbandLevelsWithAlternatives) {
-      print(level.levelID);
-      print(level.rainForecast);
-      print(level.plantingAdvice);
-      print('---');
-    }
-    print('wife:');
-    for (Level level in wifeLevelsWithAlternatives) {
-      print(level.levelID);
-      print(level.rainForecast);
-      print(level.plantingAdvice);
-      print('---');
-    }
+    // print('husband:');
+    // for (Level level in husbandLevelsWithAlternatives) {
+    //   print(level.levelID);
+    //   print(level.rainForecast);
+    //   print(level.plantingAdvice);
+    //   print('---');
+    // }
+    // print('wife:');
+    // for (Level level in wifeLevelsWithAlternatives) {
+    //   print(level.levelID);
+    //   print(level.rainForecast);
+    //   print(level.plantingAdvice);
+    //   print('---');
+    // }
 
     // copy couple level list
     List<Level> copiedCoupleLevels = [];
@@ -575,10 +579,13 @@ class GameDataNotifier extends StateNotifier<GameData> {
   void saveResult() {
     // create new result object from current data
     Result newResult = Result(
+      playerID: state.currentCouple.currentPlayer?.formattedID,
+      playerType: state.currentCouple.currentPlayerType,
       level: state.currentLevel,
+      startedOn: state.startingTime,
+      endedOn: DateTime.now(),
       plantingAdviceHighRisk: getAdviceRiskHigh(),
       plantingAdviceLowRisk: getAdviceRiskLow(),
-      playerType: state.currentCouple.currentPlayerType,
       startingCash: startingCash,
       startingSavings: startingSavings,
       zebraFields: state.zebras[0],
@@ -600,12 +607,19 @@ class GameDataNotifier extends StateNotifier<GameData> {
     for (Result result in state.savedResults) {
       print('----------');
       print('----------');
-      print('PLAYER ID: ${state.currentCouple.currentPlayer?.personalID}');
-      print('PLAYER TYPE: ${result.playerType}');
+      // TODO: GET ID FROM RESULTS
+      print('PLAYER ID: ${state.currentCouple.currentPlayer?.formattedID}');
+      print('PLAYER TYPE: ${result.playerType.name}');
       print('-----');
-      print('LOCATION: ${state.currentLocation}');
-      print('SESSION: ${state.currentSession}');
+      print('LOCATION: ${state.currentLocation.name}');
+      print('SESSION: ${state.currentSession.name}');
+      // TODO: GET NUMBER FROM ID OF RESULTS
+      //print('PLAYER NUMBER: ${state.currentCouple.currentPlayer?.number}');
       //print('ID: ${result.level.levelID}'); // CALCULATE
+      print('-----');
+      print('STARTING TIME: ${result.startedOn}');
+      print('END TIME: ${result.endedOn}');
+      print('TIME PLAYED: ${result.timePlayed.inSeconds} seconds');
       print('-----');
       print('LEVEL ID: ${result.level.levelID}');
       print('FORECAST: ${result.level.rainForecast}');
@@ -618,18 +632,21 @@ class GameDataNotifier extends StateNotifier<GameData> {
       print('STARTING SAVINGS: ${result.startingSavings}');
       print('MONEY SPENT: ${result.costsTotal}');
       print('MONEY EARNED: ${result.earningsTotal}');
-      print('MONEY EARNED: ${result.earningsTotal}');
       print('STORED IN SAVINGS: ${result.storedInSavings}');
       print('TOTAL MONEY AT END: ${result.totalMoneyAtEnd}');
       print('-----');
-      print('ZEBRAS: ${result.zebraFields}');
-      print('LIONS: ${result.lionFields}');
-      print('ELEPHANTS: ${result.elephantFields}');
+      print('ZEBRA FIELDS: ${result.zebraFields}');
+      print('LION FIELDS: ${result.lionFields}');
+      print('ELEPHANT FIELDS: ${result.elephantFields}');
       print('ALL FIELDS: ${result.fieldsTotal}');
       print('-----');
-      print('ZEBRA EARNINGS: ${result.earningsZebras}');
-      print('LION EARNINGS: ${result.earningsLions}');
-      print('ELEPHANT EARNINGS: ${result.earningsElephants}');
+      print('ZEBRAS COSTS: ${result.costsZebras}');
+      print('LIONS COSTS: ${result.costsLions}');
+      print('ELEPHANTS COSTS: ${result.costsElephants}');
+      print('-----');
+      print('ZEBRAS EARNINGS: ${result.earningsZebras}');
+      print('LIONS EARNINGS: ${result.earningsLions}');
+      print('ELEPHANTS EARNINGS: ${result.earningsElephants}');
       print('----------');
       print('----------');
     }
