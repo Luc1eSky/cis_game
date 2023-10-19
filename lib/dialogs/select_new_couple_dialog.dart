@@ -16,7 +16,8 @@ class SelectNewCoupleDialog extends ConsumerStatefulWidget {
   const SelectNewCoupleDialog({super.key});
 
   @override
-  ConsumerState<SelectNewCoupleDialog> createState() => _SelectNewCoupleDialogState();
+  ConsumerState<SelectNewCoupleDialog> createState() =>
+      _SelectNewCoupleDialogState();
 }
 
 class _SelectNewCoupleDialogState extends ConsumerState<SelectNewCoupleDialog> {
@@ -29,10 +30,11 @@ class _SelectNewCoupleDialogState extends ConsumerState<SelectNewCoupleDialog> {
   @override
   void initState() {
     // use current enumerator as default value
-    Enumerator? currentEnumerator = ref.read(gameDataNotifierProvider).currentEnumerator;
+    Enumerator? currentEnumerator =
+        ref.read(gameDataNotifierProvider).currentEnumerator;
     if (currentEnumerator != null) {
-      enumeratorDropdownValue =
-          enumerators.firstWhere((enumerator) => enumerator.fullName == currentEnumerator.fullName);
+      enumeratorDropdownValue = enumerators.firstWhere(
+          (enumerator) => enumerator.fullName == currentEnumerator.fullName);
     }
 
     // // TODO: get current location from last couple?
@@ -73,14 +75,17 @@ class _SelectNewCoupleDialogState extends ConsumerState<SelectNewCoupleDialog> {
                       width: 270,
                       height: 50,
                       child: InputDecorator(
-                        decoration: const InputDecoration(border: OutlineInputBorder()),
+                        decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            contentPadding: EdgeInsets.only(left: 10.0)),
                         child: DropdownButtonHideUnderline(
                           child: DropdownButton(
                             hint: const Text('please choose'),
                             value: enumeratorDropdownValue,
                             items: enumerators.map((Enumerator enumerator) {
                               return DropdownMenuItem(
-                                  value: enumerator, child: Text(enumerator.fullName));
+                                  value: enumerator,
+                                  child: Text(enumerator.fullName));
                             }).toList(),
                             onChanged: (value) {
                               setState(
@@ -105,15 +110,20 @@ class _SelectNewCoupleDialogState extends ConsumerState<SelectNewCoupleDialog> {
                   width: 270,
                   height: 50,
                   child: InputDecorator(
-                    decoration: const InputDecoration(border: OutlineInputBorder()),
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      contentPadding: EdgeInsets.only(left: 10.0),
+                    ),
                     child: DropdownButtonHideUnderline(
                       child: DropdownButton(
                         hint: const Text('select'),
                         value: locationDropdownValue,
-                        items: allLocations.map<DropdownMenuItem<Location>>((Location location) {
+                        items: allLocations.map<DropdownMenuItem<Location>>(
+                            (Location location) {
                           return DropdownMenuItem(
                               value: location,
-                              child: Text('${location.acronym} - ${location.name}'));
+                              child: Text(
+                                  '${location.acronym} - ${location.name}'));
                         }).toList(),
                         onChanged: (value) {
                           setState(
@@ -139,16 +149,21 @@ class _SelectNewCoupleDialogState extends ConsumerState<SelectNewCoupleDialog> {
                       width: 160,
                       height: 50,
                       child: InputDecorator(
-                        decoration: const InputDecoration(border: OutlineInputBorder()),
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          contentPadding: EdgeInsets.only(left: 10.0),
+                        ),
                         child: DropdownButtonHideUnderline(
                           child: DropdownButton(
                               hint: const Text('select'),
                               value: sessionDropdownValue,
-                              items:
-                                  Session.values.map<DropdownMenuItem<Session>>((Session session) {
+                              items: Session.values
+                                  .map<DropdownMenuItem<Session>>(
+                                      (Session session) {
                                 return DropdownMenuItem(
                                     value: session,
-                                    child: Text('${session.name} - ${session.short}'));
+                                    child: Text(
+                                        '${session.name} - ${session.short}'));
                               }).toList(),
                               onChanged: (value) {
                                 setState(() {
@@ -163,15 +178,20 @@ class _SelectNewCoupleDialogState extends ConsumerState<SelectNewCoupleDialog> {
                       width: 100,
                       height: 50,
                       child: InputDecorator(
-                        decoration: const InputDecoration(border: OutlineInputBorder()),
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          contentPadding: EdgeInsets.only(left: 10.0),
+                        ),
                         child: DropdownButtonHideUnderline(
                           child: DropdownButton(
                               hint: const Text('select'),
                               value: coupleNumberDropdownValue,
-                              items:
-                                  List.generate(maxNumberOfCouplesPerLocation, (index) => index + 1)
-                                      .map<DropdownMenuItem<int>>((int value) {
-                                return DropdownMenuItem(value: value, child: Text('$value'));
+                              items: List.generate(
+                                      maxNumberOfCouplesPerLocation,
+                                      (index) => index + 1)
+                                  .map<DropdownMenuItem<int>>((int value) {
+                                return DropdownMenuItem(
+                                    value: value, child: Text('$value'));
                               }).toList(),
                               onChanged: (value) {
                                 setState(() {
@@ -190,7 +210,7 @@ class _SelectNewCoupleDialogState extends ConsumerState<SelectNewCoupleDialog> {
               'C-${locationDropdownValue?.acronym ?? "xxx"}-${sessionDropdownValue?.short ?? "xx"}-'
               '${coupleNumberDropdownValue == null ? "xx" : coupleNumberDropdownValue.toString().padLeft(2, '0')}',
               style: const TextStyle(
-                fontSize: 22,
+                fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -233,7 +253,8 @@ class _SelectNewCoupleDialogState extends ConsumerState<SelectNewCoupleDialog> {
               notifier.setCurrentSession(newSession: sessionDropdownValue!);
 
               // set currentEnumerator
-              notifier.setCurrentEnumerator(newEnumerator: enumeratorDropdownValue!);
+              notifier.setCurrentEnumerator(
+                  newEnumerator: enumeratorDropdownValue!);
 
               Navigator.of(context).pop();
 
