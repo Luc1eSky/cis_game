@@ -14,9 +14,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../classes/alternative_level_bundle.dart';
 import '../classes/field.dart';
 import '../classes/level.dart';
+import '../classes/level_result.dart';
 import '../classes/location.dart';
 import '../classes/plantingAdvice.dart';
-import '../classes/result.dart';
 import '../classes/seed_type.dart';
 import '../constants.dart';
 import '../data/levels.dart';
@@ -578,8 +578,7 @@ class GameDataNotifier extends StateNotifier<GameData> {
 
   void saveResult() {
     // create new result object from current data
-    Result newResult = Result(
-      playerID: state.currentCouple.currentPlayer?.formattedID,
+    LevelResult newResult = LevelResult(
       playerType: state.currentCouple.currentPlayerType,
       level: state.currentLevel,
       startedOn: state.startingTime,
@@ -596,7 +595,7 @@ class GameDataNotifier extends StateNotifier<GameData> {
       earningsElephants: state.elephants[1].toDouble(),
     );
     // get a copy of results list
-    List<Result> currentResults = copySavedResults(state.savedResults);
+    List<LevelResult> currentResults = copySavedResults(state.savedResults);
     // add new result to it
     currentResults.add(newResult);
     // update state
@@ -604,18 +603,24 @@ class GameDataNotifier extends StateNotifier<GameData> {
   }
 
   void printPlayerResults() {
-    for (Result result in state.savedResults) {
+    List<LevelResult> allResults = state.savedResults;
+
+    int lastEntries = state.currentCouple.currentPlayerType == PlayerType.both
+        ? coupleLevels.length
+        : individualLevels.length;
+
+    List<LevelResult> currentPlayerResults = allResults.sublist(allResults.length - lastEntries);
+
+    for (LevelResult result in currentPlayerResults) {
       print('----------');
       print('----------');
-      // TODO: GET ID FROM RESULTS
+      print('ENUMERATOR: ${state.currentEnumerator?.fullName}');
+      print('-----');
       print('PLAYER ID: ${state.currentCouple.currentPlayer?.formattedID}');
       print('PLAYER TYPE: ${result.playerType.name}');
-      print('-----');
       print('LOCATION: ${state.currentLocation.name}');
       print('SESSION: ${state.currentSession.name}');
-      // TODO: GET NUMBER FROM ID OF RESULTS
-      //print('PLAYER NUMBER: ${state.currentCouple.currentPlayer?.number}');
-      //print('ID: ${result.level.levelID}'); // CALCULATE
+      print('PLAYER NUMBER: ${state.currentCouple.currentPlayer?.number}');
       print('-----');
       print('STARTING TIME: ${result.startedOn}');
       print('END TIME: ${result.endedOn}');

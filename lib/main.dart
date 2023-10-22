@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pwa_install/pwa_install.dart';
 import 'package:url_strategy/url_strategy.dart';
 
+import 'localData/sembastDataRepository.dart';
 import 'main_screen/main_screen.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
@@ -32,7 +33,32 @@ void main() async {
     }
   }
 
-  runApp(const ProviderScope(child: MyApp()));
+  // TODO: show loading animation for startup
+  runApp(
+    const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        backgroundColor: Colors.greenAccent,
+        body: Center(
+          child: CircularProgressIndicator(),
+        ),
+      ),
+    ),
+  );
+
+  // TODO: initialize local database
+  //await Future.delayed(const Duration(seconds: 2));
+  final localDataRepository = await SembastDataRepository.makeDefault();
+
+  // start up
+  runApp(
+    ProviderScope(
+      overrides: [
+        localDataRepositoryProvider.overrideWithValue(localDataRepository),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {

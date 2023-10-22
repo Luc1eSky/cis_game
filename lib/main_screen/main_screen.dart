@@ -1,4 +1,3 @@
-import 'package:cis_game/classes/couple.dart';
 import 'package:cis_game/main_screen/screen_too_small_page.dart';
 import 'package:cis_game/main_screen/widgets/second_row_main_page.dart';
 import 'package:cis_game/main_screen/widgets/top_row_main_page.dart';
@@ -7,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../color_palette.dart';
+import '../classes/couple.dart';
 import '../constants.dart';
 import '../dialogs/forecast_dialog.dart';
 import '../rive/rive_data_notifier.dart';
@@ -26,7 +26,6 @@ class _MainScreenState extends ConsumerState<MainScreen> {
   void initState() {
     ref.read(riveDataNotifierProvider.notifier).loadRiveData();
 
-    print('This app was started at: ${DateTime.now()}');
     // WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
     //   if (ref.watch(gameDataNotifierProvider).currentCouple.currentPlayerType == PlayerType.none) {
     //     showDialog(

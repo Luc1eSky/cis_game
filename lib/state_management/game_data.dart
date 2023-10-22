@@ -3,8 +3,8 @@ import 'package:cis_game/classes/enumerator.dart';
 import '../classes/couple.dart';
 import '../classes/field.dart';
 import '../classes/level.dart';
+import '../classes/level_result.dart';
 import '../classes/location.dart';
-import '../classes/result.dart';
 import '../classes/seed_type.dart';
 import '../classes/session.dart';
 
@@ -17,7 +17,7 @@ class GameData {
   final double cash;
   final double savings;
   final List<Field> currentFieldList;
-  final List<Result> savedResults;
+  final List<LevelResult> savedResults;
   final int levelIndex;
   final Level currentLevel;
   final SeedType? currentSeedType;
@@ -126,7 +126,7 @@ class GameData {
     double? cash,
     double? savings,
     List<Field>? currentFieldList,
-    List<Result>? savedResults,
+    List<LevelResult>? savedResults,
     int? levelIndex,
     Level? currentLevel,
     SeedType? currentSeedType,
@@ -170,9 +170,9 @@ List<Field> copyFieldList(List<Field> fieldList) {
 }
 
 // copy list of results
-List<Result> copySavedResults(List<Result> resultList) {
-  List<Result> copiedResultList = [];
-  for (Result result in resultList) {
+List<LevelResult> copySavedResults(List<LevelResult> resultList) {
+  List<LevelResult> copiedResultList = [];
+  for (LevelResult result in resultList) {
     copiedResultList.add(result.copyWith());
   }
   return copiedResultList;

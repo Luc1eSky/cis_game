@@ -5,9 +5,8 @@ import 'package:cis_game/classes/plantingAdvice.dart';
 import '../data/seedtypes.dart';
 import 'level.dart';
 
-class Result {
-  const Result({
-    required this.playerID,
+class LevelResult {
+  const LevelResult({
     required this.playerType,
     required this.startedOn,
     required this.endedOn,
@@ -26,8 +25,7 @@ class Result {
 
   // get enumerator, couple, location, session from game data
 
-  // player ID and type of player needed to show results later
-  final String? playerID;
+  // type of player needed to show results later
   final PlayerType playerType;
 
   // time stamps
@@ -41,6 +39,26 @@ class Result {
 
   // starting conditions
   final double startingCash;
+
+  @override
+  String toString() {
+    return '''\nLevelResult{
+    playerType: ${playerType.name},
+    startedOn: $startedOn,
+    endedOn: $endedOn,
+    level: $level,
+    plantingAdviceHighRisk: $plantingAdviceHighRisk,
+    plantingAdviceLowRisk: $plantingAdviceLowRisk,
+    startingCash: $startingCash,
+    startingSavings: $startingSavings,
+    zebraFields: $zebraFields,
+    lionFields: $lionFields, 
+    elephantFields: $elephantFields,
+    earningsZebras: $earningsZebras,
+    earningsLions: $earningsLions,
+    earningsElephants: $earningsElephants}\n''';
+  }
+
   final double startingSavings;
 
   // planting decisions
@@ -53,8 +71,7 @@ class Result {
   final double earningsLions;
   final double earningsElephants;
 
-  Result copyWith({
-    String? playerID,
+  LevelResult copyWith({
     PlayerType? playerType,
     DateTime? startedOn,
     DateTime? endedOn,
@@ -70,8 +87,7 @@ class Result {
     double? earningsLions,
     double? earningsElephants,
   }) {
-    return Result(
-      playerID: playerID ?? this.playerID,
+    return LevelResult(
       playerType: playerType ?? this.playerType,
       startedOn: startedOn ?? this.startedOn.copyWith(),
       endedOn: endedOn ?? this.endedOn.copyWith(),
@@ -115,4 +131,42 @@ class Result {
 
   // calculate total money at end (cash + savings)
   double get totalMoneyAtEnd => storedInSavings + earningsTotal;
+
+  Map<String, dynamic> toMap() {
+    return {
+      'playerType': playerType.name,
+      'startedOn': startedOn.millisecondsSinceEpoch,
+      'endedOn': endedOn.millisecondsSinceEpoch,
+      'level': level.toMap(),
+      'plantingAdviceHighRisk': plantingAdviceHighRisk.name,
+      'plantingAdviceLowRisk': plantingAdviceLowRisk.name,
+      'startingCash': startingCash,
+      'startingSavings': startingSavings,
+      'zebraFields': zebraFields,
+      'lionFields': lionFields,
+      'elephantFields': elephantFields,
+      'earningsZebras': earningsZebras,
+      'earningsLions': earningsLions,
+      'earningsElephants': earningsElephants,
+    };
+  }
+
+  factory LevelResult.fromMap(Map<String, dynamic> map) {
+    return LevelResult(
+      playerType: PlayerType.values.byName(map['playerType']),
+      startedOn: DateTime.fromMillisecondsSinceEpoch(map['startedOn']),
+      endedOn: DateTime.fromMillisecondsSinceEpoch(map['endedOn']),
+      level: Level.fromMap(map['level']),
+      plantingAdviceHighRisk: PlantingAdvice.values.byName(map['plantingAdviceHighRisk']),
+      plantingAdviceLowRisk: PlantingAdvice.values.byName(map['plantingAdviceLowRisk']),
+      startingCash: map['startingCash'] as double,
+      startingSavings: map['startingSavings'] as double,
+      zebraFields: map['zebraFields'] as int,
+      lionFields: map['lionFields'] as int,
+      elephantFields: map['elephantFields'] as int,
+      earningsZebras: map['earningsZebras'] as double,
+      earningsLions: map['earningsLions'] as double,
+      earningsElephants: map['earningsElephants'] as double,
+    );
+  }
 }

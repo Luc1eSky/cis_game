@@ -2,6 +2,8 @@ import 'package:cis_game/dialogs/pin_unlock_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../dialogs/upload_dialog.dart';
+import '../../localData/sembastDataRepository.dart';
 import '../../state_management/game_data_notifier.dart';
 
 class TopRowMainPage extends ConsumerWidget {
@@ -29,6 +31,7 @@ class TopRowMainPage extends ConsumerWidget {
             icon: const Icon(Icons.settings),
           ),
         ),
+        const SizedBox(width: 10),
         Expanded(
           flex: 2,
           child: FittedBox(
@@ -55,6 +58,29 @@ class TopRowMainPage extends ConsumerWidget {
             child: Text(
               'Season: ${ref.watch(gameDataNotifierProvider).season}',
               style: const TextStyle(fontSize: 100),
+            ),
+          ),
+        ),
+        const SizedBox(width: 10),
+        FittedBox(
+          child: IconButton(
+            iconSize: 150,
+            onPressed: () async {
+              // 1. Load data from memory
+              final loadedResults = await ref.read(localDataRepositoryProvider).loadGameResults();
+
+              if (context.mounted) {
+                // unlock via pin before showing upload
+                showDialog(
+                    barrierDismissible: true,
+                    context: context,
+                    builder: (context) {
+                      return UploadDialog(gameResults: loadedResults);
+                    });
+              }
+            },
+            icon: const Icon(
+              Icons.file_upload_outlined,
             ),
           ),
         ),

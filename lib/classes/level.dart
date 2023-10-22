@@ -25,4 +25,31 @@ class Level {
       plantingAdvice: plantingAdvice ?? this.plantingAdvice,
     );
   }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'levelID': levelID,
+      'rainForecast': rainForecast,
+      'isRaining': isRaining,
+      'plantingAdvice': plantingAdvice,
+    };
+  }
+
+  factory Level.fromMap(Map<String, dynamic> map) {
+    return Level(
+      levelID: map['levelID'] as String,
+      rainForecast: map['rainForecast'] as int?,
+      isRaining: map['isRaining'] as bool,
+      plantingAdvice: map['plantingAdvice'] as bool?,
+    );
+  }
+
+  @override
+  String toString() {
+    return '''Level{
+      levelID: $levelID,
+      rainForecast: $rainForecast,
+      isRaining: $isRaining,
+      plantingAdvice: $plantingAdvice}''';
+  }
 }

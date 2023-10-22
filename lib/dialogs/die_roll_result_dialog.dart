@@ -5,7 +5,10 @@ import 'package:cis_game/state_management/game_data_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../classes/game_result.dart';
+import '../classes/level_result.dart';
 import '../color_palette.dart';
+import '../localData/sembastDataRepository.dart';
 
 class DieRollDialog extends ConsumerStatefulWidget {
   const DieRollDialog({super.key});
@@ -66,7 +69,7 @@ class _DieRoleDialogState extends ConsumerState<DieRollDialog> {
         ),
         actions: [
           ElevatedButton(
-            onPressed: () {
+            onPressed: () async {
               int? dieRollResult = dropDownValue;
               // show error if nothing is selected
               if (dieRollResult == null) {
@@ -85,19 +88,29 @@ class _DieRoleDialogState extends ConsumerState<DieRollDialog> {
               // save die roll result in game data
               ref.read(gameDataNotifierProvider.notifier).setDieRollResult(result: dieRollResult);
 
-              // Close the current dialog
-              Navigator.of(context).pop();
+              // save results locally
+              List<LevelResult> savedLevelResults = ref.read(gameDataNotifierProvider).savedResults;
 
-              // open selection dialog
-              showDialog(
-                barrierDismissible: false,
-                context: context,
-                builder: (context) {
-                  // Show the two buttons for wife and couple via a button
-                  // make the buttons showing up dependent on the die roll result
-                  return const ChoosePlayerForSummaryDialog();
-                },
-              );
+              // add game result to local memory
+              await ref
+                  .read(localDataRepositoryProvider)
+                  .addGameResult(GameResult(savedLevelResults));
+
+              if (context.mounted) {
+                // Close the current dialog
+                Navigator.of(context).pop();
+
+                // open selection dialog
+                showDialog(
+                  barrierDismissible: false,
+                  context: context,
+                  builder: (context) {
+                    // Show the two buttons for wife and couple via a button
+                    // make the buttons showing up dependent on the die roll result
+                    return const ChoosePlayerForSummaryDialog();
+                  },
+                );
+              }
             },
             child: const Text('CONTINUE'),
           )

@@ -8,15 +8,7 @@ final riveDataNotifierProvider =
     StateNotifierProvider<RiveDataNotifier, RiveData>((ref) => RiveDataNotifier());
 
 class RiveDataNotifier extends StateNotifier<RiveData> {
-  RiveDataNotifier()
-      : super(
-          RiveData(
-              // stateNumberInputsDot: List.generate(allLevels.length, (index) => null),
-              // clickedTriggers: List.generate(allLevels.length, (index) => null),
-              // lengthInputs: List.generate(allLevels.length, (index) => null),
-              // stateNumberInputsLine: List.generate(allLevels.length, (index) => null),
-              ),
-        );
+  RiveDataNotifier() : super(const RiveData());
 
   void loadRiveData() async {
     try {

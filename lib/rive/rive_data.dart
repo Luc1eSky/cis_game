@@ -10,7 +10,7 @@ class RiveData {
   // final List<SMIInput<double>?> lengthInputs;
   // final List<SMIInput<double>?> stateNumberInputsLine;
 
-  RiveData({
+  const RiveData({
     this.riveFileRain,
     this.riveFileMaize,
     this.riveFilesAreLoaded = false,

@@ -3,7 +3,7 @@ import 'package:cis_game/dialogs/player_done_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../classes/result.dart';
+import '../classes/level_result.dart';
 import '../constants.dart';
 import '../state_management/game_data_notifier.dart';
 
@@ -17,7 +17,7 @@ class SeasonSummaryDialog extends ConsumerStatefulWidget {
 class _SummaryPageState extends ConsumerState<SeasonSummaryDialog> {
   @override
   Widget build(BuildContext context) {
-    Result result = ref.read(gameDataNotifierProvider).savedResults.last;
+    LevelResult result = ref.read(gameDataNotifierProvider).savedResults.last;
     return DialogTemplate(
       title: Text(
         'Season ${ref.read(gameDataNotifierProvider).season}',
