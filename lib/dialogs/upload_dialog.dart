@@ -46,7 +46,10 @@ class _UploadDialogState extends ConsumerState<UploadDialog> {
             //Navigator.of(context).pop();
             try {
               final db = FirebaseFirestore.instance;
-              final docRef = await db.collection("connection").add({'connection': true});
+              final docRef = await db.collection("connection").add({
+                'connection': true,
+                'timeStamp': DateTime.now(),
+              });
               //print(docRef.id);
               setState(() {
                 errorMessage = 'success';

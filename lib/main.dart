@@ -52,13 +52,10 @@ void main() async {
   //await Future.delayed(const Duration(seconds: 2));
   final localDataRepository = await SembastDataRepository.makeDefault();
   print('sambast initialized');
-  try {
-    await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform,
-    );
-  } catch (e) {
-    print(e);
-  }
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
   print('firebase initialized');
 
   // start up
