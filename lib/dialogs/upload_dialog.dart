@@ -59,28 +59,18 @@ class _UploadDialogState extends ConsumerState<UploadDialog> {
                     // TODO: TRY CATCH
                     final db = FirebaseFirestore.instance;
 
-                    bool isOnline = false;
-                    try {
-                      QuerySnapshot snap = await db.collection('online').get();
-                      isOnline = snap.docs.first.get('isOnline');
-                    } catch (e) {
-                      setState(() {
-                        status = 'error';
-                      });
-                      return;
-                    }
-
-                    print('isOnline: $isOnline');
-
                     DocumentReference documentReference =
-                        FirebaseFirestore.instance.collection('users').doc('testDoc');
+                        FirebaseFirestore.instance.collection('new').doc('testDoc');
 
-                    // db.runTransaction((transaction) async {
-                    //   transaction.set(documentReference, {
-                    //     'connected': true,
-                    //     'timeStamp': DateTime.now(),
-                    //   });
-                    // });
+                    bool wasWritten = await db.runTransaction((transaction) async {
+                      transaction.set(documentReference, {
+                        'connected': true,
+                        'timeStamp': DateTime.now(),
+                      });
+                      return true;
+                    }).onError((error, stackTrace) => false);
+
+                    print('wasWritten: $wasWritten');
 
                     // // testing data persistence
                     // try {
