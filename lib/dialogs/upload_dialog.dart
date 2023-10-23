@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:cis_game/classes/game_results.dart';
 import 'package:cis_game/dialogs/dialog_template.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -60,35 +58,45 @@ class _UploadDialogState extends ConsumerState<UploadDialog> {
 
                     // TODO: TRY CATCH
                     final db = FirebaseFirestore.instance;
-                    db.settings = const Settings(persistenceEnabled: false);
 
-                    db.enablePersistence(const PersistenceSettings(synchronizeTabs: false));
-
-                    // DocumentReference documentReference =
-                    //     FirebaseFirestore.instance.collection('users').doc('testDoc');
-                    //
-                    // db.runTransaction((transaction) async {
-                    //   transaction.set(documentReference, {
-                    //     'connected': true,
-                    //     'timeStamp': DateTime.now(),
-                    //   });
-                    // }).t;
-
-                    // testing data persistence
+                    bool isOnline = false;
                     try {
-                      await db.collection("new").add({
-                        'connected': true,
-                        'timeStamp': DateTime.now(),
-                      }).timeout(const Duration(seconds: 7), onTimeout: () {
-                        throw TimeoutException('Timed Out');
-                      });
+                      QuerySnapshot snap = await db.collection('online').get();
+                      isOnline = snap.docs.first.get('isOnline');
                     } catch (e) {
-                      db.clearPersistence();
                       setState(() {
                         status = 'error';
                       });
                       return;
                     }
+
+                    print('isOnline: $isOnline');
+
+                    DocumentReference documentReference =
+                        FirebaseFirestore.instance.collection('users').doc('testDoc');
+
+                    // db.runTransaction((transaction) async {
+                    //   transaction.set(documentReference, {
+                    //     'connected': true,
+                    //     'timeStamp': DateTime.now(),
+                    //   });
+                    // });
+
+                    // // testing data persistence
+                    // try {
+                    //   await db.collection("new").add({
+                    //     'connected': true,
+                    //     'timeStamp': DateTime.now(),
+                    //   }).timeout(const Duration(seconds: 7), onTimeout: () {
+                    //     throw TimeoutException('Timed Out');
+                    //   });
+                    // } catch (e) {
+                    //   db.clearPersistence();
+                    //   setState(() {
+                    //     status = 'error';
+                    //   });
+                    //   return;
+                    // }
 
                     // int i = 0;
                     // for (GameResult gameResult in widget.gameResults.gameResultList) {
