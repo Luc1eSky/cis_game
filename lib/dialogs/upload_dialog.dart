@@ -37,8 +37,10 @@ class _UploadDialogState extends ConsumerState<UploadDialog> {
               : status == 'success'
                   ? const Text('Success.')
                   : status == 'error'
-                      ? const Text('Could not connect to database. Check connection.')
-                      : const Text('Info: Make sure you have internet connection.')),
+                      ? const Text(
+                          'Could not connect to database. Check connection.')
+                      : const Text(
+                          'Info: Make sure you have internet connection.')),
       actions: [
         ElevatedButton(
           onPressed: () {
@@ -59,18 +61,20 @@ class _UploadDialogState extends ConsumerState<UploadDialog> {
                     List<GameResult> copiedGameResultList =
                         widget.gameResults.copyWith().gameResultList;
 
-                    // TODO: TRY CATCH ?
+                    // TODO: TRY CATCH
                     final db = FirebaseFirestore.instance;
                     int i = 0;
-                    for (GameResult gameResult in widget.gameResults.gameResultList) {
+                    for (GameResult gameResult
+                        in widget.gameResults.gameResultList) {
                       try {
-                        Map<String, dynamic> gameResultMap = gameResult.toFirebaseMap();
-                        // //await Future.delayed(const Duration(seconds: 2));
-                        // if (i > 0) {
-                        //   throw TimeoutException('Timed Out');
-                        // } else {
-                        //   i++;
-                        // }
+                        Map<String, dynamic> gameResultMap =
+                            gameResult.toFirebaseMap();
+                        //await Future.delayed(const Duration(seconds: 2));
+                        if (i > 0) {
+                          throw TimeoutException('Timed Out');
+                        } else {
+                          i++;
+                        }
 
                         await db
                             .collection("test")

@@ -57,11 +57,11 @@ class _SeedSelectionState extends ConsumerState<SeedSelectionDialog> {
               ),
             ),
           ),
-          DataColumn(
+          const DataColumn(
             label: Expanded(
                 child: Icon(
               Icons.cloud,
-              color: Colors.grey[400],
+              color: Colors.white,
               size: 50,
             )),
           ),
