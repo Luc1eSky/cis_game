@@ -63,7 +63,19 @@ class _UploadDialogState extends ConsumerState<UploadDialog> {
                     db.settings = const Settings(persistenceEnabled: false);
 
                     db.enablePersistence(const PersistenceSettings(synchronizeTabs: false));
+                    db.clearPersistence();
 
+                    // DocumentReference documentReference =
+                    //     FirebaseFirestore.instance.collection('users').doc('testDoc');
+                    //
+                    // db.runTransaction((transaction) async {
+                    //   transaction.set(documentReference, {
+                    //     'connected': true,
+                    //     'timeStamp': DateTime.now(),
+                    //   });
+                    // }).t;
+
+                    // testing data persistence
                     try {
                       await db.collection("new").add({
                         'connected': true,
