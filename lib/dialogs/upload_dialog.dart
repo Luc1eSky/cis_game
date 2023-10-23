@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cis_game/classes/game_results.dart';
 import 'package:cis_game/dialogs/dialog_template.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -28,7 +30,7 @@ class _UploadDialogState extends ConsumerState<UploadDialog> {
         children: [
           Text('there are $resultsCount files to upload...'),
           const SizedBox(height: 10),
-          Text('Error: $errorMessage'),
+          Text('Status: $errorMessage'),
         ],
       ),
       actions: [
@@ -55,6 +57,8 @@ class _UploadDialogState extends ConsumerState<UploadDialog> {
               final docRef = await db.collection("connection").add({
                 'connection': true,
                 'timeStamp': DateTime.now(),
+              }).timeout(const Duration(seconds: 7), onTimeout: () {
+                throw TimeoutException('Timed Out');
               });
               setState(() {
                 errorMessage = 'success';
