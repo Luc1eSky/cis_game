@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../classes/game_result.dart';
-import '../localData/sembastDataRepository.dart';
 
 class UploadDialog extends ConsumerStatefulWidget {
   const UploadDialog({
@@ -63,14 +62,21 @@ class _UploadDialogState extends ConsumerState<UploadDialog> {
                     final db = FirebaseFirestore.instance;
                     db.settings = const Settings(persistenceEnabled: false);
 
-                    await db.collection("new").add({
-                      'connected': true,
-                      'timeStamp': DateTime.now(),
-                    })
-                        //.add(gameResultMap)
-                        .timeout(const Duration(seconds: 7), onTimeout: () {
-                      throw TimeoutException('Timed Out');
-                    });
+                    db.enablePersistence(const PersistenceSettings(synchronizeTabs: false));
+
+                    try {
+                      await db.collection("new").add({
+                        'connected': true,
+                        'timeStamp': DateTime.now(),
+                      }).timeout(const Duration(seconds: 7), onTimeout: () {
+                        throw TimeoutException('Timed Out');
+                      });
+                    } catch (e) {
+                      setState(() {
+                        status = 'error';
+                      });
+                      return;
+                    }
 
                     // int i = 0;
                     // for (GameResult gameResult in widget.gameResults.gameResultList) {
@@ -103,7 +109,8 @@ class _UploadDialogState extends ConsumerState<UploadDialog> {
                     //   }
                     // }
 
-                    ref.read(localDataRepositoryProvider).resetMemory();
+                    //ref.read(localDataRepositoryProvider).resetMemory();
+
                     setState(() {
                       status = 'success';
                     });
