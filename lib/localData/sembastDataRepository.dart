@@ -41,7 +41,7 @@ class SembastDataRepository {
 
   /// save game result to local memory
   /// GameResults -> map -> json
-  Future<void> _saveGameResults(GameResults gameResults) {
+  Future<void> saveGameResults(GameResults gameResults) {
     return store.record(gameResultKey).put(db, gameResults.toJson());
   }
 
@@ -59,7 +59,7 @@ class SembastDataRepository {
     GameResults updatedGameResults = GameResults(updatedGameResultList);
 
     // save updated game results in memory
-    await _saveGameResults(updatedGameResults);
+    await saveGameResults(updatedGameResults);
 
     return;
   }
@@ -68,7 +68,7 @@ class SembastDataRepository {
 
   /// reset saved GameResults to empty list
   Future<void> resetMemory() async {
-    return await _saveGameResults(const GameResults());
+    return await saveGameResults(const GameResults());
   }
 }
 

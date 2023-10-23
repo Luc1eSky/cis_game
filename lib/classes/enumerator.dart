@@ -24,4 +24,20 @@ class Enumerator {
       id: id ?? this.id,
     );
   }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'firstName': firstName,
+      'lastName': lastName,
+      'id': id,
+    };
+  }
+
+  factory Enumerator.fromMap(Map<String, dynamic> map) {
+    return Enumerator(
+      firstName: map['firstName'] as String,
+      lastName: map['lastName'] as String,
+      id: map['id'] as String?,
+    );
+  }
 }

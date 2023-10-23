@@ -1,12 +1,20 @@
 // results class that contains all data that needs to be saved
 import 'package:cis_game/classes/couple.dart';
+import 'package:cis_game/classes/enumerator.dart';
+import 'package:cis_game/classes/location.dart';
 import 'package:cis_game/classes/plantingAdvice.dart';
+import 'package:cis_game/classes/session.dart';
 
 import '../data/seedtypes.dart';
 import 'level.dart';
 
 class LevelResult {
   const LevelResult({
+    required this.enumerator,
+    required this.playerID,
+    required this.location,
+    required this.session,
+    required this.playerNumber,
     required this.playerType,
     required this.startedOn,
     required this.endedOn,
@@ -24,6 +32,11 @@ class LevelResult {
   });
 
   // get enumerator, couple, location, session from game data
+  final Enumerator enumerator;
+  final String playerID;
+  final Location location;
+  final Session session;
+  final int playerNumber;
 
   // type of player needed to show results later
   final PlayerType playerType;
@@ -43,6 +56,11 @@ class LevelResult {
   @override
   String toString() {
     return '''\nLevelResult{
+    enumerator : ${enumerator.fullName},
+    playerID: $playerID,     
+    location: ${location.name},
+    session: ${session.name},
+    playerNumber: $playerNumber,
     playerType: ${playerType.name},
     startedOn: $startedOn,
     endedOn: $endedOn,
@@ -72,6 +90,11 @@ class LevelResult {
   final double earningsElephants;
 
   LevelResult copyWith({
+    Enumerator? enumerator,
+    String? playerID,
+    Location? location,
+    Session? session,
+    int? playerNumber,
     PlayerType? playerType,
     DateTime? startedOn,
     DateTime? endedOn,
@@ -88,6 +111,11 @@ class LevelResult {
     double? earningsElephants,
   }) {
     return LevelResult(
+      enumerator: enumerator ?? this.enumerator.copyWith(),
+      playerID: playerID ?? this.playerID,
+      location: location ?? this.location.copyWith(),
+      session: session ?? this.session,
+      playerNumber: playerNumber ?? this.playerNumber,
       playerType: playerType ?? this.playerType,
       startedOn: startedOn ?? this.startedOn.copyWith(),
       endedOn: endedOn ?? this.endedOn.copyWith(),
@@ -134,6 +162,11 @@ class LevelResult {
 
   Map<String, dynamic> toMap() {
     return {
+      'enumerator': enumerator.toMap(),
+      'playerID': playerID,
+      'location': location.toMap(),
+      'session': session.name,
+      'playerNumber': playerNumber,
       'playerType': playerType.name,
       'startedOn': startedOn.millisecondsSinceEpoch,
       'endedOn': endedOn.millisecondsSinceEpoch,
@@ -153,6 +186,11 @@ class LevelResult {
 
   Map<String, dynamic> toFirebaseMap() {
     return {
+      'enumerator': enumerator.fullName,
+      'playerID': playerID,
+      'location': location.name,
+      'session': session.name,
+      'playerNumber': playerNumber,
       'playerType': playerType.name,
       'startedOn': startedOn,
       'endedOn': endedOn,
@@ -181,6 +219,11 @@ class LevelResult {
 
   factory LevelResult.fromMap(Map<String, dynamic> map) {
     return LevelResult(
+      enumerator: Enumerator.fromMap(map['enumerator']),
+      playerID: map['playerID'] as String,
+      location: Location.fromMap(map['location']),
+      session: Session.values.byName(map['session']),
+      playerNumber: map['playerNumber'] as int,
       playerType: PlayerType.values.byName(map['playerType']),
       startedOn: DateTime.fromMillisecondsSinceEpoch(map['startedOn']),
       endedOn: DateTime.fromMillisecondsSinceEpoch(map['endedOn']),

@@ -17,6 +17,20 @@ class Location {
       acronym: acronym ?? this.acronym,
     );
   }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'name': name,
+      'acronym': acronym,
+    };
+  }
+
+  factory Location.fromMap(Map<String, dynamic> map) {
+    return Location(
+      name: map['name'] as String,
+      acronym: map['acronym'] as String,
+    );
+  }
 }
 
 const Location dummyLocation = Location(name: '', acronym: '');

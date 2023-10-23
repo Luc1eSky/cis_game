@@ -37,4 +37,12 @@ class GameResult {
   String toString() {
     return levelResultList.toString();
   }
+
+  GameResult copyWith({
+    List<LevelResult>? levelResultList,
+  }) {
+    return GameResult(
+      levelResultList ?? this.levelResultList.map((e) => e.copyWith()).toList(),
+    );
+  }
 }

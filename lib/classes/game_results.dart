@@ -47,4 +47,12 @@ class GameResults {
     }
     return formattedString;
   }
+
+  GameResults copyWith({
+    List<GameResult>? gameResultList,
+  }) {
+    return GameResults(
+      gameResultList ?? this.gameResultList.map((e) => e.copyWith()).toList(),
+    );
+  }
 }

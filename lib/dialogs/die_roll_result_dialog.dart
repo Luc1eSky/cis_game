@@ -41,7 +41,10 @@ class _DieRoleDialogState extends ConsumerState<DieRollDialog> {
             SizedBox(
               height: 50,
               child: InputDecorator(
-                decoration: const InputDecoration(border: OutlineInputBorder()),
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  contentPadding: EdgeInsets.only(left: 10.0),
+                ),
                 child: DropdownButtonHideUnderline(
                   child: DropdownButton(
                       hint: const Text('please select'),

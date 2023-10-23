@@ -583,6 +583,11 @@ class GameDataNotifier extends StateNotifier<GameData> {
   void saveResult() {
     // create new result object from current data
     LevelResult newResult = LevelResult(
+      enumerator: state.currentEnumerator!,
+      playerID: state.currentCouple.currentPlayer!.personalID,
+      location: state.currentLocation,
+      session: state.currentSession,
+      playerNumber: state.currentCouple.currentPlayer!.number,
       playerType: state.currentCouple.currentPlayerType,
       level: state.currentLevel,
       startedOn: state.startingTime,

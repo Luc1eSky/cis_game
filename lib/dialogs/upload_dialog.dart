@@ -6,6 +6,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../classes/game_result.dart';
+import '../localData/sembastDataRepository.dart';
+
 class UploadDialog extends ConsumerStatefulWidget {
   const UploadDialog({
     required this.gameResults,
@@ -18,64 +21,84 @@ class UploadDialog extends ConsumerStatefulWidget {
 }
 
 class _UploadDialogState extends ConsumerState<UploadDialog> {
-  String errorMessage = '';
+  String status = '';
 
   @override
   Widget build(BuildContext context) {
     int resultsCount = widget.gameResults.gameResultList.length;
+
     return DialogTemplate(
-      title: const Text('Locally Saved Data'),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text('there are $resultsCount files to upload...'),
-          const SizedBox(height: 10),
-          Text('Status: $errorMessage'),
-        ],
-      ),
+      title: Text('Files to upload: $resultsCount'),
+      content: SizedBox(
+          height: 50,
+          width: 200,
+          child: status == 'loading'
+              ? const Center(child: CircularProgressIndicator())
+              : status == 'success'
+                  ? const Text('Success!')
+                  : status == 'error'
+                      ? const Text('Could not connect to database. Check connection!')
+                      : const Text('Info: Make sure you have internet connection.')),
       actions: [
         ElevatedButton(
-          onPressed: () async {
-            // STEP 1: CHECK IF CONNECTION AVAILABLE
-
-            // STEP 2: FOR EACH GAME RESULT
-
-            // UPLOAD EACH RESULT TO A NEW DOCUMENT
-            // DELETE RESULT FROM LOCAL LIST
-
-            // STEP 3: UPDATE MEMORY
-
-            //Navigator.of(context).pop();
-            try {
-              setState(() {
-                errorMessage = 'start';
-              });
-              final db = FirebaseFirestore.instance;
-              setState(() {
-                errorMessage = 'db instance created';
-              });
-              final docRef = await db.collection("connection").add({
-                'connection': true,
-                'timeStamp': DateTime.now(),
-              }).timeout(const Duration(seconds: 7), onTimeout: () {
-                throw TimeoutException('Timed Out');
-              });
-              setState(() {
-                errorMessage = 'success';
-              });
-            } catch (e) {
-              //print(e);
-              setState(() {
-                errorMessage = e.toString();
-              });
-            }
-
-            // Map<String, dynamic> gameResultMap = gameResults.gameResultList[0].toFirebaseMap();
-            //
-            // final docRef = await db.collection("test").add(gameResultMap);
+          onPressed: () {
+            Navigator.of(context).pop();
           },
-          child: const Text('Upload'),
-        )
+          child: const Text('Close'),
+        ),
+        if (status != 'success' && resultsCount > 0 && status != 'error')
+          ElevatedButton(
+            onPressed: status == 'loading'
+                ? null
+                : () async {
+                    setState(() {
+                      status = 'loading';
+                    });
+
+                    // get a copy of the game results list
+                    List<GameResult> copiedGameResultList =
+                        widget.gameResults.copyWith().gameResultList;
+
+                    // TODO: TRY CATCH
+                    final db = FirebaseFirestore.instance;
+                    int i = 0;
+                    for (GameResult gameResult in widget.gameResults.gameResultList) {
+                      try {
+                        Map<String, dynamic> gameResultMap = gameResult.toFirebaseMap();
+                        //await Future.delayed(const Duration(seconds: 2));
+                        if (i > 0) {
+                          throw TimeoutException('Timed Out');
+                        } else {
+                          i++;
+                        }
+
+                        await db
+                            .collection("test")
+                            .add(gameResultMap)
+                            .timeout(const Duration(seconds: 7), onTimeout: () {
+                          throw TimeoutException('Timed Out');
+                        });
+                        // remove uploaded result from list
+                        copiedGameResultList.removeAt(0);
+                      } catch (e) {
+                        setState(() {
+                          status = 'error';
+                        });
+
+                        ref
+                            .read(localDataRepositoryProvider)
+                            .saveGameResults(GameResults(copiedGameResultList));
+                        return;
+                      }
+                    }
+
+                    ref.read(localDataRepositoryProvider).resetMemory();
+                    setState(() {
+                      status = 'success';
+                    });
+                  },
+            child: const Text('Upload'),
+          ),
       ],
     );
   }
