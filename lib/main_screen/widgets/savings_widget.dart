@@ -6,14 +6,12 @@ import '../../state_management/game_data_notifier.dart';
 
 class SavingsWidget extends ConsumerWidget {
   const SavingsWidget({
-    required this.isActive,
     super.key,
   });
 
-  final bool isActive;
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    bool isActive = ref.watch(gameDataNotifierProvider).buttonsAreActive;
     return Container(
       decoration: BoxDecoration(
         color: ColorPalette().tileColor,

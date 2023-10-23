@@ -1,9 +1,11 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pwa_install/pwa_install.dart';
 import 'package:url_strategy/url_strategy.dart';
 
+import 'firebase_options.dart';
 import 'localData/sembastDataRepository.dart';
 import 'main_screen/main_screen.dart';
 
@@ -49,6 +51,15 @@ void main() async {
   // TODO: initialize local database
   //await Future.delayed(const Duration(seconds: 2));
   final localDataRepository = await SembastDataRepository.makeDefault();
+  print('sambast initialized');
+  try {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+  } catch (e) {
+    print(e);
+  }
+  print('firebase initialized');
 
   // start up
   runApp(

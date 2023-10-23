@@ -27,6 +27,7 @@ class GameData {
   final bool showingWeatherAnimation;
   final int? dieRollResult;
   final bool isInPracticeMode;
+  final bool buttonsAreActive;
 
   // number of zebra fields in fieldLists
   List<int> get zebras {
@@ -115,6 +116,7 @@ class GameData {
     this.showingWeatherAnimation = false,
     this.dieRollResult,
     required this.isInPracticeMode,
+    required this.buttonsAreActive,
   });
 
   GameData copyWith({
@@ -136,6 +138,7 @@ class GameData {
     bool? showingWeatherAnimation,
     int? dieRollResult,
     bool? isInPracticeMode,
+    bool? buttonsAreActive,
   }) {
     return GameData(
       currentEnumerator: currentEnumerator ?? this.currentEnumerator?.copyWith(),
@@ -156,6 +159,7 @@ class GameData {
       showingWeatherAnimation: showingWeatherAnimation ?? this.showingWeatherAnimation,
       dieRollResult: dieRollResult ?? this.dieRollResult,
       isInPracticeMode: isInPracticeMode ?? this.isInPracticeMode,
+      buttonsAreActive: buttonsAreActive ?? this.buttonsAreActive,
     );
   }
 }

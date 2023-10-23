@@ -255,8 +255,6 @@ class _SummaryPageState extends ConsumerState<SeasonSummaryDialog> {
                         barrierDismissible: false,
                         context: context,
                         builder: (context) {
-                          // TODO: SAVE RESULTS OF ALL PLAYED SEASONS OF PLAYER
-                          ref.read(gameDataNotifierProvider.notifier).printPlayerResults();
                           return const PlayerDoneDialog();
                         },
                       );

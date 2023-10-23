@@ -9,19 +9,13 @@ import '../../../color_palette.dart';
 import '../../state_management/game_data_notifier.dart';
 import 'cash_widget.dart';
 
-class BottomRowMainPage extends ConsumerStatefulWidget {
+class BottomRowMainPage extends ConsumerWidget {
   const BottomRowMainPage({
     super.key,
   });
 
   @override
-  ConsumerState<BottomRowMainPage> createState() => _BottomRowMainPageState();
-}
-
-class _BottomRowMainPageState extends ConsumerState<BottomRowMainPage> {
-  bool buttonsAreActive = true;
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Row(
       children: [
         const Expanded(
@@ -32,12 +26,12 @@ class _BottomRowMainPageState extends ConsumerState<BottomRowMainPage> {
             child: CashWidget(),
           ),
         ),
-        Expanded(
+        const Expanded(
           flex: 3,
           child: FractionallySizedBox(
             widthFactor: 0.8,
             heightFactor: 0.8,
-            child: SavingsWidget(isActive: buttonsAreActive),
+            child: SavingsWidget(),
           ),
         ),
         Expanded(
@@ -48,7 +42,7 @@ class _BottomRowMainPageState extends ConsumerState<BottomRowMainPage> {
             child: Center(
               child: FittedBox(
                 child: ElevatedButton(
-                  onPressed: buttonsAreActive
+                  onPressed: ref.watch(gameDataNotifierProvider).buttonsAreActive
                       ? () async {
                           if (ref.read(gameDataNotifierProvider).cash > 0) {
                             showDialog(
@@ -57,8 +51,7 @@ class _BottomRowMainPageState extends ConsumerState<BottomRowMainPage> {
                                   return const WarningUseCashDialog();
                                 });
                           } else {
-                            // deactivate button to not prevent double click
-                            setState(() => buttonsAreActive = false);
+                            ref.read(gameDataNotifierProvider.notifier).disableButtons();
 
                             // simulate if it is raining or not
                             ref.read(gameDataNotifierProvider.notifier).randomizeWeatherEvent();
@@ -96,9 +89,6 @@ class _BottomRowMainPageState extends ConsumerState<BottomRowMainPage> {
 
                             // check if he last level was played by current player
                             ref.read(gameDataNotifierProvider.notifier).checkIfLastLevelWasPlayed();
-
-                            // activate button again
-                            setState(() => buttonsAreActive = true);
 
                             // open the season summary dialog
                             if (context.mounted) {

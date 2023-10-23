@@ -19,15 +19,17 @@ class TopRowMainPage extends ConsumerWidget {
         FittedBox(
           child: IconButton(
             iconSize: 100,
-            onPressed: () {
-              // unlock via pin before showing settings
-              showDialog(
-                  barrierDismissible: true,
-                  context: context,
-                  builder: (context) {
-                    return const PinUnlockDialog(showSettings: true);
-                  });
-            },
+            onPressed: ref.watch(gameDataNotifierProvider).buttonsAreActive
+                ? () {
+                    // unlock via pin before showing settings
+                    showDialog(
+                        barrierDismissible: true,
+                        context: context,
+                        builder: (context) {
+                          return const PinUnlockDialog(showSettings: true);
+                        });
+                  }
+                : null,
             icon: const Icon(Icons.settings),
           ),
         ),
@@ -65,20 +67,23 @@ class TopRowMainPage extends ConsumerWidget {
         FittedBox(
           child: IconButton(
             iconSize: 150,
-            onPressed: () async {
-              // 1. Load data from memory
-              final loadedResults = await ref.read(localDataRepositoryProvider).loadGameResults();
+            onPressed: ref.watch(gameDataNotifierProvider).buttonsAreActive
+                ? () async {
+                    // 1. Load data from memory
+                    final loadedResults =
+                        await ref.read(localDataRepositoryProvider).loadGameResults();
 
-              if (context.mounted) {
-                // unlock via pin before showing upload
-                showDialog(
-                    barrierDismissible: true,
-                    context: context,
-                    builder: (context) {
-                      return UploadDialog(gameResults: loadedResults);
-                    });
-              }
-            },
+                    if (context.mounted) {
+                      // unlock via pin before showing upload
+                      showDialog(
+                          barrierDismissible: true,
+                          context: context,
+                          builder: (context) {
+                            return UploadDialog(gameResults: loadedResults);
+                          });
+                    }
+                  }
+                : null,
             icon: const Icon(
               Icons.file_upload_outlined,
             ),

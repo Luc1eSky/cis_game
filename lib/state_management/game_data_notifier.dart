@@ -50,6 +50,7 @@ class GameDataNotifier extends StateNotifier<GameData> {
             allFieldsAreSeeded: false,
             currentEnumerator: null,
             isInPracticeMode: true, // start in practice mode
+            buttonsAreActive: true,
           ),
         );
 
@@ -313,6 +314,7 @@ class GameDataNotifier extends StateNotifier<GameData> {
       newSeasonHasStarted: true,
       allFieldsAreSeeded: false,
       isInPracticeMode: state.isInPracticeMode,
+      buttonsAreActive: true,
     );
   }
 
@@ -336,6 +338,7 @@ class GameDataNotifier extends StateNotifier<GameData> {
       newSeasonHasStarted: newSeasonHasStarted,
       allFieldsAreSeeded: false,
       isInPracticeMode: state.isInPracticeMode,
+      buttonsAreActive: true,
     );
   }
 
@@ -357,6 +360,7 @@ class GameDataNotifier extends StateNotifier<GameData> {
       allFieldsAreSeeded: false,
       isInPracticeMode: state.isInPracticeMode,
       // copied values: savedFieldLists, currentCouple
+      buttonsAreActive: true,
     );
   }
 
@@ -624,7 +628,7 @@ class GameDataNotifier extends StateNotifier<GameData> {
       print('-----');
       print('STARTING TIME: ${result.startedOn}');
       print('END TIME: ${result.endedOn}');
-      print('TIME PLAYED: ${result.timePlayed.inSeconds} seconds');
+      print('TIME PLAYED: ${result.timePlayedInSeconds} seconds');
       print('-----');
       print('LEVEL ID: ${result.level.levelID}');
       print('FORECAST: ${result.level.rainForecast}');
@@ -769,5 +773,9 @@ class GameDataNotifier extends StateNotifier<GameData> {
 
   void changeGameMode() {
     state = state.copyWith(isInPracticeMode: !state.isInPracticeMode);
+  }
+
+  void disableButtons() {
+    state = state.copyWith(buttonsAreActive: false);
   }
 }

@@ -106,7 +106,7 @@ class LevelResult {
   }
 
   // calculate time played for this level
-  Duration get timePlayed => endedOn.difference(startedOn);
+  int get timePlayedInSeconds => endedOn.difference(startedOn).inSeconds;
 
   // calculate total amount of fields
   int get fieldsTotal => zebraFields + lionFields + elephantFields;
@@ -148,6 +148,34 @@ class LevelResult {
       'earningsZebras': earningsZebras,
       'earningsLions': earningsLions,
       'earningsElephants': earningsElephants,
+    };
+  }
+
+  Map<String, dynamic> toFirebaseMap() {
+    return {
+      'playerType': playerType.name,
+      'startedOn': startedOn,
+      'endedOn': endedOn,
+      'level': level.toMap(),
+      'plantingAdviceHighRisk': plantingAdviceHighRisk.name,
+      'plantingAdviceLowRisk': plantingAdviceLowRisk.name,
+      'startingCash': startingCash,
+      'startingSavings': startingSavings,
+      'zebraFields': zebraFields,
+      'lionFields': lionFields,
+      'elephantFields': elephantFields,
+      'earningsZebras': earningsZebras,
+      'earningsLions': earningsLions,
+      'earningsElephants': earningsElephants,
+      'timePlayedInSeconds': timePlayedInSeconds,
+      'fieldsTotal': fieldsTotal,
+      'costsZebras': costsZebras,
+      'costsLions': costsLions,
+      'costsElephants': costsElephants,
+      'costsTotal': costsTotal,
+      'storedInSavings': storedInSavings,
+      'earningsTotal': earningsTotal,
+      'totalMoneyAtEnd': totalMoneyAtEnd,
     };
   }
 
