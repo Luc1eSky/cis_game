@@ -63,7 +63,6 @@ class _UploadDialogState extends ConsumerState<UploadDialog> {
                     db.settings = const Settings(persistenceEnabled: false);
 
                     db.enablePersistence(const PersistenceSettings(synchronizeTabs: false));
-                    db.clearPersistence();
 
                     // DocumentReference documentReference =
                     //     FirebaseFirestore.instance.collection('users').doc('testDoc');
@@ -84,6 +83,7 @@ class _UploadDialogState extends ConsumerState<UploadDialog> {
                         throw TimeoutException('Timed Out');
                       });
                     } catch (e) {
+                      db.clearPersistence();
                       setState(() {
                         status = 'error';
                       });
