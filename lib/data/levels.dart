@@ -71,43 +71,43 @@ List<Level> individualLevels = [
     isRaining: false,
     plantingAdvice: false,
   ),
-  // const Level(
-  //   levelID: "I2",
-  //   rainForecast: 1,
-  //   isRaining: false,
-  //   plantingAdvice: true,
-  // ),
-  // const Level(
-  //   levelID: "I3",
-  //   rainForecast: 1,
-  //   isRaining: false,
-  //   plantingAdvice: false,
-  // ),
-  // const Level(
-  //   levelID: "I4",
-  //   rainForecast: null,
-  //   isRaining: false,
-  //   plantingAdvice: false,
-  // ),
-  // const Level(
-  //   levelID: "I5",
-  //   rainForecast: 2,
-  //   isRaining: false,
-  //   plantingAdvice: false,
-  // ),
-  // const Level(
-  //   levelID: "I6",
-  //   rainForecast: 3,
-  //   isRaining: false,
-  //   plantingAdvice: false,
-  // ),
-  // // INFO: I7 has alternative levels
-  // const Level(
-  //   levelID: "I7",
-  //   rainForecast: 4,
-  //   isRaining: false,
-  //   plantingAdvice: true,
-  // ),
+  const Level(
+    levelID: "I2",
+    rainForecast: 1,
+    isRaining: false,
+    plantingAdvice: true,
+  ),
+  const Level(
+    levelID: "I3",
+    rainForecast: 1,
+    isRaining: false,
+    plantingAdvice: false,
+  ),
+  const Level(
+    levelID: "I4",
+    rainForecast: null,
+    isRaining: false,
+    plantingAdvice: false,
+  ),
+  const Level(
+    levelID: "I5",
+    rainForecast: 2,
+    isRaining: false,
+    plantingAdvice: false,
+  ),
+  const Level(
+    levelID: "I6",
+    rainForecast: 3,
+    isRaining: false,
+    plantingAdvice: false,
+  ),
+  // INFO: I7 has alternative levels
+  const Level(
+    levelID: "I7",
+    rainForecast: 4,
+    isRaining: false,
+    plantingAdvice: true,
+  ),
 ];
 
 List<Level> coupleLevels = [
@@ -117,30 +117,30 @@ List<Level> coupleLevels = [
     isRaining: false,
     plantingAdvice: true,
   ),
-  // const Level(
-  //   levelID: "C2",
-  //   rainForecast: null,
-  //   isRaining: false,
-  //   plantingAdvice: false,
-  // ),
-  // const Level(
-  //   levelID: "C3",
-  //   rainForecast: 3,
-  //   isRaining: false,
-  //   plantingAdvice: false,
-  // ),
-  // const Level(
-  //   levelID: "C4",
-  //   rainForecast: 4,
-  //   isRaining: false,
-  //   plantingAdvice: false,
-  // ),
-  // const Level(
-  //   levelID: "C5",
-  //   rainForecast: 2,
-  //   isRaining: false,
-  //   plantingAdvice: false,
-  // ),
+  const Level(
+    levelID: "C2",
+    rainForecast: null,
+    isRaining: false,
+    plantingAdvice: false,
+  ),
+  const Level(
+    levelID: "C3",
+    rainForecast: 3,
+    isRaining: false,
+    plantingAdvice: false,
+  ),
+  const Level(
+    levelID: "C4",
+    rainForecast: 4,
+    isRaining: false,
+    plantingAdvice: false,
+  ),
+  const Level(
+    levelID: "C5",
+    rainForecast: 2,
+    isRaining: false,
+    plantingAdvice: false,
+  ),
 ];
 
 Level placeholderLevel = const Level(
