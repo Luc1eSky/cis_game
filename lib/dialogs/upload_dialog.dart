@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../classes/game_result.dart';
+import '../localData/sembastDataRepository.dart';
 
 class UploadDialog extends ConsumerStatefulWidget {
   const UploadDialog({
@@ -22,7 +23,7 @@ class _UploadDialogState extends ConsumerState<UploadDialog> {
 
   @override
   Widget build(BuildContext context) {
-    int resultsCount = 2; //widget.gameResults.gameResultList.length;
+    int resultsCount = widget.gameResults.gameResultList.length;
 
     return DialogTemplate(
       title: Text('Files to upload: $resultsCount'),
@@ -56,37 +57,43 @@ class _UploadDialogState extends ConsumerState<UploadDialog> {
                     List<GameResult> copiedGameResultList =
                         widget.gameResults.copyWith().gameResultList;
 
-                    // TODO: TRY CATCH
+                    // TODO: ADD TRY CATCH? can this fail?
                     final db = FirebaseFirestore.instance;
 
-                    DocumentReference documentReference =
-                        FirebaseFirestore.instance.collection('new').doc('testDoc');
+                    // go through all saved gameResults (played games by wife, husband, and couple)
+                    // each should be 7+7+5=19 levels
+                    for (GameResult gameResult in widget.gameResults.gameResultList) {
+                      // create one large map with firebase suitable data types
+                      Map<String, dynamic> gameResultMap = gameResult.toFirebaseMap();
+                      try {
+                        //await Future.delayed(const Duration(seconds: 3)); // test delay
+                        // upload one game result as one document to firestore
+                        await db.runTransaction((transaction) async {
+                          transaction.set(
+                            FirebaseFirestore.instance.collection('test').doc(),
+                            gameResultMap,
+                          );
+                        });
+                        // remove uploaded result from list
+                        copiedGameResultList.removeAt(0);
+                      } catch (e) {
+                        setState(() {
+                          status = 'error';
+                        });
+                        // save remaining game results in local memory
+                        ref
+                            .read(localDataRepositoryProvider)
+                            .saveGameResults(GameResults(copiedGameResultList));
+                        return;
+                      }
+                    }
 
-                    bool wasWritten = await db.runTransaction((transaction) async {
-                      transaction.set(documentReference, {
-                        'connected': true,
-                        'timeStamp': DateTime.now(),
-                      });
-                      return true;
-                    }).onError((error, stackTrace) => false);
+                    // reset local memory after everything was uploaded successfully
+                    ref.read(localDataRepositoryProvider).resetMemory();
 
-                    print('wasWritten: $wasWritten');
-
-                    // // testing data persistence
-                    // try {
-                    //   await db.collection("new").add({
-                    //     'connected': true,
-                    //     'timeStamp': DateTime.now(),
-                    //   }).timeout(const Duration(seconds: 7), onTimeout: () {
-                    //     throw TimeoutException('Timed Out');
-                    //   });
-                    // } catch (e) {
-                    //   db.clearPersistence();
-                    //   setState(() {
-                    //     status = 'error';
-                    //   });
-                    //   return;
-                    // }
+                    setState(() {
+                      status = 'success';
+                    });
 
                     // int i = 0;
                     // for (GameResult gameResult in widget.gameResults.gameResultList) {
@@ -118,12 +125,6 @@ class _UploadDialogState extends ConsumerState<UploadDialog> {
                     //     return;
                     //   }
                     // }
-
-                    //ref.read(localDataRepositoryProvider).resetMemory();
-
-                    setState(() {
-                      status = 'success';
-                    });
                   },
             child: const Text('Upload'),
           ),
