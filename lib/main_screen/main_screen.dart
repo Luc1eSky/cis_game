@@ -9,7 +9,6 @@ import '../../color_palette.dart';
 import '../classes/couple.dart';
 import '../constants.dart';
 import '../dialogs/forecast_dialog.dart';
-import '../excel_export.dart';
 import '../rive/rive_data_notifier.dart';
 import '../state_management/game_data_notifier.dart';
 import 'widgets/bottom_row_main_page.dart';
@@ -65,8 +64,12 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                 return const LandScapeLayout();
               },
             ),
-            if (ref.watch(gameDataNotifierProvider).newSeasonHasStarted == true &&
-                ref.watch(gameDataNotifierProvider).currentCouple.currentPlayerType !=
+            if (ref.watch(gameDataNotifierProvider).newSeasonHasStarted ==
+                    true &&
+                ref
+                        .watch(gameDataNotifierProvider)
+                        .currentCouple
+                        .currentPlayerType !=
                     PlayerType.none)
               Container(
                 color: Colors.black.withOpacity(0.4),
@@ -116,7 +119,8 @@ class LandScapeLayout extends ConsumerWidget {
           ),
           if (ref.watch(gameDataNotifierProvider).showingWeatherAnimation)
             Container(color: Colors.transparent),
-          if (ref.watch(gameDataNotifierProvider).showingWeatherAnimation) const WeatherWidget(),
+          if (ref.watch(gameDataNotifierProvider).showingWeatherAnimation)
+            const WeatherWidget(),
           // Center(
           //   child: ElevatedButton(
           //     onPressed: () {

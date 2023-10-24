@@ -10,12 +10,12 @@ import 'level.dart';
 
 class LevelResult {
   const LevelResult({
-    required this.enumerator,
-    required this.playerID,
-    required this.location,
-    required this.session,
-    required this.playerNumber,
-    required this.playerType,
+    this.enumerator,
+    this.playerID,
+    this.location,
+    this.session,
+    this.playerNumber,
+    this.playerType,
     required this.startedOn,
     required this.endedOn,
     required this.level,
@@ -32,14 +32,14 @@ class LevelResult {
   });
 
   // get enumerator, couple, location, session from game data
-  final Enumerator enumerator;
-  final String playerID;
-  final Location location;
-  final Session session;
-  final int playerNumber;
+  final Enumerator? enumerator;
+  final String? playerID;
+  final Location? location;
+  final Session? session;
+  final int? playerNumber;
 
   // type of player needed to show results later
-  final PlayerType playerType;
+  final PlayerType? playerType;
 
   // time stamps
   final DateTime startedOn;
@@ -56,12 +56,12 @@ class LevelResult {
   @override
   String toString() {
     return '''\nLevelResult{
-    enumerator : ${enumerator.fullName},
+    enumerator : ${enumerator?.fullName},
     playerID: $playerID,     
-    location: ${location.name},
-    session: ${session.name},
+    location: ${location?.name},
+    session: ${session?.name},
     playerNumber: $playerNumber,
-    playerType: ${playerType.name},
+    playerType: ${playerType?.name},
     startedOn: $startedOn,
     endedOn: $endedOn,
     level: $level,
@@ -111,17 +111,19 @@ class LevelResult {
     double? earningsElephants,
   }) {
     return LevelResult(
-      enumerator: enumerator ?? this.enumerator.copyWith(),
+      enumerator: enumerator ?? this.enumerator?.copyWith(),
       playerID: playerID ?? this.playerID,
-      location: location ?? this.location.copyWith(),
+      location: location ?? this.location?.copyWith(),
       session: session ?? this.session,
       playerNumber: playerNumber ?? this.playerNumber,
       playerType: playerType ?? this.playerType,
       startedOn: startedOn ?? this.startedOn.copyWith(),
       endedOn: endedOn ?? this.endedOn.copyWith(),
       level: level ?? this.level.copyWith(),
-      plantingAdviceHighRisk: plantingAdviceHighRisk ?? this.plantingAdviceHighRisk,
-      plantingAdviceLowRisk: plantingAdviceLowRisk ?? this.plantingAdviceLowRisk,
+      plantingAdviceHighRisk:
+          plantingAdviceHighRisk ?? this.plantingAdviceHighRisk,
+      plantingAdviceLowRisk:
+          plantingAdviceLowRisk ?? this.plantingAdviceLowRisk,
       startingCash: startingCash ?? this.startingCash,
       startingSavings: startingSavings ?? this.startingSavings,
       zebraFields: zebraFields ?? this.zebraFields,
@@ -155,19 +157,20 @@ class LevelResult {
   double get storedInSavings => startingSavings + startingCash - costsTotal;
 
   // calculate total earnings
-  double get earningsTotal => earningsZebras + earningsLions + earningsElephants;
+  double get earningsTotal =>
+      earningsZebras + earningsLions + earningsElephants;
 
   // calculate total money at end (cash + savings)
   double get totalMoneyAtEnd => storedInSavings + earningsTotal;
 
   Map<String, dynamic> toMap() {
     return {
-      'enumerator': enumerator.toMap(),
+      'enumerator': enumerator?.toMap(),
       'playerID': playerID,
-      'location': location.toMap(),
-      'session': session.name,
+      'location': location?.toMap(),
+      'session': session?.name,
       'playerNumber': playerNumber,
-      'playerType': playerType.name,
+      'playerType': playerType?.name,
       'startedOn': startedOn.millisecondsSinceEpoch,
       'endedOn': endedOn.millisecondsSinceEpoch,
       'level': level.toMap(),
@@ -186,12 +189,12 @@ class LevelResult {
 
   Map<String, dynamic> toFirebaseMap() {
     return {
-      'enumerator': enumerator.fullName,
+      'enumerator': enumerator?.fullName,
       'playerID': playerID,
-      'location': location.name,
-      'session': session.name,
+      'location': location?.name,
+      'session': session?.name,
       'playerNumber': playerNumber,
-      'playerType': playerType.name,
+      'playerType': playerType?.name,
       'startedOn': startedOn,
       'endedOn': endedOn,
       'level': level.toMap(),
@@ -228,8 +231,10 @@ class LevelResult {
       startedOn: DateTime.fromMillisecondsSinceEpoch(map['startedOn']),
       endedOn: DateTime.fromMillisecondsSinceEpoch(map['endedOn']),
       level: Level.fromMap(map['level']),
-      plantingAdviceHighRisk: PlantingAdvice.values.byName(map['plantingAdviceHighRisk']),
-      plantingAdviceLowRisk: PlantingAdvice.values.byName(map['plantingAdviceLowRisk']),
+      plantingAdviceHighRisk:
+          PlantingAdvice.values.byName(map['plantingAdviceHighRisk']),
+      plantingAdviceLowRisk:
+          PlantingAdvice.values.byName(map['plantingAdviceLowRisk']),
       startingCash: map['startingCash'] as double,
       startingSavings: map['startingSavings'] as double,
       zebraFields: map['zebraFields'] as int,

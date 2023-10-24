@@ -31,7 +31,7 @@ class GameSummaryDialog extends ConsumerWidget {
             cells: <DataCell>[
               DataCell(Text(index.toString())),
               DataCell(Text(result.totalMoneyAtEnd.toString())),
-              DataCell(Text((result.playerType.name).toString())),
+              DataCell(Text((result.playerType?.name).toString())),
             ],
           ),
         );

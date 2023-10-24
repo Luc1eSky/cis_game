@@ -98,15 +98,22 @@ class Person {
 
   // returns personalID, but in a more readable format
   String get formattedID {
-    String firstLetter = personalID.substring(0, 1);
-    String location = personalID.substring(1, 4);
-    String session = personalID.substring(4, 6);
-    String number = personalID.substring(personalID.length - 2);
-
-    return '$firstLetter-$location-$session-$number';
+    if (personalID.isEmpty) {
+      return '';
+    } else {
+      String firstLetter = personalID.substring(0, 1);
+      String location = personalID.substring(1, 4);
+      String session = personalID.substring(4, 6);
+      String number = personalID.substring(personalID.length - 2);
+      return '$firstLetter-$location-$session-$number';
+    }
   }
 
-  int get number => int.parse(personalID.substring(personalID.length - 2));
+  int get number {
+    return personalID.isEmpty
+        ? 0
+        : int.parse(personalID.substring(personalID.length - 2));
+  }
 }
 
 List<Level> copyLevels(List<Level> listToCopy) {
@@ -120,19 +127,19 @@ List<Level> copyLevels(List<Level> listToCopy) {
 Couple practiceCouple = Couple(
   currentPlayerType: PlayerType.both,
   both: Person(
-    personalID: '        ',
+    personalID: '',
     hasPlayed: false,
     levels: practiceLevels,
     playerType: PlayerType.both,
   ),
   wife: Person(
-    personalID: 'test',
+    personalID: '',
     hasPlayed: false,
     levels: [],
     playerType: PlayerType.wife,
   ),
   husband: Person(
-    personalID: 'test',
+    personalID: '',
     hasPlayed: false,
     levels: [],
     playerType: PlayerType.husband,
