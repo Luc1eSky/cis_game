@@ -16,13 +16,13 @@ class GameResult {
     return {'gameResult': listOfMaps};
   }
 
-  // convert game result to map
-  Map<String, dynamic> toFirebaseMap() {
-    List<Map<String, dynamic>> listOfMaps =
-        levelResultList.map((levelResult) => levelResult.toFirebaseMap()).toList();
-
-    return {'gameResult': listOfMaps};
-  }
+  // // convert game result to firebase map (with timestamps, etc.)
+  // Map<String, dynamic> toFirebaseMap() {
+  //   List<Map<String, dynamic>> listOfMaps =
+  //       levelResultList.map((levelResult) => levelResult.toFirebaseMap()).toList();
+  //
+  //   return {'gameResult': listOfMaps};
+  // }
 
   // create game result from map
   factory GameResult.fromMap(Map<String, dynamic> map) {

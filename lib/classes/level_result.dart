@@ -120,10 +120,8 @@ class LevelResult {
       startedOn: startedOn ?? this.startedOn.copyWith(),
       endedOn: endedOn ?? this.endedOn.copyWith(),
       level: level ?? this.level.copyWith(),
-      plantingAdviceHighRisk:
-          plantingAdviceHighRisk ?? this.plantingAdviceHighRisk,
-      plantingAdviceLowRisk:
-          plantingAdviceLowRisk ?? this.plantingAdviceLowRisk,
+      plantingAdviceHighRisk: plantingAdviceHighRisk ?? this.plantingAdviceHighRisk,
+      plantingAdviceLowRisk: plantingAdviceLowRisk ?? this.plantingAdviceLowRisk,
       startingCash: startingCash ?? this.startingCash,
       startingSavings: startingSavings ?? this.startingSavings,
       zebraFields: zebraFields ?? this.zebraFields,
@@ -157,8 +155,7 @@ class LevelResult {
   double get storedInSavings => startingSavings + startingCash - costsTotal;
 
   // calculate total earnings
-  double get earningsTotal =>
-      earningsZebras + earningsLions + earningsElephants;
+  double get earningsTotal => earningsZebras + earningsLions + earningsElephants;
 
   // calculate total money at end (cash + savings)
   double get totalMoneyAtEnd => storedInSavings + earningsTotal;
@@ -231,10 +228,8 @@ class LevelResult {
       startedOn: DateTime.fromMillisecondsSinceEpoch(map['startedOn']),
       endedOn: DateTime.fromMillisecondsSinceEpoch(map['endedOn']),
       level: Level.fromMap(map['level']),
-      plantingAdviceHighRisk:
-          PlantingAdvice.values.byName(map['plantingAdviceHighRisk']),
-      plantingAdviceLowRisk:
-          PlantingAdvice.values.byName(map['plantingAdviceLowRisk']),
+      plantingAdviceHighRisk: PlantingAdvice.values.byName(map['plantingAdviceHighRisk']),
+      plantingAdviceLowRisk: PlantingAdvice.values.byName(map['plantingAdviceLowRisk']),
       startingCash: map['startingCash'] as double,
       startingSavings: map['startingSavings'] as double,
       zebraFields: map['zebraFields'] as int,

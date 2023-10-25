@@ -63,8 +63,8 @@ class _UploadDialogState extends ConsumerState<UploadDialog> {
                     // go through all saved gameResults (played games by wife, husband, and couple)
                     // each should be 7+7+5=19 levels
                     for (GameResult gameResult in widget.gameResults.gameResultList) {
-                      // create one large map with firebase suitable data types
-                      Map<String, dynamic> gameResultMap = gameResult.toFirebaseMap();
+                      // create one large map
+                      Map<String, dynamic> gameResultMap = gameResult.toMap(); // toFirebaseMap();
                       try {
                         //await Future.delayed(const Duration(seconds: 3)); // test delay
                         // upload one game result as one document to firestore

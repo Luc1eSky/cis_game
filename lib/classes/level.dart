@@ -3,7 +3,7 @@ class Level {
   final String levelID;
   final int? rainForecast;
   final bool isRaining;
-  final bool? plantingAdvice;
+  final bool plantingAdvice;
 
   const Level({
     required this.levelID,
@@ -40,7 +40,7 @@ class Level {
       levelID: map['levelID'] as String,
       rainForecast: map['rainForecast'] as int?,
       isRaining: map['isRaining'] as bool,
-      plantingAdvice: map['plantingAdvice'] as bool?,
+      plantingAdvice: map['plantingAdvice'] as bool,
     );
   }
 
