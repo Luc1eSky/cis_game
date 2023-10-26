@@ -89,15 +89,18 @@ class _DieRoleDialogState extends ConsumerState<DieRollDialog> {
               }
 
               // save die roll result in game data
-              ref.read(gameDataNotifierProvider.notifier).setDieRollResult(result: dieRollResult);
+              ref
+                  .read(gameDataNotifierProvider.notifier)
+                  .setDieRollResult(result: dieRollResult);
 
               // save results locally
-              List<LevelResult> savedLevelResults = ref.read(gameDataNotifierProvider).savedResults;
+              List<LevelResult> savedLevelResults =
+                  ref.read(gameDataNotifierProvider).savedResults;
 
               // add game result to local memory
               await ref
                   .read(localDataRepositoryProvider)
-                  .addGameResult(GameResult(savedLevelResults));
+                  .addGameResult(GameResult(savedLevelResults, dieRollResult));
 
               if (context.mounted) {
                 // Close the current dialog

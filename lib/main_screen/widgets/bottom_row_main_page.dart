@@ -42,7 +42,9 @@ class BottomRowMainPage extends ConsumerWidget {
             child: Center(
               child: FittedBox(
                 child: ElevatedButton(
-                  onPressed: ref.watch(gameDataNotifierProvider).buttonsAreActive
+                  onPressed: ref
+                          .watch(gameDataNotifierProvider)
+                          .buttonsAreActive
                       ? () async {
                           if (ref.read(gameDataNotifierProvider).cash > 0) {
                             showDialog(
@@ -51,15 +53,22 @@ class BottomRowMainPage extends ConsumerWidget {
                                   return const WarningUseCashDialog();
                                 });
                           } else {
-                            bool inPracticeMode =
-                                ref.read(gameDataNotifierProvider).isInPracticeMode;
-                            ref.read(gameDataNotifierProvider.notifier).disableButtons();
+                            bool inPracticeMode = ref
+                                .read(gameDataNotifierProvider)
+                                .isInPracticeMode;
+                            ref
+                                .read(gameDataNotifierProvider.notifier)
+                                .disableButtons();
 
                             // simulate if it is raining or not
-                            ref.read(gameDataNotifierProvider.notifier).randomizeWeatherEvent();
+                            ref
+                                .read(gameDataNotifierProvider.notifier)
+                                .randomizeWeatherEvent();
 
                             // save the results based on the fields and the weather
-                            ref.read(gameDataNotifierProvider.notifier).saveResult();
+                            ref
+                                .read(gameDataNotifierProvider.notifier)
+                                .saveResult();
 
                             //ref.read(gameDataNotifierProvider.notifier).printPlayerResults();
 
@@ -69,7 +78,8 @@ class BottomRowMainPage extends ConsumerWidget {
                                 .showWeatherAnimation();
 
                             // check if something has been planted
-                            if (ref.read(gameDataNotifierProvider).total[0] > 0) {
+                            if (ref.read(gameDataNotifierProvider).total[0] >
+                                0) {
                               // show growing animation and wait until it is done
                               await ref
                                   .read(gameDataNotifierProvider.notifier)
@@ -77,21 +87,31 @@ class BottomRowMainPage extends ConsumerWidget {
 
                               // slow animation down in practice mode
 
-                              double slowDown = inPracticeMode ? practiceModeSlowDownFactor : 1.0;
+                              double slowDown = inPracticeMode
+                                  ? practiceModeSlowDownFactor
+                                  : 1.0;
 
                               await Future.delayed(Duration(
                                   milliseconds:
-                                      (pauseAfterGrowingAnimationInMs * slowDown).toInt()));
+                                      (pauseAfterGrowingAnimationInMs *
+                                              slowDown)
+                                          .toInt()));
 
-                              ref.read(gameDataNotifierProvider.notifier).harvestFields();
+                              ref
+                                  .read(gameDataNotifierProvider.notifier)
+                                  .harvestFields();
 
                               await Future.delayed(Duration(
                                   milliseconds:
-                                      (pauseAfterHarvestShownOnFieldInMs * slowDown).toInt()));
+                                      (pauseAfterHarvestShownOnFieldInMs *
+                                              slowDown)
+                                          .toInt()));
                             }
 
                             // check if he last level was played by current player
-                            ref.read(gameDataNotifierProvider.notifier).checkIfLastLevelWasPlayed();
+                            ref
+                                .read(gameDataNotifierProvider.notifier)
+                                .checkIfLastLevelWasPlayed();
 
                             // open the season summary dialog
                             if (context.mounted) {

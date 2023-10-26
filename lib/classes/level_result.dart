@@ -19,6 +19,7 @@ class LevelResult {
     required this.startedOn,
     required this.endedOn,
     required this.level,
+    required this.season,
     required this.plantingAdviceHighRisk,
     required this.plantingAdviceLowRisk,
     required this.startingCash,
@@ -37,6 +38,7 @@ class LevelResult {
   final Location? location;
   final Session? session;
   final int? playerNumber;
+  final int season;
 
   // type of player needed to show results later
   final PlayerType? playerType;
@@ -62,6 +64,7 @@ class LevelResult {
     session: ${session?.name},
     playerNumber: $playerNumber,
     playerType: ${playerType?.name},
+    season: $season,
     startedOn: $startedOn,
     endedOn: $endedOn,
     level: $level,
@@ -96,6 +99,7 @@ class LevelResult {
     Session? session,
     int? playerNumber,
     PlayerType? playerType,
+    int? season,
     DateTime? startedOn,
     DateTime? endedOn,
     Level? level,
@@ -117,11 +121,14 @@ class LevelResult {
       session: session ?? this.session,
       playerNumber: playerNumber ?? this.playerNumber,
       playerType: playerType ?? this.playerType,
+      season: season ?? this.season,
       startedOn: startedOn ?? this.startedOn.copyWith(),
       endedOn: endedOn ?? this.endedOn.copyWith(),
       level: level ?? this.level.copyWith(),
-      plantingAdviceHighRisk: plantingAdviceHighRisk ?? this.plantingAdviceHighRisk,
-      plantingAdviceLowRisk: plantingAdviceLowRisk ?? this.plantingAdviceLowRisk,
+      plantingAdviceHighRisk:
+          plantingAdviceHighRisk ?? this.plantingAdviceHighRisk,
+      plantingAdviceLowRisk:
+          plantingAdviceLowRisk ?? this.plantingAdviceLowRisk,
       startingCash: startingCash ?? this.startingCash,
       startingSavings: startingSavings ?? this.startingSavings,
       zebraFields: zebraFields ?? this.zebraFields,
@@ -155,7 +162,8 @@ class LevelResult {
   double get storedInSavings => startingSavings + startingCash - costsTotal;
 
   // calculate total earnings
-  double get earningsTotal => earningsZebras + earningsLions + earningsElephants;
+  double get earningsTotal =>
+      earningsZebras + earningsLions + earningsElephants;
 
   // calculate total money at end (cash + savings)
   double get totalMoneyAtEnd => storedInSavings + earningsTotal;
@@ -168,6 +176,7 @@ class LevelResult {
       'session': session?.name,
       'playerNumber': playerNumber,
       'playerType': playerType?.name,
+      'season': season,
       'startedOn': startedOn.millisecondsSinceEpoch,
       'endedOn': endedOn.millisecondsSinceEpoch,
       'level': level.toMap(),
@@ -184,38 +193,39 @@ class LevelResult {
     };
   }
 
-  Map<String, dynamic> toFirebaseMap() {
-    return {
-      'enumerator': enumerator?.fullName,
-      'playerID': playerID,
-      'location': location?.name,
-      'session': session?.name,
-      'playerNumber': playerNumber,
-      'playerType': playerType?.name,
-      'startedOn': startedOn,
-      'endedOn': endedOn,
-      'level': level.toMap(),
-      'plantingAdviceHighRisk': plantingAdviceHighRisk.name,
-      'plantingAdviceLowRisk': plantingAdviceLowRisk.name,
-      'startingCash': startingCash,
-      'startingSavings': startingSavings,
-      'zebraFields': zebraFields,
-      'lionFields': lionFields,
-      'elephantFields': elephantFields,
-      'earningsZebras': earningsZebras,
-      'earningsLions': earningsLions,
-      'earningsElephants': earningsElephants,
-      'timePlayedInSeconds': timePlayedInSeconds,
-      'fieldsTotal': fieldsTotal,
-      'costsZebras': costsZebras,
-      'costsLions': costsLions,
-      'costsElephants': costsElephants,
-      'costsTotal': costsTotal,
-      'storedInSavings': storedInSavings,
-      'earningsTotal': earningsTotal,
-      'totalMoneyAtEnd': totalMoneyAtEnd,
-    };
-  }
+  // Map<String, dynamic> toFirebaseMap() {
+  //   return {
+  //     'enumerator': enumerator?.fullName,
+  //     'playerID': playerID,
+  //     'location': location?.name,
+  //     'session': session?.name,
+  //     'playerNumber': playerNumber,
+  //     'playerType': playerType?.name,
+  //     'season': season,
+  //     'startedOn': startedOn,
+  //     'endedOn': endedOn,
+  //     'level': level.toMap(),
+  //     'plantingAdviceHighRisk': plantingAdviceHighRisk.name,
+  //     'plantingAdviceLowRisk': plantingAdviceLowRisk.name,
+  //     'startingCash': startingCash,
+  //     'startingSavings': startingSavings,
+  //     'zebraFields': zebraFields,
+  //     'lionFields': lionFields,
+  //     'elephantFields': elephantFields,
+  //     'earningsZebras': earningsZebras,
+  //     'earningsLions': earningsLions,
+  //     'earningsElephants': earningsElephants,
+  //     'timePlayedInSeconds': timePlayedInSeconds,
+  //     'fieldsTotal': fieldsTotal,
+  //     'costsZebras': costsZebras,
+  //     'costsLions': costsLions,
+  //     'costsElephants': costsElephants,
+  //     'costsTotal': costsTotal,
+  //     'storedInSavings': storedInSavings,
+  //     'earningsTotal': earningsTotal,
+  //     'totalMoneyAtEnd': totalMoneyAtEnd,
+  //   };
+  // }
 
   factory LevelResult.fromMap(Map<String, dynamic> map) {
     return LevelResult(
@@ -225,11 +235,14 @@ class LevelResult {
       session: Session.values.byName(map['session']),
       playerNumber: map['playerNumber'] as int,
       playerType: PlayerType.values.byName(map['playerType']),
+      season: map['season'] as int,
       startedOn: DateTime.fromMillisecondsSinceEpoch(map['startedOn']),
       endedOn: DateTime.fromMillisecondsSinceEpoch(map['endedOn']),
       level: Level.fromMap(map['level']),
-      plantingAdviceHighRisk: PlantingAdvice.values.byName(map['plantingAdviceHighRisk']),
-      plantingAdviceLowRisk: PlantingAdvice.values.byName(map['plantingAdviceLowRisk']),
+      plantingAdviceHighRisk:
+          PlantingAdvice.values.byName(map['plantingAdviceHighRisk']),
+      plantingAdviceLowRisk:
+          PlantingAdvice.values.byName(map['plantingAdviceLowRisk']),
       startingCash: map['startingCash'] as double,
       startingSavings: map['startingSavings'] as double,
       zebraFields: map['zebraFields'] as int,

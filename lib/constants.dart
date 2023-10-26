@@ -1,5 +1,5 @@
 // TODO: REMOVE LEVEL ID AFTER TESTING IN SECOND ROW BAR
-const String appVersion = '1.0.6';
+const String appVersion = '1.0.7 (TEST LOCAL STORAGE)';
 
 const double practiceModeSlowDownFactor = 2.0;
 

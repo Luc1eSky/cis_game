@@ -611,6 +611,7 @@ class GameDataNotifier extends StateNotifier<GameData> {
       playerNumber: state.currentCouple.currentPlayer?.number,
       playerType: state.currentCouple.currentPlayerType,
       level: state.currentLevel,
+      season: state.season,
       startedOn: state.startingTime,
       endedOn: DateTime.now(),
       plantingAdviceHighRisk: getAdviceRiskHigh(),
@@ -653,6 +654,7 @@ class GameDataNotifier extends StateNotifier<GameData> {
       print('SESSION: ${state.currentSession.name}');
       print('PLAYER NUMBER: ${state.currentCouple.currentPlayer?.number}');
       print('-----');
+      print('SEASON: ${state.season}');
       print('STARTING TIME: ${result.startedOn}');
       print('END TIME: ${result.endedOn}');
       print('TIME PLAYED: ${result.timePlayedInSeconds} seconds');
