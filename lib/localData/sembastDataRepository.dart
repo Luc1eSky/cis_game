@@ -53,8 +53,11 @@ class SembastDataRepository {
     List<GameResult> updatedGameResultList =
         List<GameResult>.from(currentSavedGameResults.gameResultList);
     // add new game result to list
-    updatedGameResultList.add(newGameResult);
 
+    // TODO: Take out after local memory test
+    for (int i = 0; i < 10; i++) {
+      updatedGameResultList.add(newGameResult);
+    }
     // create new GameResults object
     GameResults updatedGameResults = GameResults(updatedGameResultList);
 
