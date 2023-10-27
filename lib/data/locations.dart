@@ -11,11 +11,11 @@ List<Location> allLocations = [
   ),
   Location(
     name: 'CHAMBULA',
-    acronym: 'CHA',
+    acronym: 'CHM',
   ),
   Location(
     name: 'CHANSANJE',
-    acronym: 'CHA',
+    acronym: 'CHN',
   ),
   Location(
     name: 'CHIYEMU',
