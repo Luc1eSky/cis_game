@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../constants.dart';
-import '../../state_management/game_data_notifier.dart';
 import 'forecast_widget.dart';
 
 class SecondRowMainPage extends ConsumerWidget {
@@ -12,7 +11,7 @@ class SecondRowMainPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Row(
+    return const Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Expanded(
@@ -21,14 +20,13 @@ class SecondRowMainPage extends ConsumerWidget {
             child: FittedBox(
               alignment: Alignment.centerLeft,
               child: Text(
-                'V$appVersion / '
-                'Level ${ref.watch(gameDataNotifierProvider).currentLevel.levelID}',
-                style: const TextStyle(fontSize: 100, color: Colors.red),
+                'V$appVersion',
+                style: TextStyle(fontSize: 100),
               ),
             ),
           ),
         ),
-        const Expanded(
+        Expanded(
           flex: 2,
           child: Align(
             alignment: Alignment.centerRight,

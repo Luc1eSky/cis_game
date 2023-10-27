@@ -123,7 +123,7 @@ class _SelectNewCoupleDialogState extends ConsumerState<SelectNewCoupleDialog> {
                           return DropdownMenuItem(
                               value: location,
                               child: Text(
-                                  '${location.acronym} - ${location.name}'));
+                                  '${location.name} - ${location.acronym}'));
                         }).toList(),
                         onChanged: (value) {
                           setState(
