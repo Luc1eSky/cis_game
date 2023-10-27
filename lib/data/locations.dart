@@ -47,7 +47,7 @@ List<Location> allLocations = [
   ),
   Location(
     name: 'KAMONO CAMP',
-    acronym: 'KAM',
+    acronym: 'KAC',
   ),
   Location(
     name: 'KATUBA',
