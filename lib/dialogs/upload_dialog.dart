@@ -35,8 +35,10 @@ class _UploadDialogState extends ConsumerState<UploadDialog> {
               : status == 'success'
                   ? const Text('Success.')
                   : status == 'error'
-                      ? const Text('Could not connect to database. Check connection.')
-                      : const Text('Info: Make sure you have internet connection.')),
+                      ? const Text(
+                          'Could not connect to database. Check connection.')
+                      : const Text(
+                          'Info: Make sure you have internet connection.')),
       actions: [
         ElevatedButton(
           onPressed: () {
@@ -62,15 +64,17 @@ class _UploadDialogState extends ConsumerState<UploadDialog> {
 
                     // go through all saved gameResults (played games by wife, husband, and couple)
                     // each should be 7+7+5=19 levels
-                    for (GameResult gameResult in widget.gameResults.gameResultList) {
+                    for (GameResult gameResult
+                        in widget.gameResults.gameResultList) {
                       // create one large map
-                      Map<String, dynamic> gameResultMap = gameResult.toMap(); // toFirebaseMap();
+                      Map<String, dynamic> gameResultMap =
+                          gameResult.toMap(); // toFirebaseMap();
                       try {
                         //await Future.delayed(const Duration(seconds: 3)); // test delay
                         // upload one game result as one document to firestore
                         await db.runTransaction((transaction) async {
                           transaction.set(
-                            FirebaseFirestore.instance.collection('test').doc(),
+                            FirebaseFirestore.instance.collection('data').doc(),
                             gameResultMap,
                           );
                         });
