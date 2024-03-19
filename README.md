@@ -1,16 +1,40 @@
-# cis_game
+# CIS Game
 
-A new Flutter project.
+Welcome to the Mobile Agricultural Simulation Game (CIS Game) repository! This project was developed in collaboration with the International Food Policy Research Institute (IFPRI) as part of the "Accelerating Impacts of CGIAR Climate Research for Africa" (AICCRA) program, funded by the World Bank. The goal of this game is to provide a tool for better understanding how both male and female farmers in Zambia might incorporate Climate Information Services (CIS) into their agricultural decision-making processes.
 
-## Getting Started
+# Overview
+This repository contains the source code for a mobile agricultural simulation game designed specifically for use in Zambia. The game is intended to be a simple and user-friendly application that can be played offline by individual players or couples. It includes a practice mode for participants to familiarize themselves with the game mechanics before starting the actual simulation.
 
-This project is a starting point for a Flutter application.
+# Features
+Offline Play: The game is designed to be playable without an internet connection, allowing participants in rural areas to engage with it easily.
 
-A few resources to get you started if this is your first Flutter project:
+Practice Mode: Participants can use the practice mode to understand the mechanics of the game before starting the actual simulation.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+User-Friendly Interface: The interface is intuitive and easy to navigate, making it accessible to users with varying levels of technological proficiency.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Admin Page: Enumerators have access to an admin page where they can upload the data collected during the game to a database once an internet connection is reestablished.
+
+#Getting Started
+To get started with the game, follow these steps:
+
+- Clone the Repository: Clone this repository to your local machine using git clone.
+- Install Dependencies: Ensure you have all the necessary dependencies installed.
+- Run the Game: Launch the game application and explore its features.
+
+Contribution Guidelines
+Contributions to this project are welcome! If you have any ideas for improvements or bug fixes, please submit a pull request following the contribution guidelines.
+
+License
+This project is licensed under the MIT License, which means you are free to use, modify, and distribute the code as long as you include the original copyright and license notice.
+
+Acknowledgements
+We would like to thank the International Food Policy Research Institute (IFPRI) for their collaboration on this project, as well as the World Bank for funding the AICCRA program.
+
+For any inquiries or issues, please contact lucie@prosperplay.org.
+
+Happy farming! 🌱🚜
+
+
+
+
+
