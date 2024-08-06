@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "733902188694",
+    "project_id": "cis-game-fe7ae",
+    "storage_bucket": "cis-game-fe7ae.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:733902188694:android:7cc107c090dd13b5add2b7",
+        "android_client_info": {
+          "package_name": "com.example.cis_game"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "733902188694-eiqh80m7fanjvf3956ur3220ohf7bkn2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB9WYi70pwRMpgu35azHbjwyGjtCMtrfSM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "733902188694-eiqh80m7fanjvf3956ur3220ohf7bkn2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

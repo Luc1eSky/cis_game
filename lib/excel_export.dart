@@ -65,7 +65,8 @@ Future<void> createExcel() async {
   // connect to Firestore db
   FirebaseFirestore db = FirebaseFirestore.instance;
   // get snapshot of collection
-  CollectionReference testCollectionRef = db.collection('test');
+  CollectionReference testCollectionRef = db.collection('data');
+
   QuerySnapshot testQuerySnapshot = await testCollectionRef.get();
 
   int row = 2;

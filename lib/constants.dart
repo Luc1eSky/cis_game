@@ -1,5 +1,5 @@
 // TODO: REMOVE LEVEL ID AFTER TESTING IN SECOND ROW BAR
-const String appVersion = '1.1';
+const String appVersion = '2.1';
 
 const double practiceModeSlowDownFactor = 2.0;
 
@@ -47,7 +47,7 @@ const int noForecastRainChance = 4; // 4 = 80% chance when no forecast
 const String currency = 'kwacha';
 
 // max number of couples per location (for dropdown selection)
-const int maxNumberOfCouplesPerLocation = 12;
+const int maxNumberOfCouplesPerLocation = 10;
 const int maxNumberOnDie = 12;
 
 // Advice for planting

@@ -55,7 +55,8 @@ class _PinUnlockDialogState extends State<PinUnlockDialog> {
     if (screenHeight < minimumScreenHeight) {
       return const SizedBox();
     }
-    double dialogHeight = min(MediaQuery.of(context).size.height * 0.7, pinUnlockDialogMaxHeight);
+    double dialogHeight =
+        min(MediaQuery.of(context).size.height * 0.7, pinUnlockDialogMaxHeight);
     double dialogWidth = dialogHeight / 5.5 * 3;
     return AlertDialog(
       // titlePadding: EdgeInsets.zero,
@@ -140,6 +141,7 @@ class _PinUnlockDialogState extends State<PinUnlockDialog> {
                           // add delete button
                           if (number == 10) {
                             return PinButton(
+                              textColor: Colors.white,
                               backgroundColor: Colors.red,
                               onTapFunction: () {
                                 deleteLastNumber();
@@ -153,6 +155,7 @@ class _PinUnlockDialogState extends State<PinUnlockDialog> {
                             return Consumer(
                               builder: (context, ref, child) {
                                 return PinButton(
+                                  textColor: Colors.white,
                                   backgroundColor: Colors.green,
                                   onTapFunction: () {
                                     // when code is correct
@@ -196,9 +199,11 @@ class _PinUnlockDialogState extends State<PinUnlockDialog> {
                                         );
                                       }
                                     } else {
-                                      ScaffoldMessenger.of(context).showSnackBar(
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
                                         SnackBar(
-                                          backgroundColor: ColorPalette().snackBar,
+                                          backgroundColor:
+                                              ColorPalette().snackBar,
                                           content: const Center(
                                             child: Text('Code incorrect'),
                                           ),
@@ -217,6 +222,7 @@ class _PinUnlockDialogState extends State<PinUnlockDialog> {
                           }
 
                           return PinButton(
+                            textColor: Colors.white,
                             backgroundColor: Colors.grey[700]!,
                             onTapFunction: () {
                               addNumberToPin(number);
@@ -242,8 +248,10 @@ class PinButton extends StatelessWidget {
   final VoidCallback onTapFunction;
   final String? buttonText;
   final IconData? buttonIconData;
+  final Color textColor;
 
   const PinButton({
+    required this.textColor,
     required this.backgroundColor,
     required this.onTapFunction,
     this.buttonText,
@@ -271,12 +279,13 @@ class PinButton extends StatelessWidget {
               child: buttonText != null
                   ? Text(
                       buttonText!,
-                      style: const TextStyle(fontSize: 100),
+                      style: TextStyle(fontSize: 100, color: textColor),
                     )
                   : buttonIconData != null
                       ? Icon(
                           buttonIconData,
                           size: 100,
+                          color: textColor,
                         )
                       : Container(),
             ),
