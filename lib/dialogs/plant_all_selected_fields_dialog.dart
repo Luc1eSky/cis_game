@@ -20,8 +20,8 @@ class PlantAllSelectedFieldsDialog extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return DialogTemplate(
       content: SizedBox(
-        height: 70,
-        width: 300,
+        height: 100,
+        width: 400,
         child: Center(
           child: Row(
             mainAxisSize: MainAxisSize.min,
