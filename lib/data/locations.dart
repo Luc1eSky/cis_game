@@ -1,84 +1,37 @@
 import 'package:cis_game/classes/location.dart';
 
 List<Location> allLocations = [
-  const Location(name: 'Kanjanse', acronym: 'KAN'),
-  const Location(name: 'Mateyo', acronym: 'MAT'),
-  const Location(name: 'Chigumbi', acronym: 'CHI'),
-  const Location(name: 'Mtumpha', acronym: 'MTU'),
+  const Location(name: 'Aloni', acronym: 'ALO'),
+  const Location(name: 'Chingumbi', acronym: 'CHI'),
+  const Location(name: 'Chikwenya', acronym: 'CHK'),
+  const Location(name: 'Chiwale', acronym: 'CHW'),
   const Location(name: 'Dominic', acronym: 'DOM'),
+  const Location(name: 'Kachelela', acronym: 'KAC'),
+  const Location(name: 'Kafusa', acronym: 'KAF'),
+  const Location(name: 'Kamphende', acronym: 'KAM'),
+  const Location(name: 'Kanjase', acronym: 'KAN'),
+  const Location(name: 'Kapota', acronym: 'KAP'),
+  const Location(name: 'Luponda', acronym: 'LUP'),
   const Location(name: 'Malamba', acronym: 'MAL'),
+  const Location(name: 'Masikito', acronym: 'MAS'),
+  const Location(name: 'Mateyo', acronym: 'MAT'),
+  const Location(name: 'Mbirizi', acronym: 'MBI'),
+  const Location(name: 'Mbwatuka', acronym: 'MBW'),
   const Location(name: 'Mitowe', acronym: 'MIT'),
-  const Location(name: 'Nyansimbo', acronym: 'NYA'),
-  // Location(
-  //   name: 'ANTHONY',
-  //   acronym: 'ANT',
-  // ),
-  // Location(
-  //   name: 'BANDSON',
-  //   acronym: 'BAN',
-  // ),
-  // Location(
-  //   name: 'CHAMBULA',
-  //   acronym: 'CHM',
-  // ),
-  // Location(
-  //   name: 'CHANSANJE',
-  //   acronym: 'CHN',
-  // ),
-  // Location(
-  //   name: 'CHIYEMU',
-  //   acronym: 'CHI',
-  // ),
-  // Location(
-  //   name: 'DANIELI',
-  //   acronym: 'DAN',
-  // ),
-  // Location(
-  //   name: 'DAVID',
-  //   acronym: 'DAV',
-  // ),
-  // Location(
-  //   name: 'DRIVER',
-  //   acronym: 'DRI',
-  // ),
-  // Location(
-  //   name: 'GABRIEL',
-  //   acronym: 'GAB',
-  // ),
-  // Location(
-  //   name: 'KAINGO',
-  //   acronym: 'KAI',
-  // ),
-  // Location(
-  //   name: 'KAMONO',
-  //   acronym: 'KAM',
-  // ),
-  // Location(
-  //   name: 'KAMONO CAMP',
-  //   acronym: 'KAC',
-  // ),
-  // Location(
-  //   name: 'KATUBA',
-  //   acronym: 'KAT',
-  // ),
-  // Location(
-  //   name: 'KAZOLWE',
-  //   acronym: 'KAZ',
-  // ),
-  // Location(
-  //   name: 'NEW SOLOMON',
-  //   acronym: 'NEW',
-  // ),
-  // Location(
-  //   name: 'NKOKOBEKA',
-  //   acronym: 'NKO',
-  // ),
-  // Location(
-  //   name: 'THANDI',
-  //   acronym: 'THA',
-  // ),
-  // Location(
-  //   name: 'YELANI',
-  //   acronym: 'YEL',
-  // ),
+  const Location(name: 'Mkopeka', acronym: 'MKO'),
+  const Location(name: 'Mtumpha', acronym: 'MTU'),
+  const Location(name: 'Mulipa', acronym: 'MUP'),
+  const Location(name: 'Mulinda', acronym: 'MUL'),
+  const Location(name: 'Mumba', acronym: 'MUM'),
+  const Location(name: 'Muyampira', acronym: 'MUY'),
+  const Location(name: 'Mwanza_Kasero', acronym: 'MWA'),
+  const Location(name: 'Mzenje', acronym: 'MZE'),
+  const Location(name: 'Nyamulima', acronym: 'NYA'),
+  const Location(name: 'Nyamfumde', acronym: 'NYE'),
+  const Location(name: 'Nyansimbo', acronym: 'NYO'),
+  const Location(name: 'Sabau', acronym: 'SAB'),
+  const Location(name: 'Sikamwenje', acronym: 'SIJ'),
+  const Location(name: 'Sikalanga', acronym: 'SIK'),
+  const Location(name: 'Sikwenda', acronym: 'SKW'),
+  const Location(name: 'Susana', acronym: 'SUS'),
 ];
